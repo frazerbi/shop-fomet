@@ -20,6 +20,7 @@
 
 add_action( 'after_switch_theme', 'child_sync_elementor_kit' );
 add_action( 'admin_init',         'child_sync_elementor_kit_via_url' );
+add_filter( 'elementor/fonts/additional_fonts', 'child_register_elementor_fonts' );
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
@@ -55,6 +56,20 @@ function child_sync_elementor_kit(): bool {
 	child_clear_elementor_cache();
 
 	return true;
+}
+
+/**
+ * Register the theme's self-hosted font (see theme.json fontFace) with
+ * Elementor's font picker, so it shows up as a normal system font instead
+ * of falling back to "custom" in the Global Fonts / typography controls.
+ *
+ * @param array $fonts Existing Elementor font list, keyed by font name.
+ * @return array
+ */
+function child_register_elementor_fonts( array $fonts ): array {
+	$fonts['Sora'] = \Elementor\Fonts::SYSTEM;
+
+	return $fonts;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

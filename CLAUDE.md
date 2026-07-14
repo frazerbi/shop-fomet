@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-This repo is a WordPress site root. The theme lives at `wp-content/themes/hello-theme-child/`, a child theme for **Hello Elementor** (Elementor's official base theme). The theme is a starter template designed to be customised per project by replacing placeholder values.
+This repo is a WordPress site root for **Fomet** ([fomet.it](https://fomet.it/)) — this is the company's **e-commerce site**. Only the child theme is tracked in this repo (`wp-content/plugins/` isn't present here), so any store/checkout logic (e.g. WooCommerce) lives outside what's checked in — verify before assuming a specific commerce plugin. The theme itself is at `wp-content/themes/hello-theme-child/`, a child theme for **Hello Elementor** (Elementor's official base theme). It started as a generic starter template; brand values (colors, font, logo) have since been filled in for this project — see below.
 
 ## Repo structure
 
@@ -14,7 +14,8 @@ wp-content/
     └── hello-theme-child/   # the child theme (see below)
         └── assets/
             ├── fonts/        # self-hosted webfonts (referenced from theme.json)
-            └── icons/        # SVG icons used across the theme
+            ├── icons/        # SVG icons used across the theme
+            └── logo/         # Fomet logo-fomet.svg + favicon-fomet.svg
 ```
 
 ## SCSS workflow
@@ -40,13 +41,14 @@ npm run build
 | File | Role |
 |---|---|
 | `style.scss` | Single SCSS source; compiled to `style.css` |
-| `functions.php` | Enqueues `style.css`; placeholder hooks for fonts and SVG upload |
-| `design-tokens.php` | **Single source of truth** for brand colors and typography. Edit here first. |
-| `elementor-kit-sync.php` | Reads `child_design_tokens()` and writes values into Elementor's active Kit (Global Colors + Global Typography) |
+| `functions.php` | Enqueues `style.css`; `child_allow_svg` filter enabled (SVG upload support, needed for the logo assets below) |
+| `design-tokens.php` | **Single source of truth** for brand colors and typography. Edit here first. Populated with Fomet's brand palette and `Sora` font (mirrors `theme.json`). |
+| `elementor-kit-sync.php` | Reads `child_design_tokens()` and writes values into Elementor's active Kit (Global Colors + Global Typography). Also registers `Sora` with Elementor's font picker via `elementor/fonts/additional_fonts` so it isn't relegated to "custom". |
 | `performance-optimization.php` | Generic WordPress/Elementor perf tweaks (disables Gutenberg, emoji, oEmbed, XML-RPC, comments, cleans `<head>`) |
 | `theme.json` | Block editor / Global Styles config: color palette, gradients, typography (font sizes, self-hosted `Sora` font faces via `assets/fonts/`), spacing scale, layout widths, and default block/element style resets |
 | `assets/fonts/` | Self-hosted `Sora` variable font files (`.woff2`, latin + latin-ext subsets), loaded via `theme.json` `fontFace` |
 | `assets/icons/` | SVG icon set (social, UI, logos) used by templates/widgets |
+| `assets/logo/` | Fomet brand SVGs: `logo-fomet.svg`, `favicon-fomet.svg`. Uploaded manually via Site Identity in wp-admin — no automated sync code for these. |
 
 ### Design token flow
 
@@ -58,7 +60,7 @@ Tokens are pushed automatically on `after_switch_theme`. To re-push manually:
 
 ### Naming conventions
 
-All PHP functions use the prefix `child_`. When starting a new project, find-and-replace `child_` with a project-specific prefix (e.g. `acme_`) across all `.php` files.
+All PHP functions use the prefix `child_`. When starting a new project, find-and-replace `child_` with a project-specific prefix (e.g. `acme_`) across all `.php` files. The `child_` prefix was kept as-is for Fomet.
 
 CSS custom properties use `--theme-*`. The SCSS source variable `$primary` and `$font` are the two values to set first for any new project.
 
@@ -67,3 +69,4 @@ CSS custom properties use `--theme-*`. The SCSS source variable `$primary` and `
 - Styles target Elementor's DOM structure (`.elementor > section > .e-con-inner`, `.elementor-widget-*`)
 - `performance-optimization.php` dequeues Elementor admin-only assets on the frontend and keeps Heartbeat alive only inside the page editor
 - The kit sync touches `_elementor_page_settings` post meta on the active kit post, then calls `files_manager->clear_cache()` to regenerate CSS
+- `theme.json`'s gradients and responsive `clamp()` font-size scale are deliberately **not** synced to Elementor (no 1:1 equivalent — Elementor global colors are flat and typography slots don't support `clamp()`); they stay block-editor-only

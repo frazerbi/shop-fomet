@@ -36,14 +36,14 @@ add_action( 'wp_enqueue_scripts', 'child_enqueue_scripts', 20 );
 // add_action( 'wp_enqueue_scripts', 'child_enqueue_fonts', 10 );
 
 // ─── Supporto SVG upload ──────────────────────────────────────────────────────
-// Decommentare per abilitare l'upload di file SVG dalla media library.
+// Necessario per poter caricare logo-fomet.svg da Media Library / Site Identity.
 
-// function child_allow_svg( $mimes ) {
-// 	$mimes['svg']  = 'image/svg+xml';
-// 	$mimes['svgz'] = 'image/svg+xml';
-// 	return $mimes;
-// }
-// add_filter( 'upload_mimes', 'child_allow_svg' );
+function child_allow_svg( $mimes ) {
+	$mimes['svg']  = 'image/svg+xml';
+	$mimes['svgz'] = 'image/svg+xml';
+	return $mimes;
+}
+add_filter( 'upload_mimes', 'child_allow_svg' );
 
 // ─── Elementor Kit — Global Colors & Typography ───────────────────────────────
 // I valori vengono impostati tramite design-tokens.php e propagati a Elementor
