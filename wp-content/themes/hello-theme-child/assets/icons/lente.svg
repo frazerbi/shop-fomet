@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Livello_2" data-name="Livello 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.99 19.99">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: .75px;
+      }
+    </style>
+  </defs>
+  <g id="Livello_1-2" data-name="Livello 1">
+    <g>
+      <circle class="cls-1" cx="9.41" cy="9.41" r="9.03"/>
+      <line class="cls-1" x1="15.92" y1="15.92" x2="19.62" y2="19.62"/>
+    </g>
+  </g>
+</svg>

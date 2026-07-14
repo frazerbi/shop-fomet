@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Livello_2" data-name="Livello 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45.89 34.44">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #e0e0e0;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+  <g id="Livello_1-2" data-name="Livello 1">
+    <rect class="cls-1" x="2.04" y="3.65" width="41.82" height="27.13" rx="4.21" ry="4.21" transform="translate(-2.98 4.94) rotate(-11.55)"/>
+    <polyline class="cls-1" points="38.33 3.83 23.14 18.2 3.53 10.94"/>
+  </g>
+</svg>
