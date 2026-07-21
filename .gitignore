@@ -1,0 +1,8 @@
+backup-old-db/
+*.csv
+
+# macOS
+.DS_Store
+
+# Node
+node_modules/

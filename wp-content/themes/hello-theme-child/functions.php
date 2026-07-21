@@ -16,7 +16,7 @@ function child_enqueue_scripts() {
 		'hello-elementor-child-style',
 		get_stylesheet_directory_uri() . '/style.css',
 		[ 'hello-elementor-theme-style' ],
-		'1.0.0'
+		wp_get_theme()->get( 'Version' )
 	);
 }
 add_action( 'wp_enqueue_scripts', 'child_enqueue_scripts', 20 );
