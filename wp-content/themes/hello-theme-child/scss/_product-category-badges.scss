@@ -1,0 +1,45 @@
+@use "variables" as *;
+
+// ─── Badge categoria prodotto (shortcode) ─────────────────────────────────────
+// Stili per [product_parent_category] / [product_child_category]
+// (product-category-shortcodes.php). Il posizionamento nel Loop Grid è gestito
+// via Elementor; qui solo la differenziazione visiva fra le due tassonomie:
+// genitore = badge pieno (pill), figlia = etichetta testuale leggera.
+
+.product-category-parent {
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--theme-radius-s);
+  background-color: var(--theme-primary);
+  color: var(--theme-white) !important;
+  font-family: var(--theme-font);
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color $anim-fast $ease-out;
+
+  &:hover {
+    background-color: var(--theme-black);
+    color: var(--theme-white) !important;
+  }
+}
+
+.product-category-child {
+  display: inline-block;
+  color: var(--theme-gray-medium);
+  font-family: var(--theme-font);
+  font-size: 0.625rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color $anim-fast $ease-out;
+
+  &:hover {
+    color: var(--theme-primary);
+  }
+}

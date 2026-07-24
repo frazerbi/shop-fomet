@@ -1,0 +1,172 @@
+@use "variables" as *;
+
+// ─── WooCommerce — Menu Cart (Elementor Pro widget "woocommerce-menu-cart.default") ─
+// Mini-cart nel menu header (side-cart), diverso dalla pagina Carrello vera e
+// propria (widget woocommerce-cart, vedi scss/_cart.scss). Markup verificato
+// dall'HTML reale del widget (2026-07-24): wrapper
+// .elementor-widget-woocommerce-menu-cart, pannello a scomparsa
+// .elementor-menu-cart__container > __main, lista prodotti
+// .elementor-menu-cart__products > .elementor-menu-cart__product,
+// subtotale + bottoni "Visualizza carrello"/"Pagamento" in fondo, bottone
+// toggle con badge quantità nell'header. Solo skin (colori/font/bordi/radius/
+// spaziature): il layout flex/posizionamento del pannello resta quello di
+// Elementor Pro (custom-pro-widget-woocommerce-menu-cart.min.css, non tracciato
+// qui) — non va ricostruito.
+
+.elementor-widget-woocommerce-menu-cart {
+  // ── Bottone toggle nell'header ──────────────────────────────────────────
+
+  .elementor-menu-cart__toggle_button {
+    font-family: var(--theme-font);
+    font-weight: 500;
+    color: var(--theme-text);
+    transition: color $anim-fast $ease-out;
+
+    &:hover {
+      color: var(--theme-primary);
+    }
+  }
+
+  .elementor-button-icon-qty {
+    font-family: var(--theme-font);
+    font-weight: 600;
+    color: var(--theme-white);
+    background-color: var(--theme-accent);
+  }
+
+  svg.e-eicon-cart-medium {
+    fill: currentColor;
+  }
+
+  // ── Pannello side-cart ───────────────────────────────────────────────────
+
+  .elementor-menu-cart__close-button {
+    color: var(--theme-text);
+
+    &:hover {
+      color: var(--theme-primary);
+    }
+  }
+
+  // ── Riga prodotto ────────────────────────────────────────────────────────
+
+  .elementor-menu-cart__product {
+    padding: 0.9375rem 0;
+    border-bottom: 1px solid var(--theme-gray-pale);
+  }
+
+  .elementor-menu-cart__product-image a {
+    display: block;
+    width: 4rem;
+    height: 4rem;
+    background-color: var(--theme-white-smoke);
+    border-radius: var(--theme-radius-s);
+    overflow: hidden;
+  }
+
+  .elementor-menu-cart__product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0.3125rem;
+  }
+
+  .elementor-menu-cart__product-name a {
+    font-family: var(--theme-font);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--theme-text);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--theme-primary);
+    }
+  }
+
+  .elementor-menu-cart__product-price {
+    font-family: var(--theme-font);
+    font-size: 0.8125rem;
+    color: var(--theme-gray-medium);
+    white-space: nowrap;
+
+    .product-quantity,
+    .amount {
+      font-weight: 600;
+      color: var(--theme-text);
+    }
+  }
+
+  .elementor-menu-cart__product-remove a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--theme-gray-medium) !important;
+    background: transparent;
+    border: 1px solid var(--theme-gray-light);
+    border-radius: 50%;
+    transition: color $anim-fast $ease-out, border-color $anim-fast $ease-out, background-color $anim-fast $ease-out;
+
+    &:hover {
+      color: var(--theme-white) !important;
+      background-color: var(--theme-accent);
+      border-color: var(--theme-accent);
+    }
+  }
+
+  // ── Subtotale ────────────────────────────────────────────────────────────
+
+  .elementor-menu-cart__subtotal {
+    padding: 0.9375rem 0;
+    font-family: var(--theme-font);
+    font-size: 0.9375rem;
+    color: var(--theme-text);
+    border-top: 1px solid var(--theme-gray-pale);
+
+    strong {
+      font-weight: 600;
+    }
+
+    .amount {
+      font-weight: 600;
+    }
+  }
+
+  // ── Bottoni "Visualizza carrello" / "Pagamento" ─────────────────────────
+
+  .elementor-menu-cart__footer-buttons {
+    gap: 0.625rem;
+
+    .elementor-button {
+      padding: 0.75rem 1rem;
+      font-family: var(--theme-font);
+      font-weight: 500;
+      font-size: 0.875rem;
+      border-radius: 0;
+      transition: background-color $anim-fast $ease-out, color $anim-fast $ease-out, border-color $anim-fast $ease-out;
+    }
+
+    .elementor-button--view-cart {
+      color: var(--theme-text) !important;
+      background-color: transparent;
+      border: 1px solid var(--theme-black);
+
+      &:hover {
+        color: var(--theme-white) !important;
+        background-color: var(--theme-black);
+      }
+    }
+
+    .elementor-button--checkout {
+      color: var(--theme-white) !important;
+      background-color: var(--theme-primary);
+      border: 1px solid var(--theme-primary);
+
+      &:hover {
+        background-color: var(--theme-black);
+        border-color: var(--theme-black);
+      }
+    }
+  }
+}

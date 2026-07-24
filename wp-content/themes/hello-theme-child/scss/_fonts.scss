@@ -1,0 +1,12 @@
+// ─── Font-face ────────────────────────────────────────────────────────────────
+// Font-face di fallback con metriche aggiustate per ridurre il layout shift (CLS)
+// durante lo swap da sans-serif a Sora. Valori calibrati su Arial (fonte: fomet.it).
+
+@font-face {
+  font-family: "Sora-fallback";
+  src: local("Arial");
+  size-adjust: 97%;
+  ascent-override: 91%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}

@@ -1,0 +1,40 @@
+// ─── SCSS Variables ───────────────────────────────────────────────────────────
+// Fonte: design-tokens.php (single source of truth, sincronizzato anche su
+// Elementor Kit da elementor-kit-sync.php). Palette e radius scale allineate
+// al sito principale fomet.it (tema "ficus").
+
+$primary:   #5A8A60; // Dark Teal
+$secondary: #A8C6AC; // Muted Teal
+$text:      #282828; // Shadow Gray
+$accent:    #D21D22; // Flag Red
+$black:     #000000;
+$white:     #ffffff;
+$font:      "Sora", "Sora-fallback", sans-serif;
+
+$black-40: rgba(0, 0, 0, 0.40);
+$black-60: rgba(0, 0, 0, 0.60);
+$black-80: rgba(0, 0, 0, 0.80);
+
+$gray-dark:      #4A4A4A;
+$gray-medium:    #898989;
+$gray-light:     #C8C8C8;
+$gray-pale:      #EDEDED;
+$white-smoke:    #F4F4F4;
+$alabaster-gray: #F2F0E6;
+$bright-green:   #179D38;
+$muted-red:      #B85450;
+
+// Radius scale (fonte: --radius-* del sito principale fomet.it)
+// Valori ×0.625 rispetto all'originale ficus: qui 1rem = 16px (default browser),
+// mentre ficus assume 1rem = 10px — il fattore compensa la differenza di base.
+$radius-s:  0.75rem;
+$radius-m:  1.5rem;
+$radius-l:  2.25rem;
+$radius-xl: 3.25rem;
+
+// Timing/easing per le animazioni (vedi partial "animations")
+$anim-fast:   0.2s;
+$anim-base:   0.35s;
+$anim-slow:   0.6s;
+$ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+$ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);

@@ -26,6 +26,29 @@ wp-content/
 
 CSS is authored in SCSS and compiled to `style.css`. Never edit `style.css` directly.
 
+`style.scss` is just an **entry point** (theme header comment + an ordered list of `@use "scss/...";` statements) — the actual rules live in `scss/*.scss` partials, one file per concern:
+
+| Partial | Contents |
+|---|---|
+| `scss/_variables.scss` | `$primary`, `$radius-*`, `$anim-*`/easing — no CSS output on its own |
+| `scss/_fonts.scss` | `@font-face` (Sora-fallback) |
+| `scss/_mixins.scss` | `heading-color`, `text-color`, `theme-font`, `btn-solid` (currently unused, kept for future use) |
+| `scss/_tokens.scss` | `:root { --theme-*; --e-global-color-*; }` (Design Tokens block) |
+| `scss/_base.scss` | structural resets only — `main { overflow-x: clip; }` + `.elementor .elementor-element` color reset |
+| `scss/_spacing.scss` | `.elementor > section > .e-con-inner` responsive padding scale + `--widgets-spacing*` custom-prop resets |
+| `scss/_typography.scss` | `body`/`.elementor-widget-container` font-family/smoothing + `.elementor .elementor-element` heading (h1–h6) and `p` rules |
+| `scss/_buttons.scss` | `.elementor-widget-button` + `.btn-arrow` |
+| `scss/_animations.scss` | keyframes + `.animate-*`/`.will-animate` utilities |
+| `scss/_product-card.scss` | product grid card (`ul.products li.product`) + widget "Product Add to Cart" (Loop Grid) |
+| `scss/_product-category-badges.scss` | `.product-category-parent`/`.product-category-child` — visual styling for the `[product_parent_category]`/`[product_child_category]` shortcodes (see `product-category-shortcodes.php` below) |
+| `scss/_product-single.scss` | single product page (gallery, title, content, price, additional info, related) |
+| `scss/_cart.scss` | Cart page widget |
+| `scss/_menu-cart.scss` | Menu (header) mini-cart widget — side-cart panel, distinct from `_cart.scss` |
+| `scss/_checkout.scss` | Checkout widget |
+| `scss/_my-account.scss` | My Account widget |
+
+Any partial using `$variables` must `@use "variables" as *;` at its top (Dart Sass `@use` scoping is per-file, not transitive) — mirror that when adding a new partial. To add a new area, create `scss/_name.scss` and append `@use "scss/name";` to `style.scss`.
+
 ```bash
 cd wp-content/themes/hello-theme-child
 
@@ -44,11 +67,13 @@ npm run build
 
 | File | Role |
 |---|---|
-| `style.scss` | Single SCSS source; compiled to `style.css` |
-| `functions.php` | Enqueues `style.css` (version read dynamically via `wp_get_theme()->get('Version')` from the theme header, not hardcoded — bump `Version:` in `style.scss`'s header comment to bust cache); `child_allow_svg` filter enabled (SVG upload support, needed for the logo assets below) |
+| `style.scss` | SCSS entry point: theme header comment + `@use` composition of `scss/*.scss` partials (see "SCSS workflow" below). Compiled to `style.css`. |
+| `scss/*.scss` | Actual SCSS source, one partial per concern (variables, tokens, base, buttons, animations, product card, product category badges, product single, cart, checkout, my-account) |
+| `functions.php` | Enqueues `style.css` (version read dynamically via `wp_get_theme()->get('Version')` from the theme header, not hardcoded — bump `Version:` in `style.scss`'s header comment to bust cache, or style changes silently won't show in a browser that already cached the old `?ver=`); `child_allow_svg` filter enabled (SVG upload support, needed for the logo assets below) |
 | `design-tokens.php` | **Single source of truth** for brand colors and typography. Edit here first. Populated with Fomet's brand palette and `Sora` font (mirrors `theme.json`). |
 | `elementor-kit-sync.php` | Reads `child_design_tokens()` and writes values into Elementor's active Kit (Global Colors + Global Typography). Also registers `Sora` with Elementor's font picker via `elementor/fonts/additional_fonts` so it isn't relegated to "custom". |
 | `performance-optimization.php` | Generic WordPress/Elementor perf tweaks (disables Gutenberg, emoji, oEmbed, XML-RPC, comments, cleans `<head>`) |
+| `product-category-shortcodes.php` | `[product_parent_category]` / `[product_child_category]` shortcodes — resolve the current Loop item's `product_cat` term(s) (via `get_the_ID()`, so no params needed inside an Elementor Loop Grid item) and print a linked badge. Parent walks up `get_ancestors()` to the top-level term if only a child term is directly assigned; child shortcode prints nothing if the product only has a top-level category. Styling lives in `scss/_product-category-badges.scss`; positioning inside the Loop Grid template is done by hand in Elementor, not by this code. |
 | `theme.json` | Block editor / Global Styles config: color palette, gradients, typography (font sizes, self-hosted `Sora` font faces via `assets/fonts/`), spacing scale, layout widths, and default block/element style resets |
 | `assets/fonts/` | Self-hosted `Sora` variable font files (`.woff2`, latin + latin-ext subsets), loaded via `theme.json` `fontFace` |
 | `assets/icons/` | SVG icon set (social, UI, logos) used by templates/widgets |
@@ -66,18 +91,18 @@ Tokens are pushed automatically on `after_switch_theme`. To re-push manually:
 
 All PHP functions use the prefix `child_`. When starting a new project, find-and-replace `child_` with a project-specific prefix (e.g. `acme_`) across all `.php` files. The `child_` prefix was kept as-is for Fomet.
 
-CSS custom properties use `--theme-*`. The SCSS source variable `$primary` and `$font` are the two values to set first for any new project.
+CSS custom properties use `--theme-*`. The SCSS source variables `$primary` and `$font` (in `scss/_variables.scss`) are the two values to set first for any new project.
 
 ### Elementor integration notes
 
 - Styles target Elementor's DOM structure (`.elementor > section > .e-con-inner`, `.elementor-widget-*`)
 - `performance-optimization.php` dequeues Elementor admin-only assets on the frontend and keeps Heartbeat alive only inside the page editor
 - The kit sync touches `_elementor_page_settings` post meta on the active kit post, then calls `files_manager->clear_cache()` to regenerate CSS
-- `theme.json`'s gradients and responsive `clamp()` font-size scale are deliberately **not** synced to Elementor's Kit/Global Typography slots (no 1:1 equivalent — Elementor global colors are flat and typography slots don't support `clamp()`); those stay block-editor-only. The `h1`–`h3` rules hardcoded directly in `style.scss` (under `.elementor .elementor-element`) are a separate thing: their `font-size` values are manually kept in sync with `theme.json`'s `extra-large`/`large`/`medium` `clamp()` presets (same formulas, copied by hand — not auto-synced, so if the presets change in `theme.json` these need updating too)
+- `theme.json`'s gradients and responsive `clamp()` font-size scale are deliberately **not** synced to Elementor's Kit/Global Typography slots (no 1:1 equivalent — Elementor global colors are flat and typography slots don't support `clamp()`); those stay block-editor-only. The `h1`–`h3` rules hardcoded directly in `scss/_typography.scss` (under `.elementor .elementor-element`) are a separate thing: their `font-size` values are manually kept in sync with `theme.json`'s `extra-large`/`large`/`medium` `clamp()` presets (same formulas, copied by hand — not auto-synced, so if the presets change in `theme.json` these need updating too)
 
 ### Design elements ported from fomet.it
 
-`style.scss` includes several elements ported/adapted (2026-07-21) from the fomet.it corporate site's `ficus` theme, for visual consistency across both properties:
+The SCSS partials (see "SCSS workflow" above; this section predates the split into `scss/*.scss` but the content still applies, just spread across `scss/_variables.scss`, `scss/_base.scss`, `scss/_spacing.scss`, `scss/_typography.scss`, `scss/_buttons.scss`, `scss/_animations.scss`, `scss/_product-card.scss`) include several elements ported/adapted (2026-07-21) from the fomet.it corporate site's `ficus` theme, for visual consistency across both properties:
 
 - **No `html { font-size: 62.5% }` override** — unlike `ficus` (which uses that to get `1rem = 10px`), this shop keeps the browser default (`1rem = 16px`). An earlier pass did copy `ficus`'s `62.5%` approach, but it was deliberately reverted per user preference (doesn't want a global rem-scaling override affecting site-wide accessibility zoom). **Instead**, every rem literal ported/derived from `ficus` (the `clamp()` scale references, `h1`–`h3` rules below, the radius scale, WooCommerce widget spacing/font-sizes) is pre-multiplied by **0.625** (=10/16) so the rendered pixel output still matches `ficus`'s values without touching the root font-size. When porting any *new* rem-based value from `ficus`/fomet.it, apply the same ×0.625 conversion — do not reintroduce `html{font-size:62.5%}`. Note: `theme.json`'s own `fontSizes` array still holds the raw unscaled `ficus`-scale values (block-editor-only, not reconciled with this ×0.625 approach).
 - **Radius scale** — `$radius-s/m/l/xl` (0.75/1.5/2.25/3.25rem, already ×0.625-adjusted) → `--theme-radius-*` custom props. Not present anywhere in this project before (only colors/spacing/font-size were already mirrored in `theme.json`); values were read from `ficus`'s live compiled CSS then scaled per the point above.
@@ -89,15 +114,21 @@ CSS custom properties use `--theme-*`. The SCSS source variable `$primary` and `
 
 **Headings use `font-weight: 300` uniformly** across `h1`–`h6` (changed 2026-07-21 from the earlier per-level weight scale, 900→500) — a deliberate user edit, not a regression to revert.
 
-### WooCommerce Elementor Pro widget overrides (cart, checkout, my account)
+### WooCommerce Elementor Pro widget overrides (single product, cart, checkout, my account)
 
-Cart, checkout, and my-account pages are built with dedicated **Elementor Pro WooCommerce widgets**, not WooCommerce's classic shortcode/template markup — confirmed via real rendered HTML (2026-07-22), same situation as the product grid above. Wrapper classes:
+The single product page, cart, checkout, and my-account pages are all built with dedicated **Elementor Pro WooCommerce widgets**, not WooCommerce's classic shortcode/template markup — confirmed via real rendered HTML (2026-07-22/24), same situation as the product grid above. Wrapper classes:
 
-- **Cart** — `.elementor-widget-woocommerce-cart` (`woocommerce-cart.default`): two-column layout, `.e-cart__column-start` (product table + coupon), `.e-cart__column-end` (`.cart_totals` panel).
-- **Checkout** — `.elementor-widget-woocommerce-checkout-page` (`woocommerce-checkout-page.default`): two-column, `.e-checkout__column-start` (billing/shipping form fields — native WooCommerce `.form-row`/`col2-set` grid), `.e-sticky-right-column` (order review table + `.e-coupon-box` + `#payment`/`#place_order`).
-- **My Account** — `.elementor-widget-woocommerce-my-account` (`woocommerce-my-account.default`, `e-my-account-tabs-vertical` modifier): only the "Bacheca" (dashboard) tab's nav (`.woocommerce-MyAccount-navigation`) + content (`.woocommerce-MyAccount-content`) are confirmed and styled. The Ordini/Downloads/Indirizzi/Dettagli Account tabs share the same nav but render different content — **not yet verified with real HTML, not styled**; get that HTML before touching them.
+- **Single product page** (`scss/_product-single.scss`) — `.elementor-widget-woocommerce-product-images` (gallery), `.elementor-widget-woocommerce-product-title`, `.elementor-widget-woocommerce-product-content` (short description), `.elementor-widget-woocommerce-product-price`, `.elementor-widget-woocommerce-product-add-to-cart` (same widget class as the Loop Grid's, in `scss/_product-card.scss` — but here the add-to-cart control is a real `<button class="single_add_to_cart_button button alt">`, not the Loop Grid's `<a class="add_to_cart_button">` AJAX link; both selectors are styled together in `scss/_product-card.scss`), `.elementor-widget-woocommerce-product-additional-information` (attributes table), `.elementor-widget-woocommerce-product-related` (reuses the native `ul.products li.product` markup already styled for the shop grid — no separate styling needed).
+- **Cart** (`scss/_cart.scss`) — `.elementor-widget-woocommerce-cart` (`woocommerce-cart.default`): two-column layout, `.e-cart__column-start` (product table + coupon), `.e-cart__column-end` (`.cart_totals` panel).
+- **Menu cart** (`scss/_menu-cart.scss`) — `.elementor-widget-woocommerce-menu-cart` (`woocommerce-menu-cart.default`, side-cart variant): header toggle button (`.elementor-menu-cart__toggle_button` + `.elementor-button-icon-qty` bubble badge), slide-out panel (`.elementor-menu-cart__container` > `.elementor-menu-cart__main`), product rows (`.elementor-menu-cart__product`, `-image`/`-name`/`-price`/`-remove`), `.elementor-menu-cart__subtotal`, `.elementor-menu-cart__footer-buttons` (`--view-cart`/`--checkout`). Distinct widget from the Cart page above — confirmed via real HTML (2026-07-24).
+- **Checkout** (`scss/_checkout.scss`) — `.elementor-widget-woocommerce-checkout-page` (`woocommerce-checkout-page.default`): two-column, `.e-checkout__column-start` → `#customer_details.col2-set` with `.col-1` (billing fields) and `.col-2` (shipping [empty on this store] + order-note textarea), each wrapped in its own `--theme-white-smoke`/`--theme-radius-m` panel (mirrors the Cart's product-table panel); `.e-checkout__column-end` → `.e-checkout__column-inner.e-sticky-right-column` containing `.e-checkout__order_review` (order table) and `.e-checkout__order_review-2` (payment methods + `#place_order`), each its own panel.
+- **My Account** (`scss/_my-account.scss`) — `.elementor-widget-woocommerce-my-account` (`woocommerce-my-account.default`, `e-my-account-tabs-vertical` modifier): only the "Bacheca" (dashboard) tab's nav (`.woocommerce-MyAccount-navigation`) + content (`.woocommerce-MyAccount-content`) are confirmed and styled. The Ordini/Downloads/Indirizzi/Dettagli Account tabs share the same nav but render different content — **not yet verified with real HTML, not styled**; get that HTML before touching them.
 
-Pattern followed for all three (same as the product-add-to-cart widget): scope every rule to the widget's own wrapper class, skin only — fonts, colors, borders, `--theme-radius-*`, buttons — never rebuild the flex/grid layout, since that's already handled by Elementor Pro's own CSS (e.g. `custom-pro-widget-woocommerce-cart.min.css`), which lives in the plugin (untracked here) and must never be edited directly. Square buttons and a `--theme-white-smoke` / `--theme-radius-m` panel for order-summary/totals sections carry through from the product grid styling for visual consistency; Select2 country/state dropdowns on checkout are re-skinned to match the plain text inputs.
+Two gotchas hit while building the Cart/Checkout overrides (2026-07-24), worth checking for on any future Elementor Pro WooCommerce widget work:
+- **Combined column classes, not parent/child**: `.e-cart__column`/`.e-checkout__column` and their `-start`/`-end` variant are two classes on the *same* div (`class="e-cart__column e-cart__column-start"`), not nested elements. Write them as one compound selector (`.e-cart__column-start { ... }`) — never `.e-cart__column { .e-cart__column-start { ... } }`, which SCSS turns into a descendant-combinator selector that matches nothing (silently killing every rule nested inside it — this shipped once in `_cart.scss` and made the whole cart page unstyled until caught).
+- **Elementor Pro's own defaults can be id-scoped**: some widget sub-parts ship default CSS scoped with a real DOM id present in the markup (e.g. checkout fields via `.woocommerce #customer_details .form-row .input-text`). No selector built only from classes — however deeply nested — beats an id-based selector on specificity. Project convention: don't mirror the id into our own selector to win the specificity fight; add `!important` on just the conflicting properties instead (explicit user preference, not just a technical default).
+
+Pattern followed for all of these (same as the product-add-to-cart widget): scope every rule to the widget's own wrapper class, skin only — fonts, colors, borders, `--theme-radius-*`, buttons — never rebuild the flex/grid layout, since that's already handled by Elementor Pro's own CSS (e.g. `custom-pro-widget-woocommerce-cart.min.css`), which lives in the plugin (untracked here) and must never be edited directly. Square buttons and a `--theme-white-smoke` / `--theme-radius-m` panel for order-summary/totals/gallery sections carry through from the product grid styling for visual consistency; Select2 country/state dropdowns on checkout are re-skinned to match the plain text inputs.
 
 ## PrestaShop migration
 

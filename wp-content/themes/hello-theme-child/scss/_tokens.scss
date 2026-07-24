@@ -1,0 +1,36 @@
+@use "variables" as *;
+
+// ─── Design Tokens ────────────────────────────────────────────────────────────
+
+:root {
+  --theme-primary:   #{$primary};
+  --theme-secondary: #{$secondary};
+  --theme-text:      #{$text};
+  --theme-accent:    #{$accent};
+  --theme-black:     #{$black};
+  --theme-white:     #{$white};
+  --theme-font:      #{$font};
+
+  --theme-black-40: #{$black-40};
+  --theme-black-60: #{$black-60};
+  --theme-black-80: #{$black-80};
+
+  --theme-gray-dark:      #{$gray-dark};
+  --theme-gray-medium:    #{$gray-medium};
+  --theme-gray-light:     #{$gray-light};
+  --theme-gray-pale:      #{$gray-pale};
+  --theme-white-smoke:    #{$white-smoke};
+  --theme-alabaster-gray: #{$alabaster-gray};
+  --theme-bright-green:   #{$bright-green};
+  --theme-muted-red:      #{$muted-red};
+
+  --theme-radius-s:  #{$radius-s};
+  --theme-radius-m:  #{$radius-m};
+  --theme-radius-l:  #{$radius-l};
+  --theme-radius-xl: #{$radius-xl};
+
+  --e-global-color-primary:   #{$primary};
+  --e-global-color-secondary: #{$secondary};
+  --e-global-color-text:      #{$text};
+  --e-global-color-accent:    #{$accent};
+}

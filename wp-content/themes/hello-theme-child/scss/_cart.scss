@@ -1,0 +1,314 @@
+@use "variables" as *;
+
+// ─── WooCommerce — Cart (Elementor Pro widget "woocommerce-cart.default") ─────
+// Markup verificato dall'HTML reale del widget: wrapper
+// .elementor-widget-woocommerce-cart > .woocommerce > .e-cart__container >
+// .e-cart__column, con due colonne (.e-cart__column-start = form carrello,
+// contenente il pannello .e-shop-table.e-cart-section con tabella prodotti +
+// coupon; .e-cart__column-end = pannello .e-cart-totals.e-cart-section con
+// .cart-collaterals .cart_totals). Background/radius del pannello applicati
+// sui wrapper .e-shop-table/.e-cart-totals (non più su .cart_totals
+// direttamente), per coprire l'intera area inclusi eventuali margini interni
+// di Elementor. Selettori scoped al wrapper del widget per non impattare
+// eventuali markup WooCommerce "classici" altrove.
+
+.elementor-widget-woocommerce-cart {
+  .woocommerce-notices-wrapper .woocommerce-error,
+  .woocommerce-notices-wrapper .woocommerce-message,
+  .woocommerce-notices-wrapper .woocommerce-info {
+    font-family: var(--theme-font);
+    border-top-color: var(--theme-primary);
+
+    .button {
+      background-color: var(--theme-primary);
+      border-radius: 0;
+    }
+  }
+
+  // .e-cart__column e .e-cart__column-start/-end sono classi combinate sullo
+  // stesso div (class="e-cart__column e-cart__column-start"), non
+  // genitore/figlio — selettori composti, non annidati come discendenti.
+  .e-cart__column-start {
+    form.woocommerce-cart-form {
+      .e-shop-table.e-cart-section {
+        background-color: var(--theme-white-smoke);
+        border-radius: var(--theme-radius-m);
+
+        // ── Tabella prodotti ─────────────────────────────────────────────────
+        table.woocommerce-cart-form__contents {
+          width: 100%;
+          border-collapse: collapse;
+
+          th {
+            padding: 0.9375rem 0.625rem;
+            font-family: var(--theme-font);
+            font-weight: 600;
+            font-size: 0.8125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--theme-gray-medium);
+            text-align: left;
+            border-bottom: 1px solid var(--theme-gray-pale);
+          }
+
+          td {
+            padding: 0.9375rem 0.625rem;
+            font-family: var(--theme-font);
+            color: var(--theme-text);
+            border-bottom: 1px solid var(--theme-gray-pale);
+            vertical-align: middle;
+          }
+
+          td.product-remove {
+            a.remove {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              width: 1.75rem;
+              height: 1.75rem;
+              color: var(--theme-gray-medium) !important;
+              background: transparent;
+              border: 1px solid var(--theme-gray-light);
+              border-radius: 50%;
+              font-size: 1rem;
+              line-height: 1;
+              transition: color $anim-fast $ease-out, border-color $anim-fast $ease-out;
+
+              &:hover {
+                color: var(--theme-white) !important;
+                background: var(--theme-accent);
+                border-color: var(--theme-accent);
+              }
+            }
+          }
+
+          td.product-thumbnail {
+            width: 5.5rem;
+
+            a {
+              display: block;
+              width: 4.5rem;
+              height: 4.5rem;
+              background: var(--theme-white-smoke);
+              border-radius: var(--theme-radius-s);
+              overflow: hidden;
+            }
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+              padding: 0.375rem;
+            }
+          }
+
+          td.product-name a {
+            font-weight: 600;
+            color: var(--theme-text);
+
+            &:hover {
+              color: var(--theme-primary);
+            }
+          }
+
+          td.product-price,
+          td.product-subtotal {
+            font-weight: 600;
+            white-space: nowrap;
+          }
+
+          td.product-quantity .quantity .qty {
+            width: 4rem;
+            padding: 0.625rem 0.5rem;
+            font-family: var(--theme-font);
+            text-align: center;
+            background-color: var(--theme-white);
+            border: 1px solid var(--theme-black);
+            border-radius: 0;
+          }
+
+          tr.actions td {
+            border-bottom: none;
+            padding-top: 1.25rem;
+
+            button[name="update_cart"] {
+              padding: 0.75rem 1.5rem;
+              font-family: var(--theme-font);
+              font-weight: 500;
+              font-size: 0.9rem;
+              color: var(--theme-text) !important;
+              background-color: transparent;
+              border: 1px solid var(--theme-black);
+              border-radius: 0;
+              transition: background-color $anim-fast $ease-out, color $anim-fast $ease-out;
+
+              &:hover:not(:disabled) {
+                color: var(--theme-white) !important;
+                background-color: var(--theme-black);
+              }
+
+              &:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // ── Coupon ────────────────────────────────────────────────────────────────
+    .coupon {
+      display: flex;
+      gap: 0.625rem;
+      margin-top: 1.25rem;
+      padding: 0;
+      border: none;
+
+      .input-text {
+        flex: 1;
+        max-width: 16rem;
+        padding: 0.75rem 0.9375rem;
+        font-family: var(--theme-font);
+        background-color: var(--theme-white);
+        border: 1px solid var(--theme-gray-light);
+        border-radius: 0;
+      }
+
+      .e-apply-coupon {
+        padding: 0.75rem 1.5rem;
+        font-family: var(--theme-font);
+        font-weight: 500;
+        color: var(--theme-text) !important;
+        background-color: transparent;
+        border: 1px solid var(--theme-black);
+        border-radius: 0;
+        transition: background-color $anim-fast $ease-out, color $anim-fast $ease-out;
+
+        &:hover {
+          color: var(--theme-white) !important;
+          background-color: var(--theme-black);
+        }
+      }
+    }
+  }
+
+  .e-cart__column-end {
+    // ── Riepilogo totali (colonna destra) ───────────────────────────────────────
+    .e-cart-totals.e-cart-section {
+      background-color: var(--theme-white-smoke);
+      border-radius: var(--theme-radius-m);
+
+      .cart-collaterals .cart_totals {
+        padding: 1.5rem;
+
+        h2 {
+          margin: 0 0 1rem;
+          font-family: var(--theme-font);
+          font-weight: 600;
+          font-size: 1.125rem;
+          color: var(--theme-text);
+        }
+
+        table.shop_table {
+          width: 100%;
+          border-collapse: collapse;
+
+          th,
+          td {
+            padding: 0.625rem 0;
+            font-family: var(--theme-font);
+            font-size: 0.9rem;
+            color: var(--theme-text);
+            border-bottom: 1px solid var(--theme-gray-light);
+            text-align: left;
+          }
+
+          th {
+            font-weight: 400;
+          }
+
+          td {
+            text-align: right;
+          }
+
+          tr.order-total {
+            th,
+            td {
+              padding-top: 0.9375rem;
+              font-weight: 600;
+              font-size: 1.0625rem;
+              border-bottom: none;
+            }
+          }
+        }
+
+        .wc-proceed-to-checkout {
+          margin-top: 1.25rem;
+
+          .checkout-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.9375rem 1.5rem;
+            font-family: var(--theme-font);
+            font-weight: 500;
+            font-size: 1rem;
+            text-align: center;
+            color: var(--theme-white) !important;
+            background-color: var(--theme-primary);
+            border: none;
+            border-radius: 0;
+            transition: background-color $anim-fast $ease-out;
+
+            &:hover {
+              background-color: var(--theme-black);
+              color: var(--theme-white) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ── Responsive: tabella prodotti impilata sotto ~768px ─────────────────────
+
+  @media (max-width: 767px) {
+    table.woocommerce-cart-form__contents {
+      thead {
+        display: none;
+      }
+
+      tr.cart_item {
+        display: block;
+        padding: 0.9375rem 0;
+        border-bottom: 1px solid var(--theme-gray-pale);
+      }
+
+      tr.cart_item td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.3125rem 0;
+        border-bottom: none;
+
+        &[data-title]::before {
+          content: attr(data-title);
+          font-weight: 600;
+          color: var(--theme-gray-medium);
+          margin-right: 0.625rem;
+        }
+      }
+
+      td.product-remove,
+      td.product-thumbnail {
+        justify-content: flex-start;
+      }
+
+      tr.actions td {
+        justify-content: flex-end;
+      }
+    }
+  }
+}

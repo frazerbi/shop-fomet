@@ -1,0 +1,66 @@
+@use "variables" as *;
+
+// ─── Animazioni ───────────────────────────────────────────────────────────────
+// Keyframes e classi utility (da fomet.it), applicabili via "CSS Classes" di
+// Elementor su qualunque widget. .will-animate/.is-visible richiede una riga
+// di JS che aggiunga .is-visible all'ingresso in viewport (IntersectionObserver);
+// finché non c'è, non usare .will-animate da solo o l'elemento resta invisibile.
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in       { animation: fadeIn $anim-base $ease-out forwards; }
+.animate-fade-in-up    { animation: fadeInUp $anim-base $ease-out forwards; }
+.animate-fade-in-down  { animation: fadeInDown $anim-base $ease-out forwards; }
+.animate-slide-in-left { animation: slideInLeft $anim-base $ease-out forwards; }
+.animate-slide-in-right{ animation: slideInRight $anim-base $ease-out forwards; }
+.animate-scale-in      { animation: scaleIn $anim-base $ease-out forwards; }
+
+.anim-fast { animation-duration: $anim-fast !important; }
+.anim-slow { animation-duration: $anim-slow !important; }
+
+.will-animate {
+  opacity: 0;
+  &.is-visible {
+    animation: fadeInUp $anim-base $ease-out forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .will-animate {
+    opacity: 1;
+    &.is-visible { animation: none; }
+  }
+}

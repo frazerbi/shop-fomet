@@ -1,0 +1,100 @@
+// ─── Button Widget ────────────────────────────────────────────────────────────
+//
+//   (default)          → bottone solido primario
+//   btn-outlined       → bordo primario, sfondo trasparente
+//   btn-outlined-white → bordo bianco, sfondo trasparente (su sfondi scuri)
+
+.elementor-widget-button {
+  a.elementor-button.elementor-button-link {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    padding: 0.46875rem 0.9375rem;
+    background: var(--theme-primary);
+    color: var(--theme-white);
+    border: none !important;
+    transition: background 0.2s ease, color 0.2s ease !important;
+
+    &:hover {
+      background: var(--theme-black) !important;
+    }
+  }
+
+  &.btn-outlined {
+    .elementor-button {
+      background-color: transparent !important;
+      color: var(--theme-primary) !important;
+      border: 2px solid var(--theme-primary) !important;
+      padding: 10px 30px !important;
+
+      &:hover {
+        background-color: var(--theme-primary) !important;
+        color: var(--theme-white) !important;
+      }
+    }
+  }
+
+  &.btn-outlined-white {
+    .elementor-button {
+      background-color: transparent !important;
+      color: var(--theme-white) !important;
+      border: 2px solid var(--theme-white) !important;
+      padding: 10px 30px !important;
+
+      &:hover {
+        background-color: var(--theme-white) !important;
+        color: var(--theme-primary) !important;
+      }
+    }
+  }
+}
+
+// ─── Arrow CTA ────────────────────────────────────────────────────────────────
+// Link con freccia animata all'hover (da fomet.it). Classe libera, applicabile
+// via "CSS Classes" di Elementor a un Text/Icon Link — non tocca lo stile dei
+// bottoni sopra (che restano squadrati, radius: 0, per scelta già in uso qui).
+
+.btn-arrow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  text-decoration: none;
+  color: inherit;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    position: relative;
+    left: 0;
+    transition: left 0.3s ease-in-out;
+  }
+
+  &::before {
+    order: 2;
+    width: 3.125rem;
+    height: 1px;
+    background-color: currentColor;
+  }
+
+  &::after {
+    order: 3;
+    width: 0.9375rem;
+    height: 0.9375rem;
+    margin-left: -1.75rem;
+    border-bottom: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: rotate(-45deg);
+  }
+
+  &:hover,
+  &:focus {
+    &::before,
+    &::after {
+      left: 0.625rem;
+    }
+  }
+}

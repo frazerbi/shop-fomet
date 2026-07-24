@@ -1,0 +1,33 @@
+// ─── Spacing ──────────────────────────────────────────────────────────────────
+
+.elementor {
+  > section > .e-con-inner {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+
+    @media (min-width: 768px) {
+      padding-top: 3.75rem;
+      padding-bottom: 3.75rem;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+
+    @media (min-width: 1024px) {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+
+    @media (min-width: 1440px) {
+      padding-left: 3.75rem;
+      padding-right: 3.75rem;
+    }
+  }
+
+  .elementor-element {
+    --widgets-spacing: 0;
+    --widgets-spacing-row: 0;
+    --widgets-spacing-column: 0;
+  }
+}

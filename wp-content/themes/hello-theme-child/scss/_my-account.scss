@@ -1,0 +1,92 @@
+@use "variables" as *;
+
+// ─── WooCommerce — My Account (Elementor Pro widget "woocommerce-my-account") ─
+// Markup verificato dall'HTML reale del widget per il tab "Bacheca": wrapper
+// .elementor-widget-woocommerce-my-account (modificatore e-my-account-tabs-
+// vertical = layout a tab verticali, gestito dal CSS del widget stesso — qui
+// non si tocca il layout, solo lo skin di nav e contenuto). Le altre tab
+// (Ordini, Downloads, Indirizzi, Dettagli Account) condividono la stessa nav
+// ma renderizzano contenuti diversi in .woocommerce-MyAccount-content — non
+// ancora verificati con HTML reale, quindi non stilizzati qui.
+
+.elementor-widget-woocommerce-my-account {
+  .woocommerce-notices-wrapper .woocommerce-error,
+  .woocommerce-notices-wrapper .woocommerce-message,
+  .woocommerce-notices-wrapper .woocommerce-info {
+    font-family: var(--theme-font);
+    border-top-color: var(--theme-primary);
+
+    .button {
+      background-color: var(--theme-primary);
+      border-radius: 0;
+    }
+  }
+
+  // ── Nav (tab verticali) ──────────────────────────────────────────────────
+
+  .woocommerce-MyAccount-navigation {
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li.woocommerce-MyAccount-navigation-link {
+      a {
+        display: block;
+        padding: 0.75rem 1.125rem;
+        font-family: var(--theme-font);
+        font-weight: 500;
+        font-size: 0.9375rem;
+        color: var(--theme-text);
+        border-left: 3px solid transparent;
+        transition: color $anim-fast $ease-out, border-color $anim-fast $ease-out, background-color $anim-fast $ease-out;
+
+        &:hover {
+          color: var(--theme-primary);
+          background-color: var(--theme-white-smoke);
+        }
+      }
+
+      &.is-active a {
+        font-weight: 600;
+        color: var(--theme-primary);
+        background-color: var(--theme-white-smoke);
+        border-left-color: var(--theme-primary);
+      }
+
+      &.woocommerce-MyAccount-navigation-link--customer-logout {
+        margin-top: 0.625rem;
+        border-top: 1px solid var(--theme-gray-pale);
+
+        a {
+          color: var(--theme-gray-medium);
+        }
+      }
+    }
+  }
+
+  // ── Contenuto ────────────────────────────────────────────────────────────
+
+  .woocommerce-MyAccount-content {
+    font-family: var(--theme-font);
+    color: var(--theme-text);
+
+    p {
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--theme-primary);
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--theme-black);
+      }
+    }
+
+    strong {
+      font-weight: 600;
+    }
+  }
+}
