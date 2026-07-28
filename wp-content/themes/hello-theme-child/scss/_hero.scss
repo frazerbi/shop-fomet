@@ -1,0 +1,19 @@
+@use "variables" as *;
+
+// ─── Hero overlay (pagine interne) ────────────────────────────────────────────
+// Assegnare la classe .hero-overlay alla sezione/container Elementor (campo
+// "CSS Classes") che ha un'immagine di sfondo, per applicare un gradiente
+// scuro sopra l'overlay nativo di Elementor. Il Background Overlay dei
+// Container Elementor è renderizzato come pseudo-elemento ::before sullo
+// stesso elemento (non un div figlio separato come nelle Section classiche)
+// — va quindi targettizzato ::before, mai l'elemento stesso, altrimenti si
+// sovrascriverebbe il suo background-image. L'overlay nativo ha di norma
+// opacity 0.5: qui forzata a 1 perché la dissolvenza è già nel gradiente
+// stesso. !important necessario per battere il CSS generato da Elementor
+// per quel singolo elemento (stesso pattern di scss/_product-single.scss
+// per i conflitti di specificity con Elementor).
+
+.hero-overlay::before {
+  background: linear-gradient(0deg, #000000b3, #0000) !important;
+  opacity: 1 !important;
+}

@@ -4,7 +4,7 @@ Theme URI: https://github.com/elementor/hello-theme/
 Description: Hello Elementor Child is a child theme of Hello Elementor, created by Elementor team
 Author: Francesco Zerbinato
 Template: hello-elementor
-Version: 1.0.15
+Version: 1.0.1631
 Text Domain: hello-elementor-child
 License: GNU General Public License v3 or later.
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -28,6 +28,8 @@ Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, fe
 @use "scss/animations";
 @use "scss/product-card";
 @use "scss/product-category-badges";
+@use "scss/hero";
+@use "scss/image";
 @use "scss/product-single";
 @use "scss/cart";
 @use "scss/menu-cart";

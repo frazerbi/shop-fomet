@@ -84,10 +84,19 @@ body,
   }
 
   // custom classes for typography
-  .title-footer {
+  .title-footer > * {
     text-transform: uppercase;
-    margin-bottom: var(--wp--preset--spacing--40);
-    color: var(--wp--preset--color--gray-medium);
+    margin-bottom: 1rem;
+    color: var(--e-global-color-gray_medium);
     font-weight: 300;
+  }
+  .link-footer a {
+    color: var(--e-global-color-text);
+    line-height: 20px;
+    margin-bottom: 1rem;
+    display: block;
+    &:hover {
+      color: var(--e-global-color-gray_medium);
+    }
   }
 }

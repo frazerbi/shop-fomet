@@ -33,3 +33,43 @@
   border-radius: 0 !important;
   padding: 10px 30px !important;
 }
+
+// Freccia animata (linea + punta) dopo il testo, via ::before/::after su un
+// contenitore flex — order:2/3 li piazza dopo il contenuto invece che prima
+// (::before/::after sono per definizione primo/ultimo figlio nel DOM).
+// L'host deve avere display: inline-flex/flex + align-items: center.
+@mixin arrow-decoration {
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    position: relative;
+    left: 0;
+    transition: left 0.3s ease-in-out;
+  }
+
+  &::before {
+    order: 2;
+    width: 3.125rem;
+    height: 1px;
+    background-color: currentColor;
+  }
+
+  &::after {
+    order: 3;
+    width: 0.9375rem;
+    height: 0.9375rem;
+    margin-left: -1.75rem;
+    border-bottom: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: rotate(-45deg);
+  }
+
+  &:hover,
+  &:focus {
+    &::before,
+    &::after {
+      left: 0.625rem;
+    }
+  }
+}

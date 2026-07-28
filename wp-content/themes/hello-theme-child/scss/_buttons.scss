@@ -1,33 +1,60 @@
+@use "mixins" as *;
+
 // ─── Button Widget ────────────────────────────────────────────────────────────
+// Le 3 varianti condividono radius (--theme-radius-m), padding (.5rem 1.8rem),
+// bordo 1px, tipografia inherit, transizione e freccia animata (arrow-decoration,
+// omologate 2026-07-28); cambiano solo i colori. Non tocca i bottoni WooCommerce
+// (cart/checkout/my-account/menu-cart/add-to-cart), che restano squadrati per
+// scelta separata — vedi CLAUDE.md.
 //
 //   (default)          → bottone solido primario
 //   btn-outlined       → bordo primario, sfondo trasparente
 //   btn-outlined-white → bordo bianco, sfondo trasparente (su sfondi scuri)
+//   btn-outlined-gray  → bordo grigio scuro, sfondo trasparente
 
 .elementor-widget-button {
   a.elementor-button.elementor-button-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
     font-family: inherit;
     font-size: inherit;
     font-weight: inherit;
     letter-spacing: inherit;
     line-height: inherit;
-    padding: 0.46875rem 0.9375rem;
+    padding: .5rem 1.8rem;
     background: var(--theme-primary);
     color: var(--theme-white);
-    border: none !important;
-    transition: background 0.2s ease, color 0.2s ease !important;
+    transition: background .2s ease, color .2s ease !important;
+    border: 1px solid var(--e-global-color-primary);
+    border-radius: var(--theme-radius-m);
+
+    @include arrow-decoration;
 
     &:hover {
       background: var(--theme-black) !important;
+      border-color: var(--theme-black) !important;
     }
   }
 
   &.btn-outlined {
     .elementor-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+      padding: .5rem 1.8rem !important;
       background-color: transparent !important;
       color: var(--theme-primary) !important;
-      border: 2px solid var(--theme-primary) !important;
-      padding: 10px 30px !important;
+      border: 1px solid var(--theme-primary) !important;
+      border-radius: var(--theme-radius-m) !important;
+      transition: background-color .2s ease, color .2s ease !important;
+
+      @include arrow-decoration;
 
       &:hover {
         background-color: var(--theme-primary) !important;
@@ -38,14 +65,52 @@
 
   &.btn-outlined-white {
     .elementor-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+      padding: .5rem 1.8rem !important;
       background-color: transparent !important;
       color: var(--theme-white) !important;
-      border: 2px solid var(--theme-white) !important;
-      padding: 10px 30px !important;
+      border: 1px solid var(--theme-white) !important;
+      border-radius: var(--theme-radius-m) !important;
+      transition: background-color .2s ease, color .2s ease !important;
+
+      @include arrow-decoration;
 
       &:hover {
-        background-color: var(--theme-white) !important;
-        color: var(--theme-primary) !important;
+        background-color: var(--theme-bright-green) !important;
+        color: var(--theme-white) !important;
+      }
+    }
+  }
+
+  &.btn-outlined-gray {
+    .elementor-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+      padding: .5rem 1.8rem !important;
+      background-color: transparent !important;
+      color: var(--theme-gray-dark) !important;
+      border: 1px solid var(--theme-gray-dark) !important;
+      border-radius: var(--theme-radius-m) !important;
+      transition: background-color .2s ease, color .2s ease !important;
+
+      @include arrow-decoration;
+
+      &:hover {
+        background-color: var(--theme-gray-dark) !important;
+        color: var(--theme-white) !important;
       }
     }
   }
@@ -53,8 +118,9 @@
 
 // ─── Arrow CTA ────────────────────────────────────────────────────────────────
 // Link con freccia animata all'hover (da fomet.it). Classe libera, applicabile
-// via "CSS Classes" di Elementor a un Text/Icon Link — non tocca lo stile dei
-// bottoni sopra (che restano squadrati, radius: 0, per scelta già in uso qui).
+// via "CSS Classes" di Elementor a un Text/Icon Link — stessa animazione
+// (mixin arrow-decoration, scss/_mixins.scss) usata di default sul bottone
+// sopra; qui serve per applicarla a un elemento che non è un Button widget.
 
 .btn-arrow {
   position: relative;
@@ -64,37 +130,5 @@
   text-decoration: none;
   color: inherit;
 
-  &::before,
-  &::after {
-    content: "";
-    display: block;
-    position: relative;
-    left: 0;
-    transition: left 0.3s ease-in-out;
-  }
-
-  &::before {
-    order: 2;
-    width: 3.125rem;
-    height: 1px;
-    background-color: currentColor;
-  }
-
-  &::after {
-    order: 3;
-    width: 0.9375rem;
-    height: 0.9375rem;
-    margin-left: -1.75rem;
-    border-bottom: 1px solid currentColor;
-    border-right: 1px solid currentColor;
-    transform: rotate(-45deg);
-  }
-
-  &:hover,
-  &:focus {
-    &::before,
-    &::after {
-      left: 0.625rem;
-    }
-  }
+  @include arrow-decoration;
 }
