@@ -73,7 +73,7 @@
     color: var(--theme-text);
 
     p {
-      line-height: 1.6;
+      line-height: var(--font-lineheight-extra-loose);
     }
 
     a {

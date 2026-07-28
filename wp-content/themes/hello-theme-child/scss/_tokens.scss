@@ -29,6 +29,11 @@
   --theme-radius-l:  #{$radius-l};
   --theme-radius-xl: #{$radius-xl};
 
+  --font-lineheight-tight:       #{$lineheight-tight};
+  --font-lineheight-normal:      #{$lineheight-normal};
+  --font-lineheight-loose:       #{$lineheight-loose};
+  --font-lineheight-extra-loose: #{$lineheight-extra-loose};
+
   --e-global-color-primary:   #{$primary};
   --e-global-color-secondary: #{$secondary};
   --e-global-color-text:      #{$text};

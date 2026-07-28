@@ -51,7 +51,7 @@
     font-family: var(--theme-font);
     font-size: 0.5rem;
     font-weight: 600;
-    line-height: 1.4;
+    line-height: var(--font-lineheight-normal);
   }
 
   .woocommerce-loop-product__title {
@@ -60,7 +60,7 @@
     font-family: var(--theme-font);
     font-size: 0.625rem;
     font-weight: 600;
-    line-height: 1.3;
+    line-height: var(--font-lineheight-loose);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -116,7 +116,7 @@
     font-family: var(--theme-font);
     font-weight: 500;
     font-size: 0.95rem;
-    line-height: 1.4;
+    line-height: var(--font-lineheight-normal);
     text-align: center;
     color: var(--theme-white) !important;
     background-color: var(--theme-primary) !important;

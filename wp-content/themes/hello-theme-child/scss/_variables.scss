@@ -32,6 +32,14 @@ $radius-m:  1.5rem;
 $radius-l:  2.25rem;
 $radius-xl: 3.25rem;
 
+// Line-height scale (fonte: fomet.it/ficus — valori unitless, quindi nessuna
+// conversione ×0.625 necessaria: sono ratio relativi al font-size dell'elemento,
+// non lunghezze in rem, e restano validi indipendentemente dalla root font-size)
+$lineheight-tight:       1.1;
+$lineheight-normal:      1.4;
+$lineheight-loose:       1.1;
+$lineheight-extra-loose: 1.2;
+
 // Timing/easing per le animazioni (vedi partial "animations")
 $anim-fast:   0.2s;
 $anim-base:   0.35s;

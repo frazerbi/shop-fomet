@@ -9,6 +9,7 @@ require_once __DIR__ . '/design-tokens.php';
 require_once __DIR__ . '/elementor-kit-sync.php';
 require_once __DIR__ . '/performance-optimization.php';
 require_once __DIR__ . '/product-category-shortcodes.php';
+require_once __DIR__ . '/iubenda.php';
 
 // ─── Enqueue ─────────────────────────────────────────────────────────────────
 
