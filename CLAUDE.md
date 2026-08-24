@@ -77,6 +77,8 @@ npm run build
 | `performance-optimization.php` | Generic WordPress/Elementor perf tweaks (disables Gutenberg, emoji, oEmbed, XML-RPC, comments, cleans `<head>`) |
 | `product-category-shortcodes.php` | `[product_parent_category]` / `[product_child_category]` shortcodes — resolve the current Loop item's `product_cat` term(s) (via `get_the_ID()`, so no params needed inside an Elementor Loop Grid item) and print a linked badge. Parent walks up `get_ancestors()` to the top-level term if only a child term is directly assigned; child shortcode prints nothing if the product only has a top-level category. Styling lives in `scss/_product-category-badges.scss`; positioning inside the Loop Grid template is done by hand in Elementor, not by this code. |
 | `iubenda.php` | Iubenda Cookie Solution integration (cookie consent banner). `wp_head` prints `_iub.csConfiguration`/`csLangConfiguration` + the account's `cs.iubenda.com/sync/<siteId>.js`, `gpp/stub.js`, `iubenda_cs.js`; `wp_footer` prints the standard onload-deferred loader for `iubenda.js` (needed for any in-page popup embed links, see "Iubenda cookie/privacy integration" below). Required via `functions.php`. |
+| `woocommerce-shipping.php` | Custom WooCommerce shipping method `child_weight_shipping` ("Spese di spedizione a peso") — weight-tier rate tables ported from the old PrestaShop store. `child_shipping_rate_tables()` is the single source of truth for the rates (filterable via `child_shipping_rate_tables`); the class only sums the package weight, picks the tier and calls `add_rate()`. Geographic matching is left entirely to WooCommerce's native Shipping Zones. Shipping VAT is forced to the **standard 22%** rate (`WC_Tax::get_shipping_tax_rates('')`) rather than inherited from the 4% products. Required via `functions.php`. |
+| `woocommerce-shipping-zones.php` | One-shot idempotent provisioning of the two Shipping Zones + their methods (weight method with the right listino, plus native `local_pickup` at 0). Never runs on its own — trigger with `wp eval 'child_sync_shipping_zones();'` or `?child_sync_shipping=1` on a wp-admin URL. Zones already present (matched by name) are skipped, not overwritten. |
 | `theme.json` | Block editor / Global Styles config: color palette, gradients, typography (font sizes, self-hosted `Sora` font faces via `assets/fonts/`), spacing scale, layout widths, and default block/element style resets |
 | `assets/fonts/` | Self-hosted `Sora` variable font files (`.woff2`, latin + latin-ext subsets), loaded via `theme.json` `fontFace` |
 | `assets/icons/` | SVG icon set (social, UI, logos) used by templates/widgets |
@@ -148,6 +150,20 @@ When adding any in-page link to an Iubenda-hosted document (privacy policy, cook
 - `iub-body-embed` is load-bearing, not cosmetic — confirmed by testing (2026-07-28): with only `iubenda-embed`, the script (`iubenda.js`, loaded fine, no console errors) still let the click navigate away instead of opening the popup. Iubenda's own "standard embedding" snippet (the one documented to open a modal) always pairs the two classes together.
 - `iubenda-noiframe` does the opposite — it forces a plain full-page navigation instead of a popup. Don't add it if a popup is wanted.
 - `iubenda-white`/`iubenda-nostyle`/`no-brand` are purely cosmetic (Iubenda's own badge styling) and can be dropped so the link inherits the theme's normal link styles instead.
+
+## Shipping (WooCommerce)
+
+Rates are ported 1:1 from the old PrestaShop store — see `backup-old-db/export/shipping.md` for the full extraction and the SQL evidence behind every number. Summary of the model:
+
+- **Weight × geographic zone only.** No distance-based calculation, no price-based tiers, no free-shipping threshold (`PS_SHIPPING_FREE_PRICE`/`FREE_WEIGHT` were both 0 on the old store), no handling fee.
+- **Two zones, not four.** PrestaShop split Italy into 4 zones (Europe / Calabria / Sicilia / Sardegna) but the last three share identical prices, so they collapse into one. **Zone order is load-bearing**: "Isole e Calabria" must sort *before* "Italia", since WooCommerce applies the first matching zone.
+- **Two methods per zone**: the weight method + native Local pickup at 0. Method order inside the zone decides which one is preselected at checkout — shipping first, pickup second. (Note: the old store only offered pickup on zone 1, i.e. not to the islands/Calabria — deliberately widened to both zones here.)
+- **Shipping VAT is 22%**, products are 4%. WooCommerce's default "shipping tax class: inherit from cart items" would wrongly apply 4%, so the method computes the tax explicitly against the standard class instead of relying on that setting.
+- **Prices in the tables are VAT-exclusive**, matching the migration CSVs' convention.
+- **Over 100 kg the old store had no rule at all** (`range_behavior=1` → carrier simply disappeared). The method makes this configurable per instance (`oltre_max`): `preventivo` (default — a 0 € "Spedizione da concordare" rate so checkout still completes), `nascondi` (exact PrestaShop behaviour), or `ultimo` (apply the last tier — heavily undercharges a pallet, avoid). Also worth noting the old tier delimiters had **coverage gaps** (1.00001–2.00002 kg and 20.00001–21.00002 kg) where no carrier was offered at all; the WooCommerce tiers were rebuilt contiguous.
+- 4 of the 39 migrated products have `weight = 0` in the PrestaShop dump — they'd silently land in the 0–1 kg tier. Fix before go-live.
+
+Not done yet: **no SCSS for the shipping rows** in cart/checkout. That markup has never rendered (no shipping method existed), so get the real HTML from the Elementor Pro Cart/Checkout widgets before styling, same rule as every other Woo widget in this repo.
 
 ## PrestaShop migration
 
