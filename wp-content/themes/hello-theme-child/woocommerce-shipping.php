@@ -198,7 +198,6 @@ function child_init_weight_shipping_method() {
 				'id'        => $this->get_rate_id(),
 				'label'     => $label,
 				'cost'      => $costo,
-				'taxes'     => $this->shipping_taxes( $costo ),
 				'package'   => $package,
 				'meta_data' => [ __( 'Peso spedizione', 'hello-elementor-child' ) => $peso . ' kg' ],
 			] );
@@ -224,19 +223,23 @@ function child_init_weight_shipping_method() {
 			return round( $peso, 3 );
 		}
 
-		/**
-		 * IVA sulla spedizione forzata su aliquota ORDINARIA (22%).
-		 * L'impostazione nativa di WooCommerce ("classe fiscale spedizione:
-		 * eredita dagli articoli") applicherebbe il 4% dei prodotti, mentre il
-		 * vecchio shop tassava la spedizione al 22% (fo_carrier.id_tax_rules_group = 1).
+		/*
+		 * IVA sulla spedizione: nessun override.
+		 *
+		 * Il trasporto addebitato dal venditore è una prestazione accessoria
+		 * (art. 12 DPR 633/72): non ha un'aliquota propria, segue quella del
+		 * bene principale. Il vecchio shop la tassava sempre al 22%
+		 * (fo_carrier.id_tax_rules_group = 1) mentre 34 prodotti su 39 sono al
+		 * 4% — era un errore, non una scelta, e non va replicato.
+		 *
+		 * Lasciando che sia add_rate() a calcolare l'imposta, WooCommerce
+		 * applica l'impostazione "classe fiscale spedizione" di
+		 * WooCommerce → Impostazioni → Tasse, che DEVE restare sul default
+		 * "basata sugli articoli del carrello": in quel modo un carrello di soli
+		 * fertilizzanti paga il 4%, e uno che contiene gadget al 22% (Cappellini,
+		 * Magliette, Pluviometro, Spandiconcime) passa automaticamente al 22%.
 		 */
-		private function shipping_taxes( $costo ) {
-			if ( ! wc_tax_enabled() || $costo <= 0 ) {
-				return [];
-			}
 
-			return WC_Tax::calc_shipping_tax( $costo, WC_Tax::get_shipping_tax_rates( '' ) );
-		}
 	}
 }
 add_action( 'woocommerce_shipping_init', 'child_init_weight_shipping_method' );
