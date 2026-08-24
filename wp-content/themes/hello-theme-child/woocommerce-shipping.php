@@ -84,8 +84,9 @@ function child_init_weight_shipping_method() {
 			$this->init_form_fields();
 			$this->init_settings();
 
-			$this->title = $this->get_option( 'title' );
-			$this->enabled = $this->get_option( 'enabled', 'yes' );
+			$this->title      = $this->get_option( 'title' );
+			$this->enabled    = $this->get_option( 'enabled', 'yes' );
+			$this->tax_status = $this->get_option( 'tax_status', 'taxable' );
 
 			add_action( 'woocommerce_update_options_shipping_' . $this->id, [ $this, 'process_admin_options' ] );
 		}
@@ -103,6 +104,17 @@ function child_init_weight_shipping_method() {
 					'description' => __( 'Etichetta mostrata al cliente in carrello e checkout.', 'hello-elementor-child' ),
 					'default'     => __( 'Spedizione', 'hello-elementor-child' ),
 					'desc_tip'    => true,
+				],
+				'tax_status' => [
+					'title'       => __( 'Stato fiscale', 'hello-elementor-child' ),
+					'type'        => 'select',
+					'class'       => 'wc-enhanced-select',
+					'options'     => [
+						'taxable' => __( 'Tassabile', 'hello-elementor-child' ),
+						'none'    => _x( 'Nessuno', 'Tax status', 'hello-elementor-child' ),
+					],
+					'default'     => 'taxable',
+					'description' => __( 'Quale aliquota venga poi applicata NON si decide qui: lo stabilisce WooCommerce → Impostazioni → Tasse → "Classe fiscale spedizione", che va lasciata su "basata sugli articoli del carrello" (il trasporto è prestazione accessoria, art. 12 DPR 633/72, e segue l\'aliquota della merce).', 'hello-elementor-child' ),
 				],
 				'listino' => [
 					'title'       => __( 'Listino', 'hello-elementor-child' ),

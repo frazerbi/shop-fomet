@@ -81,7 +81,7 @@ Quattro punti in cui è facile sbagliare:
 1. **"Spese di spedizione a peso" NON è "Tariffa unica".** È una voce a sé nel menu
    *Aggiungi metodo di spedizione*, accanto a Tariffa unica / Spedizione gratuita /
    Ritiro in sede. La riconosci perché **non ha un campo "Costo"**: ha invece
-   *Titolo*, *Listino* e *Oltre il peso massimo*. Se usi "Tariffa unica" a costo 0,
+   *Titolo*, *Stato fiscale*, *Listino* e *Oltre il peso massimo*. Se usi "Tariffa unica" a costo 0,
    il negozio spedisce gratis.
 2. **Il Listino va impostato su entrambe le istanze.** Il default è "Italia", quindi
    una zona isole lasciata al default applica le tariffe del continente.
@@ -95,6 +95,11 @@ Quattro punti in cui è facile sbagliare:
 
 *WooCommerce → Impostazioni → Tasse → Classe fiscale spedizione* deve restare sul
 default **"Classe fiscale di spedizione basata sugli articoli del carrello"**.
+
+Nel tema non c'è nessun calcolo di imposta: il metodo si limita a dichiarare
+l'imponibile, e l'IVA la calcola WooCommerce leggendo le proprie impostazioni.
+L'unica leva lato metodo è *Stato fiscale* (Tassabile / Nessuno), per istanza —
+serve a escludere del tutto la spedizione dall'imposta, non a sceglierne l'aliquota.
 
 Il trasporto addebitato dal venditore è una prestazione accessoria (art. 12 DPR
 633/72): segue l'aliquota del bene principale, non ne ha una propria. Il catalogo è

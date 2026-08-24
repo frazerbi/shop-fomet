@@ -100,6 +100,7 @@ function child_sync_shipping_zones() {
 			'woocommerce_child_weight_shipping_' . $id_peso . '_settings',
 			[
 				'title'             => 'Spedizione',
+				'tax_status'        => 'taxable',
 				'listino'           => $blueprint['listino'],
 				'oltre_max'         => 'preventivo',
 				'titolo_preventivo' => 'Spedizione da concordare — vi contatteremo',
