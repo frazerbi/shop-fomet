@@ -30,7 +30,7 @@
   color: $white !important;
   background: $primary !important;
   border: none !important;
-  border-radius: 0 !important;
+  border-radius: var(--theme-radius-xl) !important;
   padding: 10px 30px !important;
 }
 
@@ -190,7 +190,7 @@
       gap: 0.5rem;
       background-color: var(--theme-white);
       border: 1px solid var(--theme-gray-light);
-      border-radius: 0;
+      border-radius: var(--theme-radius-s);
       padding: 0.625rem 0.75rem;
       transition: border-color $anim-fast $ease-out;
 
@@ -272,7 +272,7 @@
     color: var(--theme-text) !important;
     background-color: var(--theme-white) !important;
     border: 1px solid var(--theme-gray-light) !important;
-    border-radius: 0 !important;
+    border-radius: var(--theme-radius-s) !important;
     transition: border-color $anim-fast $ease-out, border-width $anim-fast $ease-out;
 
     &::placeholder {
@@ -316,7 +316,7 @@
     color: var(--theme-white) !important;
     background-color: var(--theme-primary-dark) !important;
     border: none !important;
-    border-radius: 0 !important;
+    border-radius: var(--theme-radius-xl) !important;
     transition: background-color $anim-fast $ease-out;
 
     &:hover,

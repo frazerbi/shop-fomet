@@ -38,7 +38,7 @@
 
     .button {
       background-color: var(--theme-primary-dark);
-      border-radius: 0;
+      border-radius: var(--theme-radius-xl);
     }
   }
 
@@ -247,7 +247,7 @@
       text-align: left;
       color: var(--theme-white);
       background-color: var(--theme-gray-medium);
-      border-radius: 0;
+      border-radius: var(--theme-radius-s);
 
       &.short,
       &.bad {

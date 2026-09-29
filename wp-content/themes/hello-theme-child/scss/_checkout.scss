@@ -26,7 +26,7 @@
 
     .button {
       background-color: var(--theme-primary-dark);
-      border-radius: 0;
+      border-radius: var(--theme-radius-xl);
     }
   }
 
@@ -277,7 +277,7 @@
           color: var(--theme-text) !important;
           background-color: var(--theme-white) !important;
           border: 1px solid var(--theme-gray-light) !important;
-          border-radius: 0 !important;
+          border-radius: var(--theme-radius-s) !important;
           transition: border-color $anim-fast $ease-out, border-width $anim-fast $ease-out;
 
           &::placeholder {
@@ -394,7 +394,7 @@
       padding: 0 0.9375rem;
       background-color: var(--theme-white);
       border: 1px solid var(--theme-gray-light);
-      border-radius: 0;
+      border-radius: var(--theme-radius-s);
     }
 
     .select2-selection__rendered {
@@ -528,7 +528,7 @@
             font-family: var(--theme-font);
             background-color: var(--theme-white);
             border: 1px solid var(--theme-gray-light);
-            border-radius: 0;
+            border-radius: var(--theme-radius-s);
           }
         }
 
@@ -539,7 +539,7 @@
           color: var(--theme-text) !important;
           background-color: transparent;
           border: 1px solid var(--theme-black);
-          border-radius: 0;
+          border-radius: var(--theme-radius-xl);
           transition: background-color $anim-fast $ease-out, color $anim-fast $ease-out;
 
           &:hover {
@@ -730,7 +730,7 @@
             color: var(--theme-text);
             background-color: var(--theme-white);
             border: 1px solid var(--theme-gray-light);
-            border-radius: 0;
+            border-radius: var(--theme-radius-s);
           }
         }
 
@@ -783,7 +783,7 @@
             margin-top: 0.625rem;
             background-color: var(--theme-primary-dark);
             color: var(--theme-white) !important;
-            border-radius: 0;
+            border-radius: var(--theme-radius-xl);
           }
         }
       }
@@ -821,7 +821,7 @@
         color: var(--theme-white) !important;
         background-color: var(--theme-primary-dark) !important;
         border: none !important;
-        border-radius: 0 !important;
+        border-radius: var(--theme-radius-xl) !important;
         transition: background-color $anim-fast $ease-out;
         margin-top: 1.5rem !important;
 

@@ -101,7 +101,7 @@
     text-align: center;
     background-color: var(--theme-white);
     border: 1px solid var(--theme-black);
-    border-radius: 0;
+    border-radius: var(--theme-radius-s);
   }
 
   // a.add_to_cart_button = link AJAX del Loop Grid; button.single_add_to_cart_button
@@ -121,7 +121,7 @@
     color: var(--theme-white) !important;
     background-color: var(--theme-primary-dark) !important;
     border: none !important;
-    border-radius: 0 !important;
+    border-radius: var(--theme-radius-xl) !important;
     transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 
     &:hover {

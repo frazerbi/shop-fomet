@@ -1,11 +1,11 @@
 @use "mixins" as *;
 
 // ─── Button Widget ────────────────────────────────────────────────────────────
-// Le 3 varianti condividono radius (--theme-radius-m), padding (.5rem 1.8rem),
-// bordo 1px, tipografia inherit, transizione e freccia animata (arrow-decoration,
-// omologate 2026-07-28); cambiano solo i colori. Non tocca i bottoni WooCommerce
-// (cart/checkout/my-account/menu-cart/add-to-cart), che restano squadrati per
-// scelta separata — vedi CLAUDE.md.
+// Le varianti condividono radius (--theme-radius-xl → pillola a qualunque
+// altezza), padding (.5rem 1.8rem), bordo 1px, tipografia inherit, transizione
+// e freccia animata (arrow-decoration); cambiano solo i colori. Dal 2026-09-29
+// anche i bottoni WooCommerce (cart/checkout/my-account/menu-cart/add-to-cart)
+// usano --theme-radius-xl: nessun bottone del sito resta squadrato.
 //
 //   (default)          → bottone solido primario
 //   btn-outlined       → bordo primario, sfondo trasparente
@@ -27,7 +27,7 @@
     color: var(--theme-white);
     transition: background .2s ease, color .2s ease !important;
     border: 1px solid var(--theme-primary-dark);
-    border-radius: var(--theme-radius-m);
+    border-radius: var(--theme-radius-xl);
 
     @include arrow-decoration;
 
@@ -51,7 +51,7 @@
       background-color: transparent !important;
       color: var(--theme-primary-dark) !important;
       border: 1px solid var(--theme-primary-dark) !important;
-      border-radius: var(--theme-radius-m) !important;
+      border-radius: var(--theme-radius-xl) !important;
       transition: background-color .2s ease, color .2s ease !important;
 
       @include arrow-decoration;
@@ -77,7 +77,7 @@
       background-color: transparent !important;
       color: var(--theme-white) !important;
       border: 1px solid var(--theme-white) !important;
-      border-radius: var(--theme-radius-m) !important;
+      border-radius: var(--theme-radius-xl) !important;
       transition: background-color .2s ease, color .2s ease !important;
 
       @include arrow-decoration;
@@ -103,7 +103,7 @@
       background-color: transparent !important;
       color: var(--theme-gray-dark) !important;
       border: 1px solid var(--theme-gray-dark) !important;
-      border-radius: var(--theme-radius-m) !important;
+      border-radius: var(--theme-radius-xl) !important;
       transition: background-color .2s ease, color .2s ease !important;
 
       @include arrow-decoration;
