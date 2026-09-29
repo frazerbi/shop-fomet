@@ -835,3 +835,59 @@
     }
   }
 }
+
+// ─── Wallet digitali (Stripe Express Checkout) bloccati a form incompleto ────
+// Wrapper/overlay/avviso creati da assets/js/express-checkout-guard.js
+// attorno a #wc-stripe-express-checkout-element (vedi
+// woocommerce-express-checkout-guard.php). .is-active = Stripe ha reso
+// visibili i bottoni; .is-locked = mancano campi obbligatori. Il blocco vero
+// è `inert` sul contenitore: qui c'è solo il segnale visivo.
+.elementor-widget-woocommerce-checkout-page {
+  .child-express-guard {
+    &__buttons {
+      position: relative;
+    }
+
+    &__notice,
+    &__overlay {
+      display: none;
+    }
+
+    &.is-active.is-locked {
+      .child-express-guard__notice {
+        display: block;
+        margin: 1em 0 0;
+        font-family: var(--theme-font);
+        font-size: 0.875rem;
+        text-align: center;
+        color: var(--theme-gray-dark);
+      }
+
+      .child-express-guard__overlay {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        padding: 0;
+        background: transparent;
+        border: none;
+        border-radius: var(--theme-radius-xl);
+        cursor: not-allowed;
+
+        &:focus-visible {
+          outline: 2px solid var(--theme-primary);
+          outline-offset: 2px;
+        }
+      }
+
+      #wc-stripe-express-checkout-element {
+        opacity: 0.4;
+        filter: grayscale(1);
+      }
+    }
+
+    #wc-stripe-express-checkout-element {
+      transition: opacity $anim-fast $ease-out, filter $anim-fast $ease-out;
+    }
+  }
+}
