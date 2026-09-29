@@ -73,3 +73,257 @@
     }
   }
 }
+
+// Righe "Spedizione" e "IVA" della tabella totali (WooCommerce
+// ul#shipping_method + tr.tax-rate). Markup identico nel carrello
+// (.cart_totals table.shop_table) e nel checkout
+// (table.woocommerce-checkout-review-order-table), quindi la pelle vive qui e
+// viene inclusa da _cart.scss e _checkout.scss. Il calcolatore di spedizione e
+// la destinazione esistono solo nel carrello e restano in _cart.scss.
+@mixin shipping-totals-rows {
+  // Layout della tabella totali: niente table layout, ma flex riga per riga.
+  // Motivo: la riga spedizione deve occupare tutta la larghezza (le label
+  // lunghe dei metodi, es. "Ritiro presso la sede di S. Pietro di Morubio
+  // (VR)", altrimenti allargano la colonna e schiacciano tutto contro il
+  // bordo), ma in una tabella vera non si può far spanare una <td> senza
+  // colspan nel markup: `display: block` sulla sola cella la fa incapsulare in
+  // una cella anonima vincolata alla prima colonna (da cui l'effetto "stretto
+  // a sinistra" del tentativo precedente).
+  // Portando table/thead/tbody/tfoot/tr/th/td a block-flex il table formatting
+  // sparisce del tutto: ogni riga è un flex container (etichetta a sinistra,
+  // importo a destra — resa identica alla tabella), e la sola riga spedizione
+  // passa a colonna, quindi etichetta sopra e metodi sotto a piena larghezza.
+  // Come effetto collaterale il riepilogo è già a prova di mobile: non ci sono
+  // colonne condivise che si stringono sui viewport stretti.
+  display: block;
+
+  thead,
+  tbody,
+  tfoot {
+    display: block;
+    width: 100%;
+  }
+
+  // Il flex sulle <tr> è strutturale, non cosmetico: una volta che la tabella
+  // è block, le righe rimaste table-row genererebbero una tabella anonima
+  // ciascuna, perdendo l'allineamento della colonna importi. Qui però resta il
+  // minimo indispensabile (etichetta a sinistra, importo a destra); il gap e
+  // lo stacking su due righe valgono solo per la riga spedizione, sotto.
+  tr {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 100%;
+    // Il separatore sta sulla riga, non sulle celle: con space-between fra
+    // etichetta e importo resta uno spazio vuoto, e due border-bottom separati
+    // lascerebbero un buco in mezzo alla linea.
+    border-bottom: 1px solid var(--theme-gray-light);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  // L'ultima riga (Totale) e la riga spedizione — che è già un blocco unico
+  // etichetta+metodi — chiudono senza linea.
+  tr.order-total {
+    border-bottom: none;
+  }
+
+  th,
+  td {
+    border-bottom: none;
+  }
+
+  th {
+    flex: 0 0 auto;
+  }
+
+  // `min-width: fit-content` invece di 0: le celle non si stringono sotto il
+  // proprio contenuto, quindi i nomi prodotto del riepilogo checkout restano su
+  // una riga sola invece di andare a capo per far posto alla colonna importi.
+  td {
+    flex: 1 1 auto;
+    min-width: fit-content;
+  }
+
+  // La cella dell'importo non si allunga e non manda mai a capo: lo spazio
+  // residuo va tutto al nome prodotto.
+  td.product-total {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  tr.woocommerce-shipping-totals {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+
+    th {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    td {
+      width: 100%;
+      // Elementor Pro/WooCommerce limitano la larghezza delle celle del
+      // riepilogo: senza reset la <td> non arriva a fine riga anche da block.
+      max-width: unset;
+      padding-top: 0;
+      text-align: left;
+    }
+  }
+
+  ul#shipping_method {
+    margin: 0 0 0.75rem;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    width: 100%;
+
+    li {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--theme-white);
+      border: 1px solid var(--theme-gray-light);
+      border-radius: 0;
+      padding: 0.625rem 0.75rem;
+      transition: border-color $anim-fast $ease-out;
+
+      &:hover {
+        border-color: var(--theme-gray-medium);
+      }
+
+      // :has() per evidenziare il metodo selezionato; dove non supportato la
+      // riga resta semplicemente nello stato base.
+      &:has(input.shipping_method:checked) {
+        border-color: var(--theme-primary);
+        background-color: var(--theme-white);
+      }
+    }
+
+    input.shipping_method {
+      flex: none;
+      margin: 0;
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--theme-primary);
+      cursor: pointer;
+    }
+
+    label {
+      flex: 1;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin: 0;
+      font-family: var(--theme-font);
+      font-size: 0.875rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--theme-text);
+      cursor: pointer;
+
+      .woocommerce-Price-amount {
+        font-weight: 600;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  tr.tax-rate {
+    th,
+    td {
+      font-size: 0.8125rem;
+      color: var(--theme-gray-medium);
+    }
+  }
+}
+
+// Skin condiviso dei form nativi WooCommerce della pagina Mio Account (login,
+// registrazione, recupero password): sono template WooCommerce, non sotto-widget
+// Elementor, e hanno campi/bottoni identici. Le proprietà in conflitto usano
+// !important perché il CSS di default di Elementor Pro per il widget
+// woocommerce-my-account è id-scoped (.elementor-element-xxxx ...), che nessun
+// selettore di sole classi batte — convenzione di progetto, non si replica l'id.
+// Usato in _my-account.scss (#customer_login e .woocommerce-ResetPassword).
+@mixin account-form-fields {
+  label {
+    display: block;
+    margin-bottom: 0.375rem;
+    font-family: var(--theme-font);
+    font-size: 0.875rem;
+    color: var(--theme-text);
+
+    .required {
+      color: var(--theme-accent);
+    }
+  }
+
+  .input-text {
+    width: 100%;
+    padding: 0.75rem 0.9375rem !important;
+    font-family: var(--theme-font);
+    color: var(--theme-text) !important;
+    background-color: var(--theme-white) !important;
+    border: 1px solid var(--theme-gray-light) !important;
+    border-radius: 0 !important;
+    transition: border-color $anim-fast $ease-out, border-width $anim-fast $ease-out;
+
+    &::placeholder {
+      color: var(--theme-gray-medium);
+    }
+
+    &:focus {
+      outline: none;
+      border: 2px solid var(--theme-primary) !important;
+      padding: 0.6875rem 0.875rem !important;
+    }
+  }
+
+  // Campo password: WooCommerce avvolge l'input in uno .password-input con il
+  // bottone "mostra password" posizionato in absolute sopra l'input.
+  .password-input {
+    display: block;
+    width: 100%;
+
+    .show-password-input {
+      color: var(--theme-gray-medium);
+      transition: color $anim-fast $ease-out;
+
+      &:hover,
+      &.display-password {
+        color: var(--theme-primary);
+      }
+    }
+  }
+
+  button[type="submit"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.9375rem 1.5rem !important;
+    font-family: var(--theme-font);
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+    color: var(--theme-white) !important;
+    background-color: var(--theme-primary) !important;
+    border: none !important;
+    border-radius: 0 !important;
+    transition: background-color $anim-fast $ease-out;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: var(--theme-black) !important;
+      color: var(--theme-white) !important;
+    }
+  }
+}

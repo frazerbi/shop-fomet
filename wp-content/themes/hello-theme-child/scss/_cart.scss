@@ -1,4 +1,5 @@
 @use "variables" as *;
+@use "mixins" as *;
 
 // ─── WooCommerce — Cart (Elementor Pro widget "woocommerce-cart.default") ─────
 // Markup verificato dall'HTML reale del widget: wrapper
@@ -19,9 +20,29 @@
     font-family: var(--theme-font);
     border-top-color: var(--theme-primary);
 
+    // Stessa pelle del bottone solido primario del carrello
+    // (.wc-proceed-to-checkout .checkout-button): font/peso/colore del tema,
+    // squadrato, hover nero. color e font-weight con !important perché il CSS
+    // di WooCommerce/Elementor per i bottoni delle notice vince altrimenti
+    // sulla specificità (convenzione del progetto: !important sulle sole
+    // proprietà in conflitto, mai un id nel selettore).
     .button {
+      padding: 0.625rem 1.25rem;
+      font-family: var(--theme-font);
+      font-size: 0.875rem;
+      font-weight: 500 !important;
+      line-height: 1.2;
+      color: var(--theme-white) !important;
       background-color: var(--theme-primary);
+      border: 1px solid var(--theme-primary);
       border-radius: 0;
+      transition: background-color $anim-fast $ease-out, border-color $anim-fast $ease-out;
+
+      &:hover {
+        color: var(--theme-white) !important;
+        background-color: var(--theme-black);
+        border-color: var(--theme-black);
+      }
     }
   }
 
@@ -239,6 +260,141 @@
               font-weight: 600;
               font-size: 1.0625rem;
               border-bottom: none;
+            }
+          }
+
+          // ── Riga spedizione (metodi + destinazione + calcolatore) ──────────
+          // Markup reale del widget (verificato 2026-08-24): la <td> della riga
+          // .woocommerce-shipping-totals contiene ul#shipping_method con un <li>
+          // per metodo (radio + label), il paragrafo .woocommerce-shipping-destination
+          // e il form .woocommerce-shipping-calculator (paese/provincia via Select2,
+          // città e CAP come input testo). Metodi e righe IVA sono identici al
+          // checkout, quindi arrivano dal mixin condiviso; destinazione e
+          // calcolatore esistono solo qui. La <td> torna allineata a sinistra:
+          // l'allineamento a destra sopra vale per gli importi, non per un form.
+          @include shipping-totals-rows;
+
+          .woocommerce-shipping-destination {
+            margin: 0 0 0.5rem;
+            font-family: var(--theme-font);
+            font-size: 0.8125rem;
+            line-height: 1.4;
+            color: var(--theme-gray-medium);
+
+            strong {
+              color: var(--theme-text);
+              font-weight: 600;
+            }
+          }
+
+          // ── Calcolatore spedizione ────────────────────────────────────────
+          .woocommerce-shipping-calculator {
+            margin: 0;
+
+            a.shipping-calculator-button {
+              display: inline-block;
+              font-family: var(--theme-font);
+              font-size: 0.8125rem;
+              font-weight: 500;
+              color: var(--theme-primary);
+              text-decoration: underline;
+              text-underline-offset: 0.2em;
+
+              &:hover {
+                color: var(--theme-black);
+              }
+            }
+
+            .shipping-calculator-form {
+              margin-top: 0.75rem;
+              display: flex;
+              flex-direction: column;
+              gap: 0.625rem;
+
+              p.form-row {
+                margin: 0;
+                padding: 0;
+                display: block;
+              }
+
+              label {
+                display: block;
+                margin-bottom: 0.25rem;
+                font-family: var(--theme-font);
+                font-size: 0.75rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.03em;
+                color: var(--theme-gray-medium);
+
+                .required {
+                  color: var(--theme-accent);
+                }
+              }
+
+              .input-text {
+                width: 100%;
+                height: 2.5rem;
+                padding: 0 0.75rem;
+                font-family: var(--theme-font);
+                font-size: 0.875rem;
+                color: var(--theme-text);
+                background-color: var(--theme-white);
+                border: 1px solid var(--theme-gray-light);
+                border-radius: 0;
+
+                &:focus {
+                  outline: none;
+                  border-color: var(--theme-primary);
+                }
+              }
+
+              // Select2 (paese/provincia): stesso look degli input testo,
+              // coerente con il checkout.
+              .select2-container--default .select2-selection--single {
+                height: 2.5rem;
+                display: flex;
+                align-items: center;
+                padding: 0 0.75rem;
+                background-color: var(--theme-white);
+                border: 1px solid var(--theme-gray-light);
+                border-radius: 0;
+              }
+
+              .select2-selection__rendered {
+                padding: 0 !important;
+                font-family: var(--theme-font);
+                font-size: 0.875rem;
+                line-height: 1.3 !important;
+                color: var(--theme-text) !important;
+              }
+
+              .select2-selection__arrow {
+                height: 100% !important;
+                right: 0.5rem !important;
+              }
+
+              .select2-container--default.select2-container--open .select2-selection--single {
+                border-color: var(--theme-primary);
+              }
+
+              button[name="calc_shipping"] {
+                width: 100%;
+                padding: 0.6875rem 1.25rem;
+                font-family: var(--theme-font);
+                font-weight: 500;
+                font-size: 0.875rem;
+                color: var(--theme-text) !important;
+                background-color: transparent;
+                border: 1px solid var(--theme-black);
+                border-radius: 0;
+                transition: background-color $anim-fast $ease-out, color $anim-fast $ease-out;
+
+                &:hover {
+                  color: var(--theme-white) !important;
+                  background-color: var(--theme-black);
+                }
+              }
             }
           }
         }

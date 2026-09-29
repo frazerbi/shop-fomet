@@ -1,4 +1,5 @@
 @use "variables" as *;
+@use "mixins" as *;
 
 // ─── WooCommerce — My Account (Elementor Pro widget "woocommerce-my-account") ─
 // Markup verificato dall'HTML reale del widget per il tab "Bacheca": wrapper
@@ -10,16 +11,55 @@
 // ancora verificati con HTML reale, quindi non stilizzati qui.
 
 .elementor-widget-woocommerce-my-account {
-  .woocommerce-notices-wrapper .woocommerce-error,
-  .woocommerce-notices-wrapper .woocommerce-message,
-  .woocommerce-notices-wrapper .woocommerce-info {
+  // ── Avvisi ───────────────────────────────────────────────────────────────
+  // Non sempre dentro .woocommerce-notices-wrapper: la conferma "email per
+  // reimpostare la password inviata" è un .woocommerce-message stampato
+  // direttamente in .woocommerce (verificato dall'HTML reale), quindi i
+  // selettori non presuppongono il wrapper. Skin a pannello bianco con barra
+  // colorata a sinistra, come l'avviso del blocco pagamento in _checkout.scss.
+
+  .woocommerce-error,
+  .woocommerce-message,
+  .woocommerce-info {
+    margin: 0 0 1.5rem;
+    padding: 0.875rem 1rem;
     font-family: var(--theme-font);
-    border-top-color: var(--theme-primary);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--theme-gray-dark);
+    background-color: var(--theme-white);
+    border: 1px solid var(--theme-gray-light);
+    border-left: 3px solid var(--theme-primary);
+    border-radius: var(--theme-radius-s);
+
+    &::before {
+      content: none;
+    }
 
     .button {
       background-color: var(--theme-primary);
       border-radius: 0;
     }
+  }
+
+  .woocommerce-error {
+    border-left-color: var(--theme-accent);
+
+    li {
+      margin: 0;
+      list-style: none;
+    }
+  }
+
+  // Testo informativo stampato direttamente nella tab (es. istruzioni dopo
+  // l'invio dell'email di reset password), fuori da qualunque form.
+  > .e-my-account-tab > .woocommerce > p {
+    max-width: 44rem;
+    margin: 0;
+    font-family: var(--theme-font);
+    font-size: 0.9375rem;
+    line-height: var(--font-lineheight-extra-loose);
+    color: var(--theme-gray-dark);
   }
 
   // ── Nav (tab verticali) ──────────────────────────────────────────────────
@@ -63,6 +103,180 @@
           color: var(--theme-gray-medium);
         }
       }
+    }
+  }
+
+  // ── Login / Registrazione (utente non autenticato) ───────────────────────
+  // Markup nativo WooCommerce (form-login.php), non un sotto-widget Elementor:
+  // #customer_login.col2-set con .u-column1.col-1 (form login) e .u-column2
+  // .col-2 (form registrazione). Le due colonne diventano pannelli come in
+  // _checkout.scss (--theme-white-smoke + --theme-radius-m + bordo); campi e
+  // bottoni arrivano dal mixin condiviso account-form-fields.
+
+  #customer_login {
+    @include account-form-fields;
+
+    .col-1,
+    .col-2 {
+      padding: 1.5rem !important;
+      background-color: var(--theme-white-smoke) !important;
+      border-radius: var(--theme-radius-m) !important;
+      border: 1px solid var(--theme-gray-light) !important;
+    }
+
+    h2 {
+      margin: 0 0 1.25rem;
+      font-family: var(--theme-font);
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: var(--theme-text);
+      border: none;
+      padding: 0;
+    }
+
+    form.woocommerce-form {
+      font-family: var(--theme-font);
+      margin: 0;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: none;
+
+      > p {
+        margin: 0 0 1rem;
+      }
+
+      p:not(.form-row) {
+        font-size: 0.875rem;
+        color: var(--theme-gray-dark);
+        line-height: var(--font-lineheight-extra-loose);
+      }
+    }
+
+    // Riga "Ricordami" + bottone di invio: la checkbox e il bottone stanno
+    // nello stesso <p class="form-row">, quindi si separano verticalmente.
+    .woocommerce-form-login__rememberme {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+      color: var(--theme-text);
+      cursor: pointer;
+
+      .woocommerce-form__input-checkbox {
+        width: 1rem;
+        height: 1rem;
+        margin: 0;
+        accent-color: var(--theme-primary);
+      }
+
+      span {
+        line-height: 1;
+      }
+    }
+
+    .woocommerce-LostPassword {
+      margin: 1rem 0 0;
+      font-size: 0.875rem;
+
+      a {
+        color: var(--theme-gray-dark);
+        text-decoration: underline;
+        transition: color $anim-fast $ease-out;
+
+        &:hover {
+          color: var(--theme-primary);
+        }
+      }
+    }
+
+    // Blocchi vuoti su questo store (nessun testo privacy configurato):
+    // altrimenti lasciano spazio morto sopra il bottone di registrazione.
+    .woocommerce-privacy-policy-text:empty {
+      display: none;
+    }
+  }
+
+  // ── Recupero password ────────────────────────────────────────────────────
+  // Template nativo WooCommerce form-lost-password.php (form.woocommerce-
+  // ResetPassword.lost_reset_password), reso sulla stessa tab del widget.
+  // Form singolo a tutta larghezza: si limita a una colonna leggibile e
+  // riusa lo stesso pannello/skin dei form di login.
+  // Nota: il campo usa le classi form-row-first/.clear del layout a due
+  // colonne nativo — qui vanno neutralizzate o l'input resta a metà larghezza.
+
+  form.woocommerce-ResetPassword {
+    @include account-form-fields;
+
+    max-width: 32rem;
+    margin: 0;
+    padding: 1.5rem !important;
+    font-family: var(--theme-font);
+    background-color: var(--theme-white-smoke) !important;
+    border-radius: var(--theme-radius-m) !important;
+    border: 1px solid var(--theme-gray-light) !important;
+
+    > p {
+      margin: 0 0 1rem;
+    }
+
+    p:not(.form-row) {
+      font-size: 0.875rem;
+      color: var(--theme-gray-dark);
+      line-height: var(--font-lineheight-extra-loose);
+    }
+
+    // Le righe usano le classi del layout a due colonne nativo (first/last,
+    // 48% + float): qui i campi vanno impilati a tutta larghezza — vale sia
+    // per il form "password dimenticata" (un solo campo) sia per quello di
+    // reimpostazione (nuova password + conferma).
+    .form-row-first,
+    .form-row-last {
+      width: 100%;
+      float: none;
+    }
+
+    // Indicatore di robustezza password (aggiunto via JS da WooCommerce sotto
+    // il campo mentre si digita) + eventuale suggerimento.
+    .woocommerce-password-strength {
+      margin-top: 0.5rem;
+      padding: 0.375rem 0.625rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      text-align: left;
+      color: var(--theme-white);
+      background-color: var(--theme-gray-medium);
+      border-radius: 0;
+
+      &.short,
+      &.bad {
+        background-color: var(--theme-muted-red);
+      }
+
+      &.good {
+        background-color: var(--theme-gray-dark);
+      }
+
+      &.strong {
+        background-color: var(--theme-bright-green);
+      }
+    }
+
+    .woocommerce-password-hint {
+      display: block;
+      margin-top: 0.375rem;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--theme-gray-medium);
+    }
+
+    .clear {
+      display: none;
+    }
+
+    .form-row:last-of-type {
+      margin-bottom: 0;
     }
   }
 
