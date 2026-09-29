@@ -14,37 +14,9 @@
 // eventuali markup WooCommerce "classici" altrove.
 
 .elementor-widget-woocommerce-cart {
-  .woocommerce-notices-wrapper .woocommerce-error,
-  .woocommerce-notices-wrapper .woocommerce-message,
-  .woocommerce-notices-wrapper .woocommerce-info {
-    font-family: var(--theme-font);
-    border-top-color: var(--theme-primary);
-
-    // Stessa pelle del bottone solido primario del carrello
-    // (.wc-proceed-to-checkout .checkout-button): font/peso/colore del tema,
-    // squadrato, hover nero. color e font-weight con !important perché il CSS
-    // di WooCommerce/Elementor per i bottoni delle notice vince altrimenti
-    // sulla specificità (convenzione del progetto: !important sulle sole
-    // proprietà in conflitto, mai un id nel selettore).
-    .button {
-      padding: 0.625rem 1.25rem;
-      font-family: var(--theme-font);
-      font-size: 0.875rem;
-      font-weight: 500 !important;
-      line-height: 1.2;
-      color: var(--theme-white) !important;
-      background-color: var(--theme-primary-dark);
-      border: 1px solid var(--theme-primary-dark);
-      border-radius: var(--theme-radius-xl);
-      transition: background-color $anim-fast $ease-out, border-color $anim-fast $ease-out;
-
-      &:hover {
-        color: var(--theme-white) !important;
-        background-color: var(--theme-black);
-        border-color: var(--theme-black);
-      }
-    }
-  }
+  // Avvisi (prodotto aggiunto/rimosso, coupon, carrello vuoto): skin
+  // condivisa con checkout e Mio Account, vedi mixin notice-panel.
+  @include notice-panel;
 
   // .e-cart__column e .e-cart__column-start/-end sono classi combinate sullo
   // stesso div (class="e-cart__column e-cart__column-start"), non

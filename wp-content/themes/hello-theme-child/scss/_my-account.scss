@@ -55,60 +55,8 @@
   // reimpostare la password inviata" è un .woocommerce-message stampato
   // direttamente in .woocommerce (verificato dall'HTML reale), quindi i
   // selettori non presuppongono il wrapper. Skin a pannello bianco con barra
-  // colorata a sinistra, come l'avviso del blocco pagamento in _checkout.scss.
-
-  .woocommerce-error,
-  .woocommerce-message,
-  .woocommerce-info {
-    margin: 0 0 1.5rem;
-    padding: 0.875rem 1rem;
-    font-family: var(--theme-font);
-    font-size: 0.875rem;
-    line-height: 1.5;
-    color: var(--theme-gray-dark);
-    background-color: var(--theme-white);
-    border: 1px solid var(--theme-gray-light);
-    border-left: 3px solid var(--theme-primary);
-    border-radius: var(--theme-radius-s);
-
-    &::before {
-      content: none;
-    }
-
-    // Link-bottone negli avvisi (es. "Sfoglia prodotti" / "Conferma l'indirizzo
-    // e-mail" nella tab Ordini vuota). Elementor Pro colora ogni <a> del
-    // widget con --links-normal-color (0,4,1) e azzera lo sfondo in hover
-    // (`a.button:hover { background-color: initial }`, 0,6,1): !important
-    // sulle sole proprietà in conflitto, come nel mixin account-form-fields.
-    .button {
-      padding: 0.5rem 1.25rem;
-      font-family: var(--theme-font);
-      font-weight: 500;
-      font-size: 0.875rem;
-      line-height: 1.5;
-      text-decoration: none;
-      color: var(--theme-white) !important;
-      background-color: var(--theme-primary-dark) !important;
-      border: none;
-      border-radius: var(--theme-radius-xl);
-      transition: background-color $anim-fast $ease-out;
-
-      &:hover,
-      &:focus {
-        color: var(--theme-white) !important;
-        background-color: var(--theme-black) !important;
-      }
-    }
-  }
-
-  .woocommerce-error {
-    border-left-color: var(--theme-accent);
-
-    li {
-      margin: 0;
-      list-style: none;
-    }
-  }
+  // colorata a sinistra, condivisa con il checkout (mixin notice-panel).
+  @include notice-panel;
 
   // Testo informativo stampato direttamente nella tab (es. istruzioni dopo
   // l'invio dell'email di reset password), fuori da qualunque form.

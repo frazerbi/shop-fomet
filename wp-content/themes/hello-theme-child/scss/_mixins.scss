@@ -327,3 +327,92 @@
     }
   }
 }
+
+// Skin condiviso degli avvisi WooCommerce (.woocommerce-error/-message/-info):
+// pannello bianco con bordo grigio e barra colorata a sinistra (--theme-primary,
+// --theme-accent per gli errori) al posto del box nativo con bordo in alto e
+// icona. Selettori senza .woocommerce-notices-wrapper di proposito: gli errori
+// di validazione del checkout finiscono in .woocommerce-NoticeGroup-checkout e
+// la conferma reset password di Mio Account è stampata direttamente in
+// .woocommerce. Il link-bottone ha !important su colore/sfondo perché Elementor
+// Pro colora ogni <a> dei widget WooCommerce con selettori più specifici (es.
+// --links-normal-color a 0,4,1 in Mio Account, `a.button:hover` a 0,6,1).
+// Stesso motivo per font-weight (nel carrello il CSS di WooCommerce/Elementor
+// per i bottoni delle notice lo sovrascrive). Usato in _cart.scss,
+// _checkout.scss e _my-account.scss.
+@mixin notice-panel {
+  .woocommerce-error,
+  .woocommerce-message,
+  .woocommerce-info {
+    margin: 0 0 1.5rem;
+    padding: 0.875rem 1rem;
+    font-family: var(--theme-font);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--theme-gray-dark);
+    background-color: var(--theme-white);
+    border: 1px solid var(--theme-gray-light);
+    border-left: 3px solid var(--theme-primary);
+    border-radius: var(--theme-radius-s);
+    // WooCommerce sposta il focus sull'avviso (tabindex="-1") dopo un invio.
+    outline: none;
+
+    &::before {
+      content: none;
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      & + li {
+        margin-top: 0.375rem;
+      }
+    }
+
+    strong {
+      font-weight: 600;
+      color: var(--theme-text);
+    }
+
+    // Link-bottone (es. "Visualizza carrello", "Sfoglia prodotti").
+    .button {
+      padding: 0.5rem 1.25rem;
+      font-family: var(--theme-font);
+      font-weight: 500 !important;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      text-decoration: none;
+      color: var(--theme-white) !important;
+      background-color: var(--theme-primary-dark) !important;
+      border: none;
+      border-radius: var(--theme-radius-xl);
+      transition: background-color $anim-fast $ease-out;
+
+      &:hover,
+      &:focus {
+        color: var(--theme-white) !important;
+        background-color: var(--theme-black) !important;
+      }
+    }
+  }
+
+  .woocommerce-error {
+    border-left-color: var(--theme-accent);
+
+    // Negli errori di validazione ogni riga è un link al campo mancante: resta
+    // testo normale, sottolineato solo in hover/focus.
+    a:not(.button) {
+      color: inherit;
+      text-decoration: none;
+      transition: color $anim-fast $ease-out;
+
+      &:hover,
+      &:focus {
+        color: var(--theme-black);
+        text-decoration: underline;
+      }
+    }
+  }
+}

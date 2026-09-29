@@ -18,17 +18,9 @@
 // dei pannelli .e-shop-table/.e-cart-totals della pagina Carrello).
 
 .elementor-widget-woocommerce-checkout-page {
-  .woocommerce-notices-wrapper .woocommerce-error,
-  .woocommerce-notices-wrapper .woocommerce-message,
-  .woocommerce-info {
-    font-family: var(--theme-font);
-    border-top-color: var(--theme-primary);
-
-    .button {
-      background-color: var(--theme-primary-dark);
-      border-radius: var(--theme-radius-xl);
-    }
-  }
+  // Avvisi (errori di validazione, messaggi, info): skin condivisa con Mio
+  // Account, vedi mixin notice-panel.
+  @include notice-panel;
 
   h3 {
     margin: 0 0 1.25rem;
@@ -734,24 +726,10 @@
           }
         }
 
-        // Avviso (es. nessun metodo disponibile): pannello bianco con barra
-        // primary a sinistra, coerente con i box di riepilogo.
+        // Avviso (es. nessun metodo disponibile): skin dal mixin notice-panel,
+        // qui solo il margine (sta dentro un <li> della lista metodi).
         .woocommerce-info {
           margin: 0;
-          padding: 0.875rem 1rem;
-          font-family: var(--theme-font);
-          font-size: 0.875rem;
-          line-height: 1.5;
-          color: var(--theme-gray-dark);
-          background-color: var(--theme-white);
-          border: 1px solid var(--theme-gray-light);
-          border-top-color: var(--theme-gray-light);
-          border-left: 3px solid var(--theme-primary);
-          border-radius: var(--theme-radius-s);
-
-          &::before {
-            content: none;
-          }
 
           .e-description {
             display: block;
