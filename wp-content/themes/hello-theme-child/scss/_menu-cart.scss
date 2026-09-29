@@ -23,7 +23,7 @@
     transition: color $anim-fast $ease-out;
 
     &:hover {
-      color: var(--theme-primary);
+      color: var(--theme-primary-dark);
     }
   }
 
@@ -44,7 +44,7 @@
     color: var(--theme-text);
 
     &:hover {
-      color: var(--theme-primary);
+      color: var(--theme-primary-dark);
     }
   }
 
@@ -79,7 +79,7 @@
     text-decoration: none;
 
     &:hover {
-      color: var(--theme-primary);
+      color: var(--theme-primary-dark);
     }
   }
 
@@ -160,8 +160,8 @@
 
     .elementor-button--checkout {
       color: var(--theme-white) !important;
-      background-color: var(--theme-primary);
-      border: 1px solid var(--theme-primary);
+      background-color: var(--theme-primary-dark);
+      border: 1px solid var(--theme-primary-dark);
 
       &:hover {
         background-color: var(--theme-black);

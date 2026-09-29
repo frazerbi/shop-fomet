@@ -3,7 +3,8 @@
 // ─── Design Tokens ────────────────────────────────────────────────────────────
 
 :root {
-  --theme-primary:   #{$primary};
+  --theme-primary:      #{$primary};
+  --theme-primary-dark: #{$primary-dark};
   --theme-secondary: #{$secondary};
   --theme-text:      #{$text};
   --theme-accent:    #{$accent};
@@ -21,7 +22,6 @@
   --theme-gray-pale:      #{$gray-pale};
   --theme-white-smoke:    #{$white-smoke};
   --theme-alabaster-gray: #{$alabaster-gray};
-  --theme-bright-green:   #{$bright-green};
   --theme-muted-red:      #{$muted-red};
 
   --theme-radius-s:  #{$radius-s};

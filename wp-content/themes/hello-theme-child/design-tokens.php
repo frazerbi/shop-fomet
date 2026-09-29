@@ -23,12 +23,12 @@ function child_design_tokens(): array {
 			[
 				'_id'   => 'primary',
 				'title' => 'Primary',
-				'color' => '#5A8A60',   // Dark Teal
+				'color' => '#179D38',   // Fomet Green
 			],
 			[
 				'_id'   => 'secondary',
 				'title' => 'Secondary',
-				'color' => '#A8C6AC',   // Muted Teal
+				'color' => '#D1EBD7',   // Fomet Green Light
 			],
 			[
 				'_id'   => 'text',
@@ -79,9 +79,9 @@ function child_design_tokens(): array {
 				'color' => '#FFFFFF',
 			],
 			[
-				'_id'   => 'bright_green',
-				'title' => 'Bright Green',
-				'color' => '#179D38',
+				'_id'   => 'primary_dark',
+				'title' => 'Primary dark',
+				'color' => '#047734',
 			],
 			[
 				'_id'   => 'muted_red',

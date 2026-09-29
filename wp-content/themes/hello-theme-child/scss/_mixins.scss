@@ -298,7 +298,7 @@
 
       &:hover,
       &.display-password {
-        color: var(--theme-primary);
+        color: var(--theme-primary-dark);
       }
     }
   }
@@ -314,7 +314,7 @@
     font-size: 1rem;
     text-align: center;
     color: var(--theme-white) !important;
-    background-color: var(--theme-primary) !important;
+    background-color: var(--theme-primary-dark) !important;
     border: none !important;
     border-radius: 0 !important;
     transition: background-color $anim-fast $ease-out;

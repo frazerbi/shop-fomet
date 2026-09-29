@@ -3,8 +3,9 @@
 // Elementor Kit da elementor-kit-sync.php). Palette e radius scale allineate
 // al sito principale fomet.it (tema "ficus").
 
-$primary:   #5A8A60; // Dark Teal
-$secondary: #A8C6AC; // Muted Teal
+$primary:      #179D38; // Fomet Green (verde del logo)
+$primary-dark: #047734; // Fomet Green Dark — testo verde/hover: 5.69:1 su bianco (AA), #179D38 solo 3.55:1
+$secondary:    #D1EBD7; // Fomet Green Light
 $text:      #282828; // Shadow Gray
 $accent:    #D21D22; // Flag Red
 $black:     #000000;
@@ -21,7 +22,6 @@ $gray-light:     #C8C8C8;
 $gray-pale:      #EDEDED;
 $white-smoke:    #F4F4F4;
 $alabaster-gray: #F2F0E6;
-$bright-green:   #179D38;
 $muted-red:      #B85450;
 
 // Radius scale (fonte: --radius-* del sito principale fomet.it)

@@ -33,8 +33,8 @@
       font-weight: 500 !important;
       line-height: 1.2;
       color: var(--theme-white) !important;
-      background-color: var(--theme-primary);
-      border: 1px solid var(--theme-primary);
+      background-color: var(--theme-primary-dark);
+      border: 1px solid var(--theme-primary-dark);
       border-radius: 0;
       transition: background-color $anim-fast $ease-out, border-color $anim-fast $ease-out;
 
@@ -128,7 +128,7 @@
             color: var(--theme-text);
 
             &:hover {
-              color: var(--theme-primary);
+              color: var(--theme-primary-dark);
             }
           }
 
@@ -296,7 +296,7 @@
               font-family: var(--theme-font);
               font-size: 0.8125rem;
               font-weight: 500;
-              color: var(--theme-primary);
+              color: var(--theme-primary-dark);
               text-decoration: underline;
               text-underline-offset: 0.2em;
 
@@ -413,7 +413,7 @@
             font-size: 1rem;
             text-align: center;
             color: var(--theme-white) !important;
-            background-color: var(--theme-primary);
+            background-color: var(--theme-primary-dark);
             border: none;
             border-radius: 0;
             transition: background-color $anim-fast $ease-out;

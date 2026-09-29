@@ -25,7 +25,7 @@
     border-top-color: var(--theme-primary);
 
     .button {
-      background-color: var(--theme-primary);
+      background-color: var(--theme-primary-dark);
       border-radius: 0;
     }
   }
@@ -63,7 +63,7 @@
         color: var(--theme-text);
 
         .e-show-login {
-          color: var(--theme-primary);
+          color: var(--theme-primary-dark);
           text-decoration: underline;
           transition: color $anim-fast $ease-out;
 
@@ -127,7 +127,7 @@
             transition: color $anim-fast $ease-out;
 
             &:hover {
-              color: var(--theme-primary);
+              color: var(--theme-primary-dark);
             }
           }
         }
@@ -497,7 +497,7 @@
           color: var(--theme-text);
 
           .e-show-coupon-form {
-            color: var(--theme-primary);
+            color: var(--theme-primary-dark);
             text-decoration: underline;
 
             &:hover {
@@ -781,7 +781,7 @@
 
           .button {
             margin-top: 0.625rem;
-            background-color: var(--theme-primary);
+            background-color: var(--theme-primary-dark);
             color: var(--theme-white) !important;
             border-radius: 0;
           }
@@ -819,7 +819,7 @@
         font-size: 1rem;
         text-align: center;
         color: var(--theme-white) !important;
-        background-color: var(--theme-primary) !important;
+        background-color: var(--theme-primary-dark) !important;
         border: none !important;
         border-radius: 0 !important;
         transition: background-color $anim-fast $ease-out;

@@ -10,7 +10,7 @@
   display: inline-block;
   padding: 0.25rem 0.625rem;
   border-radius: var(--theme-radius-s);
-  background-color: var(--theme-primary);
+  background-color: var(--theme-primary-dark);
   color: var(--theme-white) !important;
   font-family: var(--theme-font);
   font-size: 0.625rem;
@@ -40,6 +40,6 @@
   transition: color $anim-fast $ease-out;
 
   &:hover {
-    color: var(--theme-primary);
+    color: var(--theme-primary-dark);
   }
 }

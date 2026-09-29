@@ -70,7 +70,7 @@
     display: block;
     padding: 0.15625rem 0.78125rem 0.78125rem;
     font-family: var(--theme-font);
-    color: var(--theme-primary);
+    color: var(--theme-primary-dark);
   }
 }
 
@@ -119,7 +119,7 @@
     line-height: var(--font-lineheight-normal);
     text-align: center;
     color: var(--theme-white) !important;
-    background-color: var(--theme-primary) !important;
+    background-color: var(--theme-primary-dark) !important;
     border: none !important;
     border-radius: 0 !important;
     transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;

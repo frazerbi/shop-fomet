@@ -37,7 +37,7 @@
     }
 
     .button {
-      background-color: var(--theme-primary);
+      background-color: var(--theme-primary-dark);
       border-radius: 0;
     }
   }
@@ -83,14 +83,14 @@
         transition: color $anim-fast $ease-out, border-color $anim-fast $ease-out, background-color $anim-fast $ease-out;
 
         &:hover {
-          color: var(--theme-primary);
+          color: var(--theme-primary-dark);
           background-color: var(--theme-white-smoke);
         }
       }
 
       &.is-active a {
         font-weight: 600;
-        color: var(--theme-primary);
+        color: var(--theme-primary-dark);
         background-color: var(--theme-white-smoke);
         border-left-color: var(--theme-primary);
       }
@@ -186,7 +186,7 @@
         transition: color $anim-fast $ease-out;
 
         &:hover {
-          color: var(--theme-primary);
+          color: var(--theme-primary-dark);
         }
       }
     }
@@ -259,7 +259,7 @@
       }
 
       &.strong {
-        background-color: var(--theme-bright-green);
+        background-color: var(--theme-primary-dark);
       }
     }
 
@@ -291,7 +291,7 @@
     }
 
     a {
-      color: var(--theme-primary);
+      color: var(--theme-primary-dark);
       text-decoration: underline;
 
       &:hover {

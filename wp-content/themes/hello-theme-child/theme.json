@@ -16,11 +16,11 @@
 				{ "name": "White smoke",    "slug": "white-smoke",    "color": "#F4F4F4" },
 				{ "name": "Alabaster Gray", "slug": "alabaster-gray", "color": "#F2F0E6" },
 				{ "name": "White",          "slug": "white",          "color": "#FFFFFF" },
-				{ "name": "Muted Teal",     "slug": "muted-teal",     "color": "#A8C6AC" },
-				{ "name": "Dark Teal",    "slug": "dark-teal",     "color": "#5A8A60" },
+				{ "name": "Fomet Green Light", "slug": "muted-teal", "color": "#D1EBD7" },
+				{ "name": "Fomet Green",  "slug": "dark-teal",     "color": "#179D38" },
+				{ "name": "Fomet Green Dark", "slug": "primary-dark", "color": "#047734" },
 				{ "name": "Flag Red",     "slug": "flag-red",      "color": "#D21D22" },
-				{ "name": "Muted Red",    "slug": "muted-red",     "color": "#B85450" },
-				{ "name": "Bright Green", "slug": "bright-green",  "color": "#179d38" }
+				{ "name": "Muted Red",    "slug": "muted-red",     "color": "#B85450" }
 			],
 			"gradients": [
 				{
@@ -31,7 +31,7 @@
 				{
 					"name": "Teal Fade",
 					"slug": "teal-fade",
-					"gradient": "linear-gradient(135deg, #5A8A60 0%, #A8C6AC 100%)"
+					"gradient": "linear-gradient(135deg, #179D38 0%, #D1EBD7 100%)"
 				},
 				{
 					"name": "Light to White",
