@@ -11,6 +11,45 @@
 // ancora verificati con HTML reale, quindi non stilizzati qui.
 
 .elementor-widget-woocommerce-my-account {
+  // ── Default di Elementor Pro (custom-pro-widget-woocommerce-my-account) ──
+  // Il CSS del widget legge quasi tutti i colori da custom property con un
+  // fallback azzurro/grigio (#5bc0de / #69727d) e selettori molto specifici
+  // (es. `.e-my-account-tab:not(.e-my-account-tab__dashboard--custom)
+  // .woocommerce a` = 0,4,1): invece di rincorrerne la specificità regola per
+  // regola si ridefiniscono qui le variabili, che valgono per tutte le tab —
+  // anche quelle non ancora verificate con HTML reale (Ordini, Indirizzi…).
+  // Se in Elementor si imposta un colore dal pannello del widget, quello
+  // (scopato su .elementor-element-xxxx) continua a vincere, com'è giusto.
+  --general-text-color: var(--theme-text);
+  --typography-section-titles-color: var(--theme-text);
+  --links-normal-color: var(--theme-primary-dark);
+  --links-hover-color: var(--theme-black);
+  --login-messages-color: var(--theme-gray-dark);
+  --forms-labels-color: var(--theme-text);
+  --checkboxes-color: var(--theme-text);
+  --tabs-normal-color: var(--theme-text);
+  --tabs-hover-color: var(--theme-primary-dark);
+  --tabs-active-color: var(--theme-primary-dark);
+  --tabs-active-border-color: var(--theme-primary);
+  --tables-title-color: var(--theme-text);
+  --tables-items-color: var(--theme-gray-dark);
+  --tables-links-normal-color: var(--theme-primary-dark);
+  --tables-links-hover-color: var(--theme-black);
+  --tables-divider-border-color: var(--theme-gray-light);
+  --tables-buttons-border-color: var(--theme-primary-dark);
+  --tables-button-normal-text-color: var(--theme-primary-dark);
+  --tables-button-hover-text-color: var(--theme-primary-dark);
+  --tables-button-border-radius: var(--theme-radius-xl);
+  --sections-border-color: var(--theme-gray-light);
+  --sections-border-radius: var(--theme-radius-m);
+  --variations-color: var(--theme-gray-dark);
+  --section-title-spacing: 1rem;
+
+  // Il widget imposta Roboto + grigio sulla radice (stessa specificità, ma
+  // style.css del child theme è caricato dopo).
+  font-family: var(--theme-font);
+  color: var(--theme-text);
+
   // ── Avvisi ───────────────────────────────────────────────────────────────
   // Non sempre dentro .woocommerce-notices-wrapper: la conferma "email per
   // reimpostare la password inviata" è un .woocommerce-message stampato
@@ -36,9 +75,29 @@
       content: none;
     }
 
+    // Link-bottone negli avvisi (es. "Sfoglia prodotti" / "Conferma l'indirizzo
+    // e-mail" nella tab Ordini vuota). Elementor Pro colora ogni <a> del
+    // widget con --links-normal-color (0,4,1) e azzera lo sfondo in hover
+    // (`a.button:hover { background-color: initial }`, 0,6,1): !important
+    // sulle sole proprietà in conflitto, come nel mixin account-form-fields.
     .button {
-      background-color: var(--theme-primary-dark);
+      padding: 0.5rem 1.25rem;
+      font-family: var(--theme-font);
+      font-weight: 500;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      text-decoration: none;
+      color: var(--theme-white) !important;
+      background-color: var(--theme-primary-dark) !important;
+      border: none;
       border-radius: var(--theme-radius-xl);
+      transition: background-color $anim-fast $ease-out;
+
+      &:hover,
+      &:focus {
+        color: var(--theme-white) !important;
+        background-color: var(--theme-black) !important;
+      }
     }
   }
 
@@ -63,8 +122,13 @@
   }
 
   // ── Nav (tab verticali) ──────────────────────────────────────────────────
+  // I colori arrivano dalle variabili --tabs-* sopra; sfondo (#f9fafa),
+  // font-weight 700, font-size 14px e border-width 0 invece sono cablati in
+  // `.e-my-account-tab .woocommerce .woocommerce-MyAccount-navigation ul li a`
+  // (0,4,3). Gli antenati .e-my-account-tab .woocommerce portano il nostro
+  // selettore a 0,5,2 (hover/active 0,6,2) — solo classi, niente !important.
 
-  .woocommerce-MyAccount-navigation {
+  .e-my-account-tab .woocommerce .woocommerce-MyAccount-navigation {
     ul {
       list-style: none;
       margin: 0;
@@ -79,6 +143,7 @@
         font-weight: 500;
         font-size: 0.9375rem;
         color: var(--theme-text);
+        background-color: transparent;
         border-left: 3px solid transparent;
         transition: color $anim-fast $ease-out, border-color $anim-fast $ease-out, background-color $anim-fast $ease-out;
 
@@ -281,6 +346,25 @@
   }
 
   // ── Contenuto ────────────────────────────────────────────────────────────
+
+  // Titoli di sezione delle tab (es. "Indirizzo di fatturazione" in
+  // Indirizzi): senza questa regola prendono la scala da titolo di pagina
+  // di _typography.scss (h2 fino a 3.75rem). Stessa misura degli h2 dei form
+  // di login. Gli antenati .e-my-account-tab .woocommerce portano il
+  // selettore a 0,4,1, pari al `.woocommerce h2 { font-weight: 400 }` di
+  // Elementor Pro, che quindi perde per ordine di caricamento.
+  .e-my-account-tab .woocommerce .woocommerce-MyAccount-content {
+    h2,
+    h3 {
+      margin: 0 0 var(--section-title-spacing);
+      font-family: var(--theme-font);
+      font-weight: 600;
+      font-size: 1.125rem;
+      line-height: 1.4;
+      letter-spacing: normal;
+      color: var(--theme-text);
+    }
+  }
 
   .woocommerce-MyAccount-content {
     font-family: var(--theme-font);
