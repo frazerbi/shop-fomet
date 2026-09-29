@@ -117,8 +117,14 @@
 
   table.woocommerce-product-attributes {
     width: 100%;
-    border-collapse: collapse;
+    // separate + spacing 0 invece di collapse: con collapse il border-radius
+    // della tabella viene ignorato. Le celle hanno solo border-bottom, quindi
+    // non ci sono bordi doppi da fondere.
+    border-collapse: separate;
+    border-spacing: 0;
     border: 1px solid var(--theme-gray-light);
+    border-radius: var(--theme-radius-m);
+    overflow: hidden;
     th,
     td {
       padding: 0.75rem 1rem;
