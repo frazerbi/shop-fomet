@@ -300,6 +300,92 @@
         background-color: var(--theme-white-smoke) !important;
         border-radius: var(--theme-radius-m) !important;
         border: 1px solid var(--theme-gray-light) !important;
+
+        // Iscrizione newsletter (plugin Mailchimp for WooCommerce): arriva in
+        // coda a .woocommerce-billing-fields, fuori dalla griglia dei campi,
+        // come checkbox + eventuale blocco consensi GDPR (#mailchimp-gdpr-fields,
+        // presente solo se l'audience Mailchimp ha i campi GDPR attivi).
+        // Messa in evidenza come riquadro in tinta brand (--theme-secondary,
+        // testo scuro sopra: contrasto pieno) con checkbox ingrandite. Il
+        // riquadro è solo sulla riga principale: il blocco GDPR è un fratello
+        // separato nel markup che il plugin mostra/nasconde da sé, quindi un
+        // pannello unico sui due resterebbe mezzo aperto a GDPR nascosto.
+        .mailchimp-newsletter {
+          margin: 1.5rem 0 0;
+          padding: 1rem 1.125rem;
+          background-color: var(--theme-secondary);
+          border: 1px solid var(--theme-primary);
+          border-radius: var(--theme-radius-s);
+        }
+
+        .mailchimp-newsletter,
+        #mailchimp-gdpr-fields {
+          // Sovrascrive la label block/0.875rem di .form-row qui sopra.
+          .woocommerce-form__label-for-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0;
+            font-family: var(--theme-font);
+            color: var(--theme-text);
+            cursor: pointer;
+          }
+
+          input[type="checkbox"] {
+            flex: 0 0 auto;
+            margin: 0;
+            accent-color: var(--theme-primary);
+            cursor: pointer;
+          }
+        }
+
+        .mailchimp-newsletter {
+          .woocommerce-form__label-for-checkbox {
+            font-size: 1rem;
+            font-weight: 500;
+          }
+
+          input[type="checkbox"] {
+            width: 1.375rem;
+            height: 1.375rem;
+          }
+        }
+
+        #mailchimp-gdpr-fields {
+          display: flex;
+          flex-direction: column;
+          gap: 0.625rem;
+          margin-top: 0.875rem;
+          // Allineato al testo della checkbox principale:
+          // padding riquadro + checkbox + gap.
+          padding-left: 3.25rem;
+
+          p {
+            margin: 0;
+            font-family: var(--theme-font);
+            font-size: 0.875rem;
+            color: var(--theme-gray-dark);
+
+            // Il plugin chiude il blocco con un <p></p> vuoto.
+            &:empty {
+              display: none;
+            }
+          }
+
+          .woocommerce-form__label-for-checkbox {
+            font-size: 0.9375rem;
+          }
+
+          input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+          }
+
+          // .clear serve solo ai float nativi; qui, in flex, sarebbe un gap in più.
+          .clear {
+            display: none;
+          }
+        }
       }
 
       .col-2 {
