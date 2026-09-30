@@ -81,7 +81,7 @@ function child_design_tokens(): array {
 			[
 				'_id'   => 'primary_dark',
 				'title' => 'Primary dark',
-				'color' => '#047734',
+				'color' => '#038037',
 			],
 			[
 				'_id'   => 'muted_red',

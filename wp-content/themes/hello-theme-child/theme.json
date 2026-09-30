@@ -18,7 +18,7 @@
 				{ "name": "White",          "slug": "white",          "color": "#FFFFFF" },
 				{ "name": "Fomet Green Light", "slug": "muted-teal", "color": "#D1EBD7" },
 				{ "name": "Fomet Green",  "slug": "dark-teal",     "color": "#179D38" },
-				{ "name": "Fomet Green Dark", "slug": "primary-dark", "color": "#047734" },
+				{ "name": "Fomet Green Dark", "slug": "primary-dark", "color": "#038037" },
 				{ "name": "Flag Red",     "slug": "flag-red",      "color": "#D21D22" },
 				{ "name": "Muted Red",    "slug": "muted-red",     "color": "#B85450" }
 			],
@@ -26,7 +26,7 @@
 				{
 					"name": "Brand Gradient",
 					"slug": "brand-gradient",
-					"gradient": "linear-gradient(135deg, #243760 0%, #6C9DD9 100%)"
+					"gradient": "linear-gradient(135deg, #038037 0%, #BFCC10 100%)"
 				},
 				{
 					"name": "Teal Fade",
