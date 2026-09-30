@@ -306,16 +306,40 @@
         // come checkbox + eventuale blocco consensi GDPR (#mailchimp-gdpr-fields,
         // presente solo se l'audience Mailchimp ha i campi GDPR attivi).
         // Messa in evidenza come riquadro in tinta brand (--theme-secondary,
-        // testo scuro sopra: contrasto pieno) con checkbox ingrandite. Il
-        // riquadro è solo sulla riga principale: il blocco GDPR è un fratello
-        // separato nel markup che il plugin mostra/nasconde da sé, quindi un
-        // pannello unico sui due resterebbe mezzo aperto a GDPR nascosto.
+        // testo scuro sopra: contrasto pieno) con checkbox ingrandite.
+        //
+        // Checkbox e GDPR formano un solo riquadro, ma nel markup sono
+        // fratelli: p.mailchimp-newsletter, un div.clear, poi un <div> anonimo
+        // che avvolge #mailchimp-gdpr-fields. Il riquadro è quindi diviso in
+        // due metà (sopra la <p>, sotto il wrapper) che si saldano solo se il
+        // GDPR è visibile: il plugin rende il wrapper `display: none` per i
+        // clienti loggati che hanno già espresso i consensi, e in quel caso
+        // la <p> deve restare un riquadro chiuso. L'etichetta del consenso è
+        // riscritta in woocommerce-mailchimp.php.
+        // Sulla <p> il test va scritto senza :has() interno (un :has() dentro
+        // :has() non è valido e farebbe scartare l'intera regola).
+
         .mailchimp-newsletter {
           margin: 1.5rem 0 0;
           padding: 1rem 1.125rem;
           background-color: var(--theme-secondary);
           border: 1px solid var(--theme-primary);
           border-radius: var(--theme-radius-s);
+
+          &:has(~ div:not([style*="none"]) > #mailchimp-gdpr-fields) {
+            padding-bottom: 0;
+            border-bottom: 0;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+        }
+
+        .mailchimp-newsletter ~ div:not([style*="none"]):has(> #mailchimp-gdpr-fields) {
+          padding: 0.875rem 1.125rem 1rem;
+          background-color: var(--theme-secondary);
+          border: 1px solid var(--theme-primary);
+          border-top: 0;
+          border-radius: 0 0 var(--theme-radius-s) var(--theme-radius-s);
         }
 
         .mailchimp-newsletter,
@@ -355,10 +379,9 @@
           display: flex;
           flex-direction: column;
           gap: 0.625rem;
-          margin-top: 0.875rem;
-          // Allineato al testo della checkbox principale:
-          // padding riquadro + checkbox + gap.
-          padding-left: 3.25rem;
+          // Allineato al testo della checkbox principale (checkbox + gap);
+          // il padding del riquadro lo mette già il wrapper.
+          padding-left: 2.125rem;
 
           p {
             margin: 0;
@@ -366,19 +389,38 @@
             font-size: 0.875rem;
             color: var(--theme-gray-dark);
 
-            // Il plugin chiude il blocco con un <p></p> vuoto.
+            // Restano due <p> vuote: quella dell'introduzione, svuotata in
+            // woocommerce-mailchimp.php, e quella con cui il plugin chiude il blocco.
             &:empty {
               display: none;
             }
           }
 
+          // Il consenso è una frase su più righe: checkbox allineata alla
+          // prima riga, non centrata sul blocco di testo.
           .woocommerce-form__label-for-checkbox {
+            align-items: flex-start;
             font-size: 0.9375rem;
+            line-height: 1.5;
           }
 
           input[type="checkbox"] {
             width: 1.25rem;
             height: 1.25rem;
+            // (1.5 × 0.9375rem − 1.25rem) / 2: centrata sulla prima riga.
+            margin-top: 0.078rem;
+          }
+
+          a {
+            color: var(--theme-primary-dark);
+            font-weight: 500;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+
+            &:hover,
+            &:focus-visible {
+              text-decoration-thickness: 2px;
+            }
           }
 
           // .clear serve solo ai float nativi; qui, in flex, sarebbe un gap in più.

@@ -12,6 +12,7 @@ require_once __DIR__ . '/product-category-shortcodes.php';
 require_once __DIR__ . '/iubenda.php';
 require_once __DIR__ . '/woocommerce-checkout-fields.php';
 require_once __DIR__ . '/woocommerce-express-checkout-guard.php';
+require_once __DIR__ . '/woocommerce-mailchimp.php';
 require_once __DIR__ . '/woocommerce-shipping.php';
 require_once __DIR__ . '/woocommerce-shipping-zones.php';
 
