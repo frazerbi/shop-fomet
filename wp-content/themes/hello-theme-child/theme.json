@@ -19,6 +19,7 @@
 				{ "name": "Fomet Green Light", "slug": "muted-teal", "color": "#D1EBD7" },
 				{ "name": "Fomet Green",  "slug": "dark-teal",     "color": "#179D38" },
 				{ "name": "Fomet Green Dark", "slug": "primary-dark", "color": "#038037" },
+				{ "name": "Button Green", "slug": "button",       "color": "#087834" },
 				{ "name": "Flag Red",     "slug": "flag-red",      "color": "#D21D22" },
 				{ "name": "Muted Red",    "slug": "muted-red",     "color": "#B85450" }
 			],
@@ -56,7 +57,7 @@
 				{ "name": "Normal Large", "slug": "normal-large", "size": "clamp(2.5rem, calc(2.5rem + 23vw / 144), 3rem)" },
 				{ "name": "Medium",       "slug": "medium",       "size": "clamp(2.5rem, calc(2.5rem + 90vw / 144), 4.5rem)" },
 				{ "name": "Large",       "slug": "large",       "size": "clamp(3.2rem, calc(3.2rem + 250vw / 144), 6rem)" },
-				{ "name": "Extra Large", "slug": "extra-large",  "size": "clamp(2.2rem, calc(2.2rem + 500vw / 144), 8rem)" }
+				{ "name": "Extra Large", "slug": "extra-large",  "size": "clamp(4.2rem, calc(2.2rem + 500vw / 144), 8rem)" }
 			],
 			"fontFamilies": [
 				{

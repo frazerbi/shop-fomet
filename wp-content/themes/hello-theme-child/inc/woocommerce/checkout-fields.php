@@ -15,6 +15,7 @@
  * suite, unità"), accorpata in address_1 — sul vecchio store PrestaShop
  * restava sistematicamente vuota. (billing_company non è presente su questo
  * store, ma viene comunque rimosso per sicurezza se un plugin lo reintroduce.)
+ * Qualunque altro campo, compresi quelli aggiunti da plugin, passa intatto.
  *
  * Due cose verificate sull'HTML reale del checkout (2026-09-21) che vincolano
  * l'implementazione:
@@ -110,8 +111,28 @@ function child_set_field_column_class( $classes, $column ) {
 }
 
 /**
- * Applica una mappa di layout a un gruppo di campi, eliminando quelli
- * non previsti dalla mappa.
+ * Campi nativi tolti dal checkout: seconda riga indirizzo e azienda.
+ *
+ * Lista esplicita, non "tutto ciò che non è nella mappa": i campi aggiunti da
+ * altri plugin (es. codice fiscale, P.IVA, SDI per la fatturazione
+ * elettronica) devono restare, con la loro priorità e le loro classi — la
+ * griglia di scss/woocommerce/checkout/_fields.scss li mette in coda.
+ *
+ * @return string[]
+ */
+function child_checkout_removed_fields() {
+	return [
+		'billing_company',
+		'billing_address_2',
+		'shipping_company',
+		'shipping_address_2',
+	];
+}
+
+/**
+ * Applica una mappa di layout a un gruppo di campi. I campi non previsti
+ * dalla mappa restano intatti; vengono eliminati solo quelli di
+ * child_checkout_removed_fields().
  *
  * @param array $group  Gruppo di campi (billing/shipping).
  * @param array $layout Mappa chiave => [ priorità, classe ].
@@ -119,8 +140,12 @@ function child_set_field_column_class( $classes, $column ) {
  */
 function child_apply_checkout_layout( $group, $layout ) {
 	foreach ( $group as $key => $field ) {
-		if ( ! isset( $layout[ $key ] ) ) {
+		if ( in_array( $key, child_checkout_removed_fields(), true ) ) {
 			unset( $group[ $key ] );
+			continue;
+		}
+
+		if ( ! isset( $layout[ $key ] ) ) {
 			continue;
 		}
 

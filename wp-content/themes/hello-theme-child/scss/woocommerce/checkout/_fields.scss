@@ -160,10 +160,17 @@
           min-height: 5rem;
         }
 
+        // !important obbligatorio: il bordo base qui sopra è !important, e
+        // senza il rosso dei campi non validi non comparirebbe mai (né al
+        // submit né dall'overlay di express-checkout-guard.js). Stessa
+        // specificità di :focus ma più avanti: campo non valido a fuoco =
+        // bordo 2px rosso. Select2 (paese/provincia) incluso, per lo stesso
+        // rosso al posto del #a00 di WooCommerce.
         &.woocommerce-invalid {
           .input-text,
-          select {
-            border-color: var(--theme-accent);
+          select,
+          .select2-container .select2-selection--single {
+            border-color: var(--theme-accent) !important;
           }
         }
       }

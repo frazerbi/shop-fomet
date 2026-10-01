@@ -103,7 +103,11 @@ add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
 
 
 /* ----------------------------------------------------------
- * 9. HEARTBEAT API — solo nell'editor, 1 richiesta al minuto
+ * 9. HEARTBEAT API — 1 richiesta al minuto, solo in admin
+ *    In admin serve ovunque, non solo nell'editor: popup di
+ *    "sessione scaduta" (wp-auth-check dipende da heartbeat) e
+ *    blocco di modifica concorrente degli ordini HPOS
+ *    (admin.php?page=wc-orders). Sul frontend non serve.
  * ---------------------------------------------------------- */
 add_filter( 'heartbeat_settings', function ( $settings ) {
 	$settings['interval'] = 60;
@@ -111,9 +115,8 @@ add_filter( 'heartbeat_settings', function ( $settings ) {
 } );
 
 add_action( 'init', function () {
-	global $pagenow;
-	if ( is_admin() && ( $pagenow === 'post.php' || $pagenow === 'post-new.php' ) ) {
-		return; // Tieni heartbeat attivo nell'editor
+	if ( is_admin() ) {
+		return;
 	}
 	wp_deregister_script( 'heartbeat' );
 } );
@@ -139,10 +142,10 @@ add_filter( 'wp_revisions_to_keep', function ( $num, $post ) {
 	return 3;
 }, 10, 2 );
 
-// Autosave ogni 3 minuti invece di 1
-if ( ! defined( 'AUTOSAVE_INTERVAL' ) ) {
-	define( 'AUTOSAVE_INTERVAL', 180 );
-}
+// L'intervallo di autosave non si può cambiare da qui: WordPress definisce
+// AUTOSAVE_INTERVAL (60 s) in wp_functionality_constants(), prima di caricare
+// il functions.php del tema. Se serve, va in wp-config.php:
+//   define( 'AUTOSAVE_INTERVAL', 180 );
 
 
 /* ----------------------------------------------------------
@@ -176,13 +179,29 @@ add_action( 'wp_enqueue_scripts', function () {
 
 
 /* ----------------------------------------------------------
- * 13. DISABILITA REST API PER UTENTI NON LOGGATI
- *     (mantiene le route di Elementor e WooCommerce intatte)
+ * 13. CHIUDE LE ROUTE REST DEL CORE AGLI UTENTI NON LOGGATI
+ *     Solo l'indice (/) e il namespace /wp/v2 (utenti, post,
+ *     media…): le route dei plugin restano aperte perché il
+ *     frontend le usa anche da ospite — Stripe crea l'ordine dei
+ *     wallet (Apple Pay / Google Pay / Link) via Store API
+ *     (/wc/store/v1/checkout), Mailchimp riceve i webhook su
+ *     /mailchimp-for-woocommerce/v1, il filtro tassonomia di
+ *     Elementor Pro usa /elementor-pro/v1/refresh-loop.
+ *     Ognuna ha il proprio permission_callback.
  * ---------------------------------------------------------- */
 add_filter( 'rest_authentication_errors', function ( $result ) {
 	if ( ! empty( $result ) ) {
 		return $result;
 	}
+
+	$route = isset( $GLOBALS['wp']->query_vars['rest_route'] )
+		? '/' . ltrim( (string) $GLOBALS['wp']->query_vars['rest_route'], '/' )
+		: '/';
+
+	if ( '/' !== $route && ! str_starts_with( $route, '/wp/v2' ) ) {
+		return $result;
+	}
+
 	if ( ! is_user_logged_in() ) {
 		return new WP_Error(
 			'rest_not_logged_in',

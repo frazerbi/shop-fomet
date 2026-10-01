@@ -31,8 +31,11 @@
     background-color: var(--theme-white-smoke);
     border-radius: var(--theme-radius-m);
     overflow: hidden;
+    // Respiro attorno al packshot: 4rem da ~1280px in su (come prima), che
+    // scende con il viewport fino a 1.25rem — fisso a 4rem, su un telefono
+    // l'immagine perdeva ~128px di larghezza su ~340.
     .woocommerce-product-gallery__image {
-      padding: 4rem;
+      padding: clamp(1.25rem, 5vw, 4rem);
     }
   }
 

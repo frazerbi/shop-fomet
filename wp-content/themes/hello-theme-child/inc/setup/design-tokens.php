@@ -84,6 +84,11 @@ function child_design_tokens(): array {
 				'color' => '#038037',
 			],
 			[
+				'_id'   => 'button',
+				'title' => 'Button',
+				'color' => '#087834',   // unico verde non del logo, solo per i bottoni
+			],
+			[
 				'_id'   => 'muted_red',
 				'title' => 'Muted Red',
 				'color' => '#B85450',

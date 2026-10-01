@@ -102,6 +102,4 @@ function child_clear_elementor_cache(): void {
 	if ( class_exists( '\Elementor\Plugin' ) && isset( \Elementor\Plugin::$instance->files_manager ) ) {
 		\Elementor\Plugin::$instance->files_manager->clear_cache();
 	}
-
-	delete_option( 'elementor_css_print_method' );
 }

@@ -30,11 +30,14 @@
     border-radius: var(--theme-radius-xl);
 
     @include arrow-decoration;
+  }
 
-    &:hover {
-      background: var(--theme-black) !important;
-      border-color: var(--theme-black) !important;
-    }
+  // Hover del solo bottone solido: le varianti qui sotto hanno il loro. Senza
+  // :not() questa regola (0,4,1 + !important) batterebbe l'hover delle varianti
+  // (0,4,0 + !important) e le farebbe diventare tutte nere.
+  &:not(.btn-outlined, .btn-outlined-white, .btn-outlined-gray) a.elementor-button.elementor-button-link:hover {
+    background: var(--theme-black) !important;
+    border-color: var(--theme-black) !important;
   }
 
   &.btn-outlined {

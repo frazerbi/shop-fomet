@@ -35,7 +35,7 @@
 				return ! $input.is( ':checked' );
 			}
 
-			var value = $.trim( $input.val() || '' );
+			var value = String( $input.val() || '' ).trim();
 
 			if ( ! value ) {
 				return true;

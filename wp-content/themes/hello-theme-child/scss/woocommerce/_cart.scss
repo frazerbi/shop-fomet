@@ -145,6 +145,46 @@
               }
             }
           }
+
+          // ── Responsive: tabella prodotti impilata sotto ~768px ─────────────
+          // Dentro la stessa catena delle regole desktop qui sopra, non in
+          // fondo al widget: con un selettore più corto (0,3,3 contro 0,6,3)
+          // padding e bordi delle <td> desktop vincevano anche su mobile.
+          @media (max-width: 767px) {
+            thead {
+              display: none;
+            }
+
+            tr.cart_item {
+              display: block;
+              padding: 0.9375rem 0;
+              border-bottom: 1px solid var(--theme-gray-pale);
+            }
+
+            tr.cart_item td {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 0.3125rem 0;
+              border-bottom: none;
+
+              &[data-title]::before {
+                content: attr(data-title);
+                font-weight: 600;
+                color: var(--theme-gray-medium);
+                margin-right: 0.625rem;
+              }
+            }
+
+            td.product-remove,
+            td.product-thumbnail {
+              justify-content: flex-start;
+            }
+
+            tr.actions td {
+              justify-content: flex-end;
+            }
+          }
         }
       }
     }
@@ -394,46 +434,6 @@
             }
           }
         }
-      }
-    }
-  }
-
-  // ── Responsive: tabella prodotti impilata sotto ~768px ─────────────────────
-
-  @media (max-width: 767px) {
-    table.woocommerce-cart-form__contents {
-      thead {
-        display: none;
-      }
-
-      tr.cart_item {
-        display: block;
-        padding: 0.9375rem 0;
-        border-bottom: 1px solid var(--theme-gray-pale);
-      }
-
-      tr.cart_item td {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.3125rem 0;
-        border-bottom: none;
-
-        &[data-title]::before {
-          content: attr(data-title);
-          font-weight: 600;
-          color: var(--theme-gray-medium);
-          margin-right: 0.625rem;
-        }
-      }
-
-      td.product-remove,
-      td.product-thumbnail {
-        justify-content: flex-start;
-      }
-
-      tr.actions td {
-        justify-content: flex-end;
       }
     }
   }
