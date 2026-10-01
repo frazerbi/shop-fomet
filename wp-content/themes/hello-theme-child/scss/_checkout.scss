@@ -887,7 +887,7 @@
 
           .button {
             margin-top: 0.625rem;
-            background-color: var(--theme-primary-dark);
+            background-color: var(--theme-button);
             color: var(--theme-white) !important;
             border-radius: var(--theme-radius-xl);
           }
@@ -925,7 +925,7 @@
         font-size: 1rem;
         text-align: center;
         color: var(--theme-white) !important;
-        background-color: var(--theme-primary-dark) !important;
+        background-color: var(--theme-button) !important;
         border: none !important;
         border-radius: var(--theme-radius-xl) !important;
         transition: background-color $anim-fast $ease-out;
