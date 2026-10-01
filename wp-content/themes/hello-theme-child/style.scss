@@ -1,7 +1,6 @@
 /*!
 Theme Name: Hello Elementor Child
-Theme URI: https://github.com/elementor/hello-theme/
-Description: Hello Elementor Child is a child theme of Hello Elementor, created by Elementor team
+Description: Tema child di Hello Elementor per lo shop Fomet (WooCommerce + Elementor Pro).
 Author: Francesco Zerbinato
 Template: hello-elementor
 Version: 1.0.192
@@ -16,8 +15,6 @@ Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, fe
 // compone i partial nell'ordine in cui il CSS deve uscire nel bundle finale.
 // Non aggiungere regole qui: aggiungi/estendi un partial in scss/, oppure crea
 // un nuovo file scss/_nome.scss e aggiungilo alla lista sotto.
-
-@use "scss/abstracts/mixins" as *; // disponibili qui per eventuali regole ad-hoc future
 
 // Base: font, token CSS, reset, spaziature, tipografia, animazioni (i bottoni
 // restano tra tipografia e animazioni: è l'ordine storico di uscita del CSS)

@@ -1,38 +1,6 @@
-@use "variables" as *;
-
 // ─── Mixins ───────────────────────────────────────────────────────────────────
-
-@mixin heading-color($color) {
-  h1, h2, h3, h4, h5, h6 { color: $color; }
-}
-
-@mixin text-color($color) {
-  .elementor-text-editor,
-  .elementor-text-editor p,
-  .elementor-divider__text,
-  .elementor-heading-title,
-  .elementor-icon-box-title,
-  .elementor-icon-box-description,
-  .elementor-image-box-title,
-  .elementor-image-box-description { color: $color; }
-}
-
-@mixin theme-font($weight, $size, $spacing: null, $line-height: null) {
-  font-family: var(--theme-font) !important;
-  font-weight: $weight !important;
-  font-size: $size !important;
-  @if $spacing     { letter-spacing: $spacing !important; }
-  @if $line-height { line-height: $line-height !important; }
-}
-
-@mixin btn-solid {
-  @include theme-font(500, 17px, -0.51px);
-  color: $white !important;
-  background: $primary !important;
-  border: none !important;
-  border-radius: var(--theme-radius-xl) !important;
-  padding: 10px 30px !important;
-}
+// Mixin generici. Quelli usati solo dalle pagine WooCommerce vivono in
+// scss/woocommerce/_shared.scss.
 
 // Freccia animata (linea + punta) dopo il testo, via ::before/::after su un
 // contenitore flex — order:2/3 li piazza dopo il contenuto invece che prima
