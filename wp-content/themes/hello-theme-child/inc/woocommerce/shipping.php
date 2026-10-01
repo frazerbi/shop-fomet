@@ -70,7 +70,7 @@ function child_init_weight_shipping_method() {
 			$this->id                 = 'child_weight_shipping';
 			$this->instance_id        = absint( $instance_id );
 			$this->method_title       = __( 'Spese di spedizione a peso', 'hello-elementor-child' );
-			$this->method_description = __( 'Tariffe a scaglioni di peso, definite nel tema child (woocommerce-shipping.php).', 'hello-elementor-child' );
+			$this->method_description = __( 'Tariffe a scaglioni di peso, definite nel tema child (inc/woocommerce/shipping.php).', 'hello-elementor-child' );
 			$this->supports           = [
 				'shipping-zones',
 				'instance-settings',

@@ -142,7 +142,7 @@
       // sezioni (fatturazione in .col-1, "Spedire ad un indirizzo diverso?"
       // in .col-2), così hanno lo stesso ritmo di righe. L'ordine dei campi e
       // le classi form-row-first/-last/-wide sono decisi lato PHP in
-      // woocommerce-checkout-fields.php (la locale italiana, da sola, rende
+      // inc/woocommerce/checkout-fields.php (la locale italiana, da sola, rende
       // wide ogni campo indirizzo). Qui si neutralizza il layout a float 48%
       // nativo di WooCommerce e si passa a grid: le colonne restano allineate
       // anche quando un campo mostra un messaggio di validazione più alto
@@ -178,7 +178,7 @@
 
         // Il campo telefono viene spostato in fondo al wrapper da uno script
         // che gira dopo il render (l'ordine che arriva dal PHP, in
-        // woocommerce-checkout-fields.php, è corretto: lo si vede per un
+        // inc/woocommerce/checkout-fields.php, è corretto: lo si vede per un
         // istante al caricamento). Contro uno spostamento nel DOM il PHP non
         // può nulla — ha già finito — e nemmeno un selettore più specifico,
         // perché non è una questione di classi.
@@ -315,7 +315,7 @@
         // GDPR è visibile: il plugin rende il wrapper `display: none` per i
         // clienti loggati che hanno già espresso i consensi, e in quel caso
         // la <p> deve restare un riquadro chiuso. L'etichetta del consenso è
-        // riscritta in woocommerce-mailchimp.php.
+        // riscritta in inc/integrations/mailchimp.php.
         // Sulla <p> il test va scritto senza :has() interno (un :has() dentro
         // :has() non è valido e farebbe scartare l'intera regola).
 
@@ -390,7 +390,8 @@
             color: var(--theme-gray-dark);
 
             // Restano due <p> vuote: quella dell'introduzione, svuotata in
-            // woocommerce-mailchimp.php, e quella con cui il plugin chiude il blocco.
+            // inc/integrations/mailchimp.php, e quella con cui il plugin
+            // chiude il blocco.
             &:empty {
               display: none;
             }
@@ -945,7 +946,7 @@
 // ─── Wallet digitali (Stripe Express Checkout) bloccati a form incompleto ────
 // Wrapper/overlay/avviso creati da assets/js/express-checkout-guard.js
 // attorno a #wc-stripe-express-checkout-element (vedi
-// woocommerce-express-checkout-guard.php). .is-active = Stripe ha reso
+// inc/woocommerce/express-checkout-guard.php). .is-active = Stripe ha reso
 // visibili i bottoni; .is-locked = mancano campi obbligatori. Il blocco vero
 // è `inert` sul contenitore: qui c'è solo il segnale visivo.
 .elementor-widget-woocommerce-checkout-page {

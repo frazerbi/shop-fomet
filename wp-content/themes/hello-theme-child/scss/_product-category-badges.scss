@@ -2,8 +2,8 @@
 
 // ─── Badge categoria prodotto (shortcode) ─────────────────────────────────────
 // Stili per [product_parent_category] / [product_child_category]
-// (product-category-shortcodes.php). Il posizionamento nel Loop Grid è gestito
-// via Elementor; qui solo la differenziazione visiva fra le due tassonomie:
+// (inc/shortcodes/product-category.php). Il posizionamento nel Loop Grid è
+// gestito via Elementor; qui solo la differenziazione visiva fra le due tassonomie:
 // genitore = badge pieno (pill), figlia = etichetta testuale leggera.
 
 .product-category-parent {

@@ -1,7 +1,7 @@
 /**
  * Blocca i wallet digitali (Stripe Express Checkout) finché i campi
  * obbligatori del checkout non sono compilati.
- * Contesto e motivazioni in woocommerce-express-checkout-guard.php.
+ * Contesto e motivazioni in inc/woocommerce/express-checkout-guard.php.
  */
 ( function ( $ ) {
 	'use strict';

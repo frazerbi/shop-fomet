@@ -2,7 +2,7 @@
 /**
  * Iubenda Cookie Solution integration
  *
- * @package Ficus
+ * @package HelloElementorChild
  */
 
 add_action('wp_head', function () { ?>

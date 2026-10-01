@@ -2,20 +2,32 @@
 /**
  * Theme functions and definitions
  *
+ * Solo bootstrap: la logica vive nei moduli in inc/, uno per funzionalità.
+ *
  * @package HelloElementorChild
  */
 
-require_once __DIR__ . '/design-tokens.php';
-require_once __DIR__ . '/elementor-kit-sync.php';
-require_once __DIR__ . '/performance-optimization.php';
-require_once __DIR__ . '/product-category-shortcodes.php';
-require_once __DIR__ . '/product-content-shortcode.php';
-require_once __DIR__ . '/iubenda.php';
-require_once __DIR__ . '/woocommerce-checkout-fields.php';
-require_once __DIR__ . '/woocommerce-express-checkout-guard.php';
-require_once __DIR__ . '/woocommerce-mailchimp.php';
-require_once __DIR__ . '/woocommerce-shipping.php';
-require_once __DIR__ . '/woocommerce-shipping-zones.php';
+// ─── Moduli ───────────────────────────────────────────────────────────────────
+
+// Setup: design token (sincronizzati sul Kit Elementor), performance, SVG.
+require_once __DIR__ . '/inc/setup/design-tokens.php';
+require_once __DIR__ . '/inc/setup/elementor-kit-sync.php';
+require_once __DIR__ . '/inc/setup/performance-optimization.php';
+require_once __DIR__ . '/inc/setup/svg-upload.php';
+
+// Shortcode per il template del Loop Grid prodotti.
+require_once __DIR__ . '/inc/shortcodes/product-category.php';
+require_once __DIR__ . '/inc/shortcodes/product-content-excerpt.php';
+
+// Integrazioni con servizi/plugin terzi.
+require_once __DIR__ . '/inc/integrations/iubenda.php';
+require_once __DIR__ . '/inc/integrations/mailchimp.php';
+
+// WooCommerce: checkout e spedizioni.
+require_once __DIR__ . '/inc/woocommerce/checkout-fields.php';
+require_once __DIR__ . '/inc/woocommerce/express-checkout-guard.php';
+require_once __DIR__ . '/inc/woocommerce/shipping.php';
+require_once __DIR__ . '/inc/woocommerce/shipping-zones.php';
 
 // ─── Enqueue ─────────────────────────────────────────────────────────────────
 
@@ -28,31 +40,3 @@ function child_enqueue_scripts() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'child_enqueue_scripts', 20 );
-
-// ─── Custom Fonts ─────────────────────────────────────────────────────────────
-// Google Fonts: decommentare e aggiornare l'URL con il font scelto.
-// Font locali (file in assets/fonts/): usare @font-face in style.scss.
-
-// function child_enqueue_fonts() {
-// 	wp_enqueue_style(
-// 		'child-theme-font',
-// 		'https://fonts.googleapis.com/css2?family=FONT_NAME:wght@400;600;700&display=swap',
-// 		[],
-// 		null
-// 	);
-// }
-// add_action( 'wp_enqueue_scripts', 'child_enqueue_fonts', 10 );
-
-// ─── Supporto SVG upload ──────────────────────────────────────────────────────
-// Necessario per poter caricare logo-fomet.svg da Media Library / Site Identity.
-
-function child_allow_svg( $mimes ) {
-	$mimes['svg']  = 'image/svg+xml';
-	$mimes['svgz'] = 'image/svg+xml';
-	return $mimes;
-}
-add_filter( 'upload_mimes', 'child_allow_svg' );
-
-// ─── Elementor Kit — Global Colors & Typography ───────────────────────────────
-// I valori vengono impostati tramite design-tokens.php e propagati a Elementor
-// da elementor-kit-sync.php al momento dell'attivazione del tema.

@@ -3,7 +3,7 @@
  * Provisioning delle Shipping Zone WooCommerce.
  *
  * Crea le due zone del vecchio shop PrestaShop e ci aggancia i metodi:
- * il metodo a peso definito in woocommerce-shipping.php + il Ritiro in sede
+ * il metodo a peso definito in inc/woocommerce/shipping.php + il Ritiro in sede
  * (Local pickup nativo, 0 €).
  *
  * Non gira mai da solo: va lanciato a mano, una volta.
