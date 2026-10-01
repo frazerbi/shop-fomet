@@ -46,7 +46,9 @@
             font-family: var(--theme-font);
             background-color: var(--theme-white);
             border: 1px solid var(--theme-gray-light);
-            border-radius: var(--theme-radius-s);
+            // Stesso raggio (e stesso !important) dell'input di ricerca dei
+            // filtri in components/_filters.scss e del coupon del carrello.
+            border-radius: var(--theme-radius-s) !important;
           }
         }
 

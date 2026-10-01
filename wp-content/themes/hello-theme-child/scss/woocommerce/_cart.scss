@@ -14,6 +14,12 @@
 // eventuali markup WooCommerce "classici" altrove.
 
 .elementor-widget-woocommerce-cart {
+  // Elementor Pro dà a .e-cart-section `padding: var(--sections-padding,
+  // 16px 30px)`, che si sommava all'imbottitura interna già definita qui
+  // (celle della tabella prodotti, `.cart_totals`): azzerata ridefinendo la
+  // variabile sul wrapper, come in _my-account.scss.
+  --sections-padding: 0;
+
   // Avvisi (prodotto aggiunto/rimosso, coupon, carrello vuoto): skin
   // condivisa con checkout e Mio Account, vedi mixin notice-panel.
   @include notice-panel;
@@ -204,7 +210,9 @@
         font-family: var(--theme-font);
         background-color: var(--theme-white);
         border: 1px solid var(--theme-gray-light);
-        border-radius: var(--theme-radius-s);
+        // Stesso raggio (e stesso !important) dell'input di ricerca dei
+        // filtri in components/_filters.scss.
+        border-radius: var(--theme-radius-s) !important;
       }
 
       .e-apply-coupon {
