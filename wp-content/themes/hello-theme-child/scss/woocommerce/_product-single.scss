@@ -1,10 +1,10 @@
-@use "variables" as *;
+@use "abstracts/variables" as *;
 
 // ─── WooCommerce — Single Product Page (Elementor Pro widgets) ───────────────
 // Markup verificato dall'HTML reale della pagina prodotto: galleria
 // (.elementor-widget-woocommerce-product-images), titolo/descrizione/prezzo
 // (widget dedicati), form d'acquisto (stesso widget "Product Add to Cart" in
-// scss/_product-card.scss, vedi fix per button.single_add_to_cart_button) e
+// scss/components/_product-card.scss, vedi fix per button.single_add_to_cart_button) e
 // tabella "Informazioni aggiuntive". La sezione "Prodotti correlati" NON usa
 // il widget nativo woocommerce-product-related: è un heading widget + un
 // Loop Grid dedicato (stesso schema del grid prodotti, template Elementor a

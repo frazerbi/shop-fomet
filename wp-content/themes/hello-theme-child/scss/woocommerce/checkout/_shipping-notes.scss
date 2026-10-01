@@ -1,0 +1,79 @@
+// ─── Checkout — spedizione e note ordine ─────────────────────────────────────
+
+.elementor-widget-woocommerce-checkout-page {
+  .e-checkout__column-start {
+    #customer_details.col2-set {
+      .col-2 {
+        // Spedizione e note ordine: due pannelli distinti, stessa skin della
+        // colonna fatturazione. Come per .e-woocommerce-login-section, il
+        // pannello della spedizione avvolge anche l'intestazione: a checkbox
+        // spenta resta una striscia con il solo "Spedire ad un indirizzo
+        // diverso?", coerente con gli altri riquadri.
+        .woocommerce-shipping-fields,
+        .woocommerce-additional-fields {
+          padding: 1.5rem !important;
+          background-color: var(--theme-white-smoke) !important;
+          border-radius: var(--theme-radius-m) !important;
+          border: 1px solid var(--theme-gray-light) !important;
+        }
+
+        .woocommerce-shipping-fields {
+          margin-bottom: 1.5rem;
+
+          h3#ship-to-different-address {
+            padding-inline-start: 0 !important;
+            margin: 0;
+
+            label {
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              margin: 0;
+              cursor: pointer;
+              font: inherit;
+            }
+
+            // Il testo della domanda sta in uno <span> dentro la label, non
+            // nell'h3: senza questa regola eredita la skin dell'h3 (600 /
+            // 1.125rem) invece di leggersi come testo normale.
+            .woocommerce-form__label span {
+              font-family: var(--theme-font);
+              font-size: 1.0625rem;
+              color: var(--theme-text);
+              line-height: 1.5em;
+            }
+
+            input[type="checkbox"] {
+              width: auto;
+              margin: 0;
+              accent-color: var(--theme-primary);
+            }
+          }
+
+          // WooCommerce apre/chiude .shipping_address via slideDown, quindi a
+          // sezione chiusa (display: none) questo margine non lascia spazio
+          // morto sotto l'intestazione.
+          //
+          // Elementor Pro dà a questo blocco un suo riquadro (sfondo bianco,
+          // bordo, padding) che qui produce un pannello dentro il pannello:
+          // va azzerato. !important perché il default è id-scoped
+          // (.woocommerce #customer_details ...) e nessun selettore di sole
+          // classi lo batterebbe.
+          .shipping_address {
+            margin-top: 3.25rem;
+            padding: 0 !important;
+            background: none !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+          }
+        }
+
+        .woocommerce-additional-fields {
+          h3 {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

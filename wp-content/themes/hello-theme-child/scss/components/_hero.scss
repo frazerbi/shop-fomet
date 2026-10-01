@@ -1,4 +1,4 @@
-@use "variables" as *;
+@use "abstracts/variables" as *;
 
 // ─── Hero overlay (pagine interne) ────────────────────────────────────────────
 // Assegnare la classe .hero-overlay alla sezione/container Elementor (campo
@@ -10,7 +10,7 @@
 // sovrascriverebbe il suo background-image. L'overlay nativo ha di norma
 // opacity 0.5: qui forzata a 1 perché la dissolvenza è già nel gradiente
 // stesso. !important necessario per battere il CSS generato da Elementor
-// per quel singolo elemento (stesso pattern di scss/_product-single.scss
+// per quel singolo elemento (stesso pattern di scss/woocommerce/_product-single.scss
 // per i conflitti di specificity con Elementor).
 
 .hero-overlay::before {

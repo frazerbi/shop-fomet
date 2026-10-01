@@ -22,7 +22,7 @@
  * quelli digitati nel form, quindi una validazione PHP sui campi del form
  * non avrebbe nulla di significativo da controllare.
  *
- * Stili in scss/_checkout.scss (sezione "Wallet digitali").
+ * Stili in scss/woocommerce/checkout/_express-guard.scss.
  *
  * @package HelloElementorChild
  */

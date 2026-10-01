@@ -17,22 +17,28 @@ Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, fe
 // Non aggiungere regole qui: aggiungi/estendi un partial in scss/, oppure crea
 // un nuovo file scss/_nome.scss e aggiungilo alla lista sotto.
 
-@use "scss/mixins" as *; // disponibili qui per eventuali regole ad-hoc future
+@use "scss/abstracts/mixins" as *; // disponibili qui per eventuali regole ad-hoc future
 
-@use "scss/fonts";
-@use "scss/tokens";
-@use "scss/base";
-@use "scss/spacing";
-@use "scss/typography";
-@use "scss/buttons";
-@use "scss/animations";
-@use "scss/product-card";
-@use "scss/product-category-badges";
-@use "scss/filters";
-@use "scss/hero";
-@use "scss/image";
-@use "scss/product-single";
-@use "scss/cart";
-@use "scss/menu-cart";
-@use "scss/checkout";
-@use "scss/my-account";
+// Base: font, token CSS, reset, spaziature, tipografia, animazioni (i bottoni
+// restano tra tipografia e animazioni: è l'ordine storico di uscita del CSS)
+@use "scss/base/fonts";
+@use "scss/base/tokens";
+@use "scss/base/base";
+@use "scss/base/spacing";
+@use "scss/base/typography";
+@use "scss/components/buttons";
+@use "scss/base/animations";
+
+// Componenti: widget Elementor e pezzi del catalogo
+@use "scss/components/product-card";
+@use "scss/components/product-category-badges";
+@use "scss/components/filters";
+@use "scss/components/hero";
+@use "scss/components/image";
+
+// WooCommerce: pagine prodotto, carrello, checkout, account
+@use "scss/woocommerce/product-single";
+@use "scss/woocommerce/cart";
+@use "scss/woocommerce/menu-cart";
+@use "scss/woocommerce/checkout";
+@use "scss/woocommerce/my-account";

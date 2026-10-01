@@ -1,0 +1,32 @@
+// ─── Checkout — select paese/provincia ───────────────────────────────────────
+
+.elementor-widget-woocommerce-checkout-page {
+  .e-checkout__column-start {
+    // Select2 (paese/provincia) — riportato alla stessa skin degli altri campi.
+
+    .select2-container--default .select2-selection--single {
+      height: 2.875rem;
+      display: flex;
+      align-items: center;
+      padding: 0 0.9375rem;
+      background-color: var(--theme-white);
+      border: 1px solid var(--theme-gray-light);
+      border-radius: var(--theme-radius-s);
+    }
+
+    .select2-selection__rendered {
+      padding: 0 !important;
+      font-family: var(--theme-font);
+      color: var(--theme-text) !important;
+    }
+
+    .select2-selection__arrow {
+      height: 100% !important;
+      right: 0.625rem !important;
+    }
+
+    .select2-container--default.select2-container--open .select2-selection--single {
+      border: 2px solid var(--theme-primary);
+    }
+  }
+}

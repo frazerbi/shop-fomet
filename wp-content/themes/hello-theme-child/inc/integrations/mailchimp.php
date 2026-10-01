@@ -11,7 +11,7 @@
  * che riceve l'HTML completo (verificato su
  * includes/class-mailchimp-woocommerce-newsletter.php, ramo master).
  *
- * Stili in scss/_checkout.scss (sezione newsletter dentro .col-1).
+ * Stili in scss/woocommerce/checkout/_billing.scss (newsletter dentro .col-1).
  *
  * @package HelloElementorChild
  */

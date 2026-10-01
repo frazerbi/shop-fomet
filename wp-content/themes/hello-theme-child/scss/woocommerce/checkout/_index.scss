@@ -1,0 +1,28 @@
+// ─── WooCommerce — Checkout (Elementor Pro widget "woocommerce-checkout-page") ─
+// Markup verificato dall'HTML reale del widget: wrapper
+// .elementor-widget-woocommerce-checkout-page > .woocommerce > form.checkout >
+// .e-checkout__container > .e-checkout__column, con due colonne
+// (.e-checkout__column-start = #customer_details.col2-set con dati
+// fatturazione/spedizione/note; .e-checkout__column-end = pannello
+// .e-checkout__column-inner.e-sticky-right-column con riepilogo ordine,
+// coupon e pagamento). Come in _cart.scss, .e-checkout__column e
+// .e-checkout__column-start/-end sono classi combinate sullo stesso div
+// (class="e-checkout__column e-checkout__column-start"), non genitore/figlio
+// — selettori composti, mai annidati come discendenti. Il layout a griglia
+// (form-row-first/last, col2-set) resta quello nativo WooCommerce
+// (frontend.css), qui si restyla solo skin: font, colori, bordi, bottoni,
+// più un pannello --theme-white-smoke/--theme-radius-m per colonna (mirror
+// dei pannelli .e-shop-table/.e-cart-totals della pagina Carrello).
+//
+// Un file per sezione del widget, nell'ordine in cui escono nel CSS finale.
+
+@use "general";
+@use "login";
+@use "fields";
+@use "billing";
+@use "shipping-notes";
+@use "select2";
+@use "order-review";
+@use "coupon";
+@use "payment";
+@use "express-guard";

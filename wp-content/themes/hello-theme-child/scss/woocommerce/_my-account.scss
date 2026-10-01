@@ -1,5 +1,5 @@
-@use "variables" as *;
-@use "mixins" as *;
+@use "abstracts/variables" as *;
+@use "woocommerce/shared" as *;
 
 // ─── WooCommerce — My Account (Elementor Pro widget "woocommerce-my-account") ─
 // Markup verificato dall'HTML reale del widget per il tab "Bacheca": wrapper
@@ -123,7 +123,7 @@
   // Markup nativo WooCommerce (form-login.php), non un sotto-widget Elementor:
   // #customer_login.col2-set con .u-column1.col-1 (form login) e .u-column2
   // .col-2 (form registrazione). Le due colonne diventano pannelli come in
-  // _checkout.scss (--theme-white-smoke + --theme-radius-m + bordo); campi e
+  // checkout/ (--theme-white-smoke + --theme-radius-m + bordo); campi e
   // bottoni arrivano dal mixin condiviso account-form-fields.
 
   #customer_login {

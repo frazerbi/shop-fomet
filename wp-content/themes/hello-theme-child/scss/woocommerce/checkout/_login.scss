@@ -1,0 +1,107 @@
+@use "abstracts/variables" as *;
+@use "woocommerce/shared" as *;
+
+// ─── Checkout — login cliente registrato ─────────────────────────────────────
+
+.elementor-widget-woocommerce-checkout-page {
+  .e-checkout__column-start {
+    // Sezione login (cliente già registrato): è sorella di #customer_details
+    // dentro la stessa colonna, quindi riceve lo stesso pannello
+    // --theme-white-smoke/--theme-radius-m dei blocchi fatturazione e note.
+    // Il pannello avvolge tutta la sezione, non solo il form: da chiusa resta
+    // una striscia con il solo link "Clicca qui per accedere", coerente con
+    // gli altri riquadri. Campi/label/bottone arrivano dal mixin condiviso
+    // account-form-fields (stesso markup nativo WooCommerce della pagina Mio
+    // Account), con !important sulle proprietà in conflitto perché il CSS di
+    // default di Elementor Pro per questo widget è id-scoped.
+    .e-woocommerce-login-section {
+      margin-bottom: 1.5rem;
+      padding: 1.5rem !important;
+      background-color: var(--theme-white-smoke) !important;
+      border-radius: var(--theme-radius-m) !important;
+      border: 1px solid var(--theme-gray-light) !important;
+
+      .woocommerce-form-login-toggle {
+        margin: 0;
+        font-family: var(--theme-font);
+        font-size: 0.9375rem;
+        color: var(--theme-text);
+
+        .e-show-login {
+          color: var(--theme-primary-dark);
+          text-decoration: underline;
+          transition: color $anim-fast $ease-out;
+
+          &:hover {
+            color: var(--theme-black);
+          }
+        }
+      }
+
+      // Contenuto mostrato dal toggle: Elementor lo apre via inline style, qui
+      // serve solo staccarlo dal titolo quando è visibile.
+      .e-woocommerce-login-anchor {
+        margin-top: 1.25rem;
+      }
+
+      .e-woocommerce-login-nudge {
+        margin: 0 0 1.25rem;
+        font-family: var(--theme-font);
+        font-size: 0.8125rem;
+        line-height: 1.5;
+        color: var(--theme-gray-medium);
+      }
+
+      @include account-form-fields;
+
+      // La label segnaposto sopra il bottone (&nbsp;) serve solo ad allinearlo
+      // ai campi: su mobile, dove le colonne si impilano, lascerebbe un vuoto.
+      .e-login-label {
+        @media (max-width: 767px) {
+          display: none;
+        }
+      }
+
+      .e-login-actions-wrap {
+        margin-top: 0.75rem;
+        font-family: var(--theme-font);
+        font-size: 0.8125rem;
+
+        .woocommerce-form-login__rememberme {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin: 0;
+          font-size: inherit;
+          color: var(--theme-gray-dark);
+          cursor: pointer;
+
+          input[type="checkbox"] {
+            flex: 0 0 auto;
+            margin: 0;
+            accent-color: var(--theme-primary);
+          }
+        }
+
+        .lost_password {
+          margin: 0;
+
+          a {
+            color: var(--theme-gray-dark);
+            text-decoration: underline;
+            transition: color $anim-fast $ease-out;
+
+            &:hover {
+              color: var(--theme-primary-dark);
+            }
+          }
+        }
+      }
+
+      // Messaggi di errore del login (riempito via AJAX dal widget).
+      .elementor-woocommerce-login-messages:not(:empty) {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

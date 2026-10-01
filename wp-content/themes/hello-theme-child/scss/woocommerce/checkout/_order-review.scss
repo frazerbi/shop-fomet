@@ -1,0 +1,79 @@
+@use "woocommerce/shared" as *;
+
+// ─── Checkout — riepilogo ordine ─────────────────────────────────────────────
+
+.elementor-widget-woocommerce-checkout-page {
+  .e-checkout__column-end {
+    .e-checkout__column-inner {
+      .e-checkout__order_review {
+        background-color: var(--theme-white-smoke);
+        border-radius: var(--theme-radius-m);
+        padding: 1.5rem;
+        border: 1px solid var(--theme-gray-light);
+
+        table.shop_table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 1.25rem;
+
+          th,
+          td {
+            padding: 0.625rem 0;
+            font-family: var(--theme-font);
+            font-size: 0.9rem;
+            color: var(--theme-text);
+            border-bottom: 1px solid var(--theme-gray-light);
+            text-align: left;
+          }
+
+          thead th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: var(--theme-gray-medium);
+          }
+
+          td.product-total,
+          th.product-total {
+            text-align: right;
+          }
+
+          tfoot td {
+            text-align: right;
+          }
+
+          tr.order-total th,
+          tr.order-total td {
+            padding-top: 0.9375rem;
+            font-weight: 600;
+            font-size: 1.0625rem;
+            border-bottom: none;
+          }
+
+          // Righe spedizione (metodi) e IVA: stessa pelle del carrello, dal
+          // mixin condiviso. Qui non c'è il calcolatore di spedizione — il
+          // widget checkout mostra solo la lista dei metodi. L'allineamento a
+          // sinistra della td del mixin sovrascrive il `tfoot td` sopra, che
+          // vale per gli importi.
+          @include shipping-totals-rows;
+        }
+      }
+      .e-checkout__order_review-2 {
+        background-color: var(--theme-white-smoke);
+        border-radius: var(--theme-radius-m);
+        padding: 1.5rem;
+        border: 1px solid var(--theme-gray-light);
+        // #payment: il contenitore nativo WooCommerce ha sfondo/raggio propri
+        // — qui vive già dentro il pannello .e-checkout__order_review-2, quindi
+        // si azzera tutto e resta solo il contenuto.
+        .woocommerce-checkout-payment {
+          background-color: transparent !important;
+          border-radius: 0 !important;  
+          padding: 0 !important;
+          border: none !important;
+
+        }
+      }
+    }
+  }
+}

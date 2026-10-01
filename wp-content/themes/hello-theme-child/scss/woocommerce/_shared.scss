@@ -1,84 +1,14 @@
-@use "variables" as *;
+@use "abstracts/variables" as *;
 
-// ─── Mixins ───────────────────────────────────────────────────────────────────
-
-@mixin heading-color($color) {
-  h1, h2, h3, h4, h5, h6 { color: $color; }
-}
-
-@mixin text-color($color) {
-  .elementor-text-editor,
-  .elementor-text-editor p,
-  .elementor-divider__text,
-  .elementor-heading-title,
-  .elementor-icon-box-title,
-  .elementor-icon-box-description,
-  .elementor-image-box-title,
-  .elementor-image-box-description { color: $color; }
-}
-
-@mixin theme-font($weight, $size, $spacing: null, $line-height: null) {
-  font-family: var(--theme-font) !important;
-  font-weight: $weight !important;
-  font-size: $size !important;
-  @if $spacing     { letter-spacing: $spacing !important; }
-  @if $line-height { line-height: $line-height !important; }
-}
-
-@mixin btn-solid {
-  @include theme-font(500, 17px, -0.51px);
-  color: $white !important;
-  background: $primary !important;
-  border: none !important;
-  border-radius: var(--theme-radius-xl) !important;
-  padding: 10px 30px !important;
-}
-
-// Freccia animata (linea + punta) dopo il testo, via ::before/::after su un
-// contenitore flex — order:2/3 li piazza dopo il contenuto invece che prima
-// (::before/::after sono per definizione primo/ultimo figlio nel DOM).
-// L'host deve avere display: inline-flex/flex + align-items: center.
-@mixin arrow-decoration {
-  &::before,
-  &::after {
-    content: "";
-    display: block;
-    position: relative;
-    left: 0;
-    transition: left 0.3s ease-in-out;
-  }
-
-  &::before {
-    order: 2;
-    width: 3.125rem;
-    height: 1px;
-    background-color: currentColor;
-  }
-
-  &::after {
-    order: 3;
-    width: 0.9375rem;
-    height: 0.9375rem;
-    margin-left: -1.75rem;
-    border-bottom: 1px solid currentColor;
-    border-right: 1px solid currentColor;
-    transform: rotate(-45deg);
-  }
-
-  &:hover,
-  &:focus {
-    &::before,
-    &::after {
-      left: 0.625rem;
-    }
-  }
-}
+// ─── Mixin condivisi tra le pagine WooCommerce ───────────────────────────────
+// Pelle comune a carrello, checkout e Mio Account (markup WooCommerce nativo
+// identico nelle tre pagine). Nessun output CSS: vanno inclusi con @include.
 
 // Righe "Spedizione" e "IVA" della tabella totali (WooCommerce
 // ul#shipping_method + tr.tax-rate). Markup identico nel carrello
 // (.cart_totals table.shop_table) e nel checkout
 // (table.woocommerce-checkout-review-order-table), quindi la pelle vive qui e
-// viene inclusa da _cart.scss e _checkout.scss. Il calcolatore di spedizione e
+// viene inclusa da _cart.scss e checkout/_order-review.scss. Il calcolatore di spedizione e
 // la destinazione esistono solo nel carrello e restano in _cart.scss.
 @mixin shipping-totals-rows {
   // Layout della tabella totali: niente table layout, ma flex riga per riga.
@@ -251,7 +181,8 @@
 // !important perché il CSS di default di Elementor Pro per il widget
 // woocommerce-my-account è id-scoped (.elementor-element-xxxx ...), che nessun
 // selettore di sole classi batte — convenzione di progetto, non si replica l'id.
-// Usato in _my-account.scss (#customer_login e .woocommerce-ResetPassword).
+// Usato in _my-account.scss (#customer_login e .woocommerce-ResetPassword) e
+// nel login del checkout (checkout/_login.scss).
 @mixin account-form-fields {
   label {
     display: block;
@@ -339,7 +270,7 @@
 // --links-normal-color a 0,4,1 in Mio Account, `a.button:hover` a 0,6,1).
 // Stesso motivo per font-weight (nel carrello il CSS di WooCommerce/Elementor
 // per i bottoni delle notice lo sovrascrive). Usato in _cart.scss,
-// _checkout.scss e _my-account.scss.
+// checkout/_general.scss e _my-account.scss.
 @mixin notice-panel {
   .woocommerce-error,
   .woocommerce-message,

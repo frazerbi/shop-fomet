@@ -2,8 +2,8 @@
   "name": "hello-theme-child",
   "private": true,
   "scripts": {
-    "watch": "sass style.scss style.css --watch --no-source-map",
-    "build": "sass style.scss style.css --style=compressed --no-source-map"
+    "watch": "sass --load-path=scss style.scss style.css --watch --no-source-map",
+    "build": "sass --load-path=scss style.scss style.css --style=compressed --no-source-map"
   },
   "devDependencies": {
     "sass": "^1.87.0"

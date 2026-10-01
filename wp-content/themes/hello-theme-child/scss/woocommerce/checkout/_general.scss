@@ -1,0 +1,17 @@
+@use "woocommerce/shared" as *;
+
+// ─── Checkout — avvisi e titoli ──────────────────────────────────────────────
+
+.elementor-widget-woocommerce-checkout-page {
+  // Avvisi (errori di validazione, messaggi, info): skin condivisa con Mio
+  // Account, vedi mixin notice-panel.
+  @include notice-panel;
+
+  h3 {
+    margin: 0 0 1.25rem;
+    font-family: var(--theme-font);
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--theme-text);
+  }
+}

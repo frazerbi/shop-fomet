@@ -1,4 +1,4 @@
-@use "mixins" as *;
+@use "abstracts/mixins" as *;
 
 // ─── Button Widget ────────────────────────────────────────────────────────────
 // Le varianti condividono radius (--theme-radius-xl → pillola a qualunque
@@ -119,7 +119,7 @@
 // ─── Arrow CTA ────────────────────────────────────────────────────────────────
 // Link con freccia animata all'hover (da fomet.it). Classe libera, applicabile
 // via "CSS Classes" di Elementor a un Text/Icon Link — stessa animazione
-// (mixin arrow-decoration, scss/_mixins.scss) usata di default sul bottone
+// (mixin arrow-decoration, scss/abstracts/_mixins.scss) usata di default sul bottone
 // sopra; qui serve per applicarla a un elemento che non è un Button widget.
 
 .btn-arrow {

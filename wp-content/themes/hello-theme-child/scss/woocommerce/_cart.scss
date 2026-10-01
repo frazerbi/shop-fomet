@@ -1,5 +1,5 @@
-@use "variables" as *;
-@use "mixins" as *;
+@use "abstracts/variables" as *;
+@use "woocommerce/shared" as *;
 
 // ─── WooCommerce — Cart (Elementor Pro widget "woocommerce-cart.default") ─────
 // Markup verificato dall'HTML reale del widget: wrapper

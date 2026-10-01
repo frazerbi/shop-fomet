@@ -1,0 +1,172 @@
+@use "abstracts/variables" as *;
+
+// ─── Checkout — griglia e skin dei campi ─────────────────────────────────────
+
+// Pannello, mirror di .e-shop-table.e-cart-section nella pagina Carrello.
+// Le regole di default di Elementor Pro sui campi form usano un selettore
+// con id (.woocommerce #customer_details .form-row .input-text) che
+// batterebbe qualunque nostro selettore di sole classi — per non doverlo
+// replicare qui si usa !important sulle proprietà in conflitto
+// (background-color, border, border-radius, color, padding).
+.elementor-widget-woocommerce-checkout-page {
+  .e-checkout__column-start {
+    #customer_details.col2-set {
+      // Griglia a due colonne per i campi cliente, condivisa dalle due
+      // sezioni (fatturazione in .col-1, "Spedire ad un indirizzo diverso?"
+      // in .col-2), così hanno lo stesso ritmo di righe. L'ordine dei campi e
+      // le classi form-row-first/-last/-wide sono decisi lato PHP in
+      // inc/woocommerce/checkout-fields.php (la locale italiana, da sola, rende
+      // wide ogni campo indirizzo). Qui si neutralizza il layout a float 48%
+      // nativo di WooCommerce e si passa a grid: le colonne restano allineate
+      // anche quando un campo mostra un messaggio di validazione più alto
+      // dell'altro, cosa che con i float fa scalinare la riga successiva.
+      .woocommerce-billing-fields__field-wrapper,
+      .woocommerce-shipping-fields__field-wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 1rem;
+
+        > .form-row {
+          float: none !important;
+          width: auto !important;
+          margin-right: 0 !important;
+          clear: none !important;
+        }
+
+        > .form-row-wide {
+          grid-column: 1 / -1;
+        }
+
+        // Alcuni script riapplicano form-row-wide dopo il render — Stripe lo
+        // fa sul proprio campo email. Effetto: il campo si prende tutta la
+        // riga e quello che gli sta a fianco scivola sotto (il "salto"
+        // visibile un attimo dopo il caricamento). Non possiamo battere il JS
+        // sul tempo, quindi lo battiamo sulla specificità: due classi (0,2,0)
+        // contro una (0,1,0), e comunque più avanti nel foglio.
+        > .form-row-first.form-row-wide,
+        > .form-row-last.form-row-wide,
+        > .form-row.stripe-gateway-checkout-email-field {
+          grid-column: auto;
+        }
+
+        // Il campo telefono viene spostato in fondo al wrapper da uno script
+        // che gira dopo il render (l'ordine che arriva dal PHP, in
+        // inc/woocommerce/checkout-fields.php, è corretto: lo si vede per un
+        // istante al caricamento). Contro uno spostamento nel DOM il PHP non
+        // può nulla — ha già finito — e nemmeno un selettore più specifico,
+        // perché non è una questione di classi.
+        //
+        // `order` sì: su una griglia decide la posizione visiva a
+        // prescindere da dove il nodo sia finito. A parità di `order` vale
+        // l'ordine del DOM, quindi bastano due gruppi: l'anagrafica prima,
+        // il telefono subito dopo, tutto il resto com'è.
+        //
+        // Le colonne sono fissate sull'id per lo stesso motivo (le classi
+        // form-row-* possono essere riscritte): è l'unica eccezione al "solo
+        // classi" del progetto, e vale solo per questa coppia.
+        > .form-row {
+          order: 3;
+        }
+
+        > #billing_first_name_field,
+        > #billing_last_name_field,
+        > #billing_email_field,
+        > #shipping_first_name_field,
+        > #shipping_last_name_field {
+          order: 1;
+        }
+
+        > #billing_phone_field,
+        > #shipping_phone_field {
+          order: 2;
+        }
+
+        > #billing_email_field,
+        > #shipping_phone_field {
+          grid-column: 1;
+        }
+
+        > #billing_phone_field {
+          grid-column: 2;
+        }
+
+        @media (max-width: 767px) {
+          > #billing_email_field,
+          > #billing_phone_field,
+          > #shipping_phone_field {
+            grid-column: auto;
+          }
+        }
+
+        // I .clear nativi servono solo a chiudere i float: con grid
+        // diventerebbero celle vuote che sfasano le colonne.
+        > .clear {
+          display: none;
+        }
+
+        @media (max-width: 767px) {
+          grid-template-columns: minmax(0, 1fr);
+
+          > .form-row-wide {
+            grid-column: auto;
+          }
+        }
+      }
+
+      // Skin dei campi, comune a fatturazione, spedizione e note ordine
+      // (anche #order_comments_field è un .form-row).
+      .form-row {
+        label {
+          display: block;
+          margin-bottom: 0.375rem;
+          font-family: var(--theme-font);
+          font-size: 0.875rem;
+          color: var(--theme-text);
+
+          .required {
+            color: var(--theme-accent);
+          }
+
+          .optional {
+            color: var(--theme-gray-medium);
+            font-size: 0.8125rem;
+          }
+        }
+
+        .input-text,
+        textarea,
+        select {
+          width: 100%;
+          padding: 0.75rem 0.9375rem !important;
+          font-family: var(--theme-font);
+          color: var(--theme-text) !important;
+          background-color: var(--theme-white) !important;
+          border: 1px solid var(--theme-gray-light) !important;
+          border-radius: var(--theme-radius-s) !important;
+          transition: border-color $anim-fast $ease-out, border-width $anim-fast $ease-out;
+
+          &::placeholder {
+            color: var(--theme-gray-medium);
+          }
+
+          &:focus {
+            outline: none;
+            border: 2px solid var(--theme-primary) !important;
+            padding: 0.6875rem 0.875rem !important;
+          }
+        }
+
+        textarea {
+          min-height: 5rem;
+        }
+
+        &.woocommerce-invalid {
+          .input-text,
+          select {
+            border-color: var(--theme-accent);
+          }
+        }
+      }
+    }
+  }
+}

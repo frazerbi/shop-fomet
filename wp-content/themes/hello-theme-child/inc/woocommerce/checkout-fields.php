@@ -33,7 +33,8 @@
  * L'ordine è espresso via `priority`: WooCommerce ordina i campi con un uasort
  * sulle priorità, non sull'ordine dell'array. Il layout a due colonne vero e
  * proprio è CSS — vedi la griglia su .woocommerce-billing-fields__field-wrapper
- * in scss/_checkout.scss (le classi native sono float al 48%, lì resettate).
+ * in scss/woocommerce/checkout/_fields.scss (le classi native sono float al
+ * 48%, lì resettate).
  *
  * @package HelloElementorChild
  */
