@@ -22,23 +22,23 @@
   // (scopato su .elementor-element-xxxx) continua a vincere, com'è giusto.
   --general-text-color: var(--theme-text);
   --typography-section-titles-color: var(--theme-text);
-  --links-normal-color: var(--theme-primary-dark);
+  --links-normal-color: var(--theme-primary);
   --links-hover-color: var(--theme-black);
   --login-messages-color: var(--theme-gray-dark);
   --forms-labels-color: var(--theme-text);
   --checkboxes-color: var(--theme-text);
   --tabs-normal-color: var(--theme-text);
-  --tabs-hover-color: var(--theme-primary-dark);
-  --tabs-active-color: var(--theme-primary-dark);
+  --tabs-hover-color: var(--theme-primary);
+  --tabs-active-color: var(--theme-primary);
   --tabs-active-border-color: var(--theme-primary);
   --tables-title-color: var(--theme-text);
   --tables-items-color: var(--theme-gray-dark);
-  --tables-links-normal-color: var(--theme-primary-dark);
+  --tables-links-normal-color: var(--theme-primary);
   --tables-links-hover-color: var(--theme-black);
   --tables-divider-border-color: var(--theme-gray-light);
-  --tables-buttons-border-color: var(--theme-button);
-  --tables-button-normal-text-color: var(--theme-button);
-  --tables-button-hover-text-color: var(--theme-button);
+  --tables-buttons-border-color: var(--theme-primary);
+  --tables-button-normal-text-color: var(--theme-primary);
+  --tables-button-hover-text-color: var(--theme-primary);
   --tables-button-border-radius: var(--theme-radius-xl);
   --sections-border-color: var(--theme-gray-light);
   --sections-border-radius: var(--theme-radius-m);
@@ -96,14 +96,14 @@
         transition: color $anim-fast $ease-out, border-color $anim-fast $ease-out, background-color $anim-fast $ease-out;
 
         &:hover {
-          color: var(--theme-primary-dark);
+          color: var(--theme-primary);
           background-color: var(--theme-white-smoke);
         }
       }
 
       &.is-active a {
         font-weight: 600;
-        color: var(--theme-primary-dark);
+        color: var(--theme-primary);
         background-color: var(--theme-white-smoke);
         border-left-color: var(--theme-primary);
       }
@@ -199,7 +199,7 @@
         transition: color $anim-fast $ease-out;
 
         &:hover {
-          color: var(--theme-primary-dark);
+          color: var(--theme-primary);
         }
       }
     }
@@ -272,7 +272,7 @@
       }
 
       &.strong {
-        background-color: var(--theme-primary-dark);
+        background-color: var(--theme-primary);
       }
     }
 
@@ -322,7 +322,7 @@
     }
 
     a {
-      color: var(--theme-primary-dark);
+      color: var(--theme-primary);
       text-decoration: underline;
 
       &:hover {

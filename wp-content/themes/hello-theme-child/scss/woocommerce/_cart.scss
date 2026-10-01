@@ -99,7 +99,7 @@
             color: var(--theme-text);
 
             &:hover {
-              color: var(--theme-primary-dark);
+              color: var(--theme-primary);
             }
           }
 
@@ -307,7 +307,7 @@
               font-family: var(--theme-font);
               font-size: 0.8125rem;
               font-weight: 500;
-              color: var(--theme-primary-dark);
+              color: var(--theme-primary);
               text-decoration: underline;
               text-underline-offset: 0.2em;
 
@@ -423,7 +423,7 @@
             font-size: 1rem;
             text-align: center;
             color: var(--theme-white) !important;
-            background-color: var(--theme-button);
+            background-color: var(--theme-primary);
             border: none;
             border-radius: var(--theme-radius-xl);
             transition: background-color $anim-fast $ease-out;

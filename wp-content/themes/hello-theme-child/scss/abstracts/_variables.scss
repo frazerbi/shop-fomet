@@ -3,10 +3,8 @@
 // anche su Elementor Kit da inc/setup/elementor-kit-sync.php). Palette e radius
 // scale allineate al sito principale fomet.it (tema "ficus").
 
-$primary:      #179D38; // Fomet Green (verde del logo)
-$primary-dark: #038037; // Fomet Green Dark — testo verde/hover: 5.06:1 su bianco (AA), #179D38 solo 3.55:1
-$button:       #087834; // Verde pulsanti (richiesta esplicita, 2026-10-01) — unica eccezione alla regola "solo verdi del logo"; 5.6:1 su bianco (AA)
-$secondary:    #D1EBD7; // Fomet Green Light
+$primary:   #047734; // Fomet Green (verde del logo) — unico verde del tema: testo, bottoni, accenti; 5.7:1 su bianco (AA)
+$secondary: #D1EBD7; // Fomet Green Light
 $text:      #282828; // Shadow Gray
 $accent:    #D21D22; // Flag Red
 $black:     #000000;

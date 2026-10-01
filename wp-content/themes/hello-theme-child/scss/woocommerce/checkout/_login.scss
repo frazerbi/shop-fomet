@@ -28,7 +28,7 @@
         color: var(--theme-text);
 
         .e-show-login {
-          color: var(--theme-primary-dark);
+          color: var(--theme-primary);
           text-decoration: underline;
           transition: color $anim-fast $ease-out;
 
@@ -92,7 +92,7 @@
             transition: color $anim-fast $ease-out;
 
             &:hover {
-              color: var(--theme-primary-dark);
+              color: var(--theme-primary);
             }
           }
         }

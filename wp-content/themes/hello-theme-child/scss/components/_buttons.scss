@@ -23,10 +23,10 @@
     letter-spacing: inherit;
     line-height: inherit;
     padding: .5rem 1.8rem;
-    background: var(--theme-button);
+    background: var(--theme-primary);
     color: var(--theme-white);
     transition: background .2s ease, color .2s ease !important;
-    border: 1px solid var(--theme-button);
+    border: 1px solid var(--theme-primary);
     border-radius: var(--theme-radius-xl);
 
     @include arrow-decoration;
@@ -52,15 +52,15 @@
       line-height: inherit;
       padding: .5rem 1.8rem !important;
       background-color: transparent !important;
-      color: var(--theme-button) !important;
-      border: 1px solid var(--theme-button) !important;
+      color: var(--theme-primary) !important;
+      border: 1px solid var(--theme-primary) !important;
       border-radius: var(--theme-radius-xl) !important;
       transition: background-color .2s ease, color .2s ease !important;
 
       @include arrow-decoration;
 
       &:hover {
-        background-color: var(--theme-button) !important;
+        background-color: var(--theme-primary) !important;
         color: var(--theme-white) !important;
       }
     }
@@ -86,7 +86,7 @@
       @include arrow-decoration;
 
       &:hover {
-        background-color: var(--theme-button) !important;
+        background-color: var(--theme-primary) !important;
         color: var(--theme-white) !important;
       }
     }

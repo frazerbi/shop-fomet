@@ -23,7 +23,7 @@ function child_design_tokens(): array {
 			[
 				'_id'   => 'primary',
 				'title' => 'Primary',
-				'color' => '#179D38',   // Fomet Green
+				'color' => '#047734',   // Fomet Green — unico verde del tema
 			],
 			[
 				'_id'   => 'secondary',
@@ -78,15 +78,19 @@ function child_design_tokens(): array {
 				'title' => 'White',
 				'color' => '#FFFFFF',
 			],
+			// primary_dark e button: verdi separati fino al 2026-10-01, ora alias
+			// di Primary. Restano nel Kit perché il sync sostituisce l'intero
+			// custom_colors: toglierli lascerebbe senza colore i widget Elementor
+			// che li referenziano come Global Color.
 			[
 				'_id'   => 'primary_dark',
-				'title' => 'Primary dark',
-				'color' => '#038037',
+				'title' => 'Primary dark (= Primary)',
+				'color' => '#047734',
 			],
 			[
 				'_id'   => 'button',
-				'title' => 'Button',
-				'color' => '#087834',   // unico verde non del logo, solo per i bottoni
+				'title' => 'Button (= Primary)',
+				'color' => '#047734',
 			],
 			[
 				'_id'   => 'muted_red',
