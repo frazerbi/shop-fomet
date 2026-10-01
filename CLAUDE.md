@@ -42,6 +42,7 @@ CSS is authored in SCSS and compiled to `style.css`. Never edit `style.css` dire
 | `scss/_animations.scss` | keyframes + `.animate-*`/`.will-animate` utilities |
 | `scss/_product-card.scss` | product grid card (`ul.products li.product`) + widget "Product Add to Cart" (Loop Grid) |
 | `scss/_product-category-badges.scss` | `.product-category-parent`/`.product-category-child` — visual styling for the `[product_parent_category]`/`[product_child_category]` shortcodes (see `product-category-shortcodes.php` below) |
+| `scss/_filters.scss` | **JetSmartFilters** widgets in the product archive's "Filtri" column (from real HTML, 2026-10-01, JSF 3.7.3) — deliberately minimal, per user request: search input only gets `--theme-radius-s`; category checkboxes become radio-style dots (black 1px circle, filled black with an inset white ring when checked, plugin tick icon hidden), labels at `line-height: 1.3`. The plugin's `public.css` is printed by a `<link>` *inside* the widget, i.e. after `style.css`, so equal specificity loses — selectors start from the widget wrapper and repeat the plugin's chain. The mobile-only `jet-smart-filters-select` widget is not styled. |
 | `scss/_hero.scss` | `.hero-overlay` — dark gradient overlay class for internal-page hero sections/containers with a background image |
 | `scss/_image.scss` | Elementor "Image" widget (`.elementor-widget-image img`) — border-radius only |
 | `scss/_product-single.scss` | single product page (gallery, title, content, price, additional info, related) |

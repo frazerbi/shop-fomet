@@ -1,0 +1,40 @@
+// ─── Filtri prodotti (JetSmartFilters) ────────────────────────────────────────
+// Widget Elementor di JetSmartFilters nella colonna "Filtri" dell'archivio
+// prodotti (markup verificato 2026-10-01, JetSmartFilters 3.7.3).
+//
+// Specificità: il plugin stampa il suo public.css con un <link> dentro il
+// widget, quindi DOPO style.css — a parità di specificità vince lui. Per questo
+// i selettori partono dal wrapper del widget e ripetono la catena del plugin.
+
+// Ricerca: solo bordi arrotondati. !important perché il reset di Hello
+// Elementor (input[type=search]) e gli eventuali "Campi modulo" del Kit hanno
+// selettori propri sui campi.
+.elementor-widget-jet-smart-filters-search .jet-smart-filters-search .jet-search-filter__input {
+  border-radius: var(--theme-radius-s) !important;
+}
+
+// Checkbox categorie → pallini: cerchio con bordo nero, pallino nero se
+// selezionata (anello bianco interno via box-shadow inset). L'icona di spunta
+// del plugin non serve più.
+.elementor-widget-jet-smart-filters-checkboxes .jet-checkboxes-list .jet-checkboxes-list__item {
+  .jet-checkboxes-list__decorator {
+    background-color: transparent;
+    border: 1px solid var(--theme-black);
+    border-radius: 50%;
+  }
+
+  .jet-checkboxes-list__checked-icon {
+    display: none;
+  }
+
+  // Interlinea contenuta: le etichette lunghe (es. "Fertirriganti Organici &
+  // Organo-Minerali") vanno a capo senza aprirsi troppo.
+  .jet-checkboxes-list__label {
+    line-height: 1.3;
+  }
+
+  .jet-checkboxes-list__input:checked + .jet-checkboxes-list__button .jet-checkboxes-list__decorator {
+    background-color: var(--theme-black);
+    box-shadow: inset 0 0 0 2px var(--theme-white);
+  }
+}
