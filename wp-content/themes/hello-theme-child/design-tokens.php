@@ -116,7 +116,7 @@ function child_design_tokens(): array {
 				'title'                  => 'Text',
 				'typography_typography'  => 'custom',
 				'typography_font_family' => 'Sora',
-				'typography_font_weight' => '400',
+				'typography_font_weight' => '300',
 			],
 			[
 				'_id'                    => 'accent',

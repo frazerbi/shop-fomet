@@ -38,7 +38,6 @@
             font-weight: 600;
             font-size: 0.8125rem;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
             color: var(--theme-gray-medium);
             text-align: left;
             border-bottom: 1px solid var(--theme-gray-pale);
@@ -218,7 +217,7 @@
           }
 
           th {
-            font-weight: 400;
+            font-weight: 300;
           }
 
           td {
@@ -296,7 +295,6 @@
                 font-size: 0.75rem;
                 font-weight: 600;
                 text-transform: uppercase;
-                letter-spacing: 0.03em;
                 color: var(--theme-gray-medium);
 
                 .required {
