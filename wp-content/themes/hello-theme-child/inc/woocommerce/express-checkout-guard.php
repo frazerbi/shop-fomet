@@ -64,3 +64,74 @@ function child_enqueue_express_checkout_guard() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'child_enqueue_express_checkout_guard', 20 );
+
+/**
+ * Sposta i bottoni wallet sotto i metodi di pagamento.
+ *
+ * Stripe li stampa su `woocommerce_checkout_before_customer_details` a
+ * priorità 1, cioè prima che il widget Checkout di Elementor Pro (priorità 5)
+ * apra le colonne: finiscono sopra tutto il checkout. Qui vanno su
+ * `woocommerce_checkout_order_review` a 30, dopo #payment (stampato a 20):
+ * dentro il pannello .e-checkout__order_review-2, sotto "Effettua ordine".
+ *
+ * Il punto è scelto perché resta *fuori* dai frammenti che WooCommerce
+ * sostituisce a ogni `update_checkout` (.woocommerce-checkout-payment e
+ * .woocommerce-checkout-review-order-table): dentro #payment il contenitore
+ * verrebbe ridisegnato vuoto e i bottoni montati da Stripe sparirebbero.
+ * Lo script di Stripe cerca il contenitore per id, ovunque sia in pagina.
+ *
+ * Stripe registra i suoi hook su `init` (priorità 11), quindi lo spostamento
+ * va fatto dopo: `wp`. Se il plugin cambia hook o accessor, has_action()
+ * fallisce e i bottoni restano semplicemente dove li mette Stripe.
+ */
+function child_move_express_checkout_buttons() {
+	if ( ! class_exists( 'WC_Stripe' ) ) {
+		return;
+	}
+
+	$ece = WC_Stripe::get_instance()->express_checkout_configuration ?? null;
+
+	if ( ! $ece ) {
+		return;
+	}
+
+	$callback = [ $ece, 'display_express_checkout_button_html' ];
+
+	if ( false === has_action( 'woocommerce_checkout_before_customer_details', $callback ) ) {
+		return;
+	}
+
+	remove_action( 'woocommerce_checkout_before_customer_details', $callback, 1 );
+	add_action(
+		'woocommerce_checkout_order_review',
+		function () use ( $callback ) {
+			child_print_express_checkout_separator_first( $callback );
+		},
+		30
+	);
+}
+add_action( 'wp', 'child_move_express_checkout_buttons' );
+
+/**
+ * Stampa i bottoni wallet con il separatore "— Oppure —" *prima* invece che
+ * dopo. Stripe stampa contenitore + separatore nello stesso metodo, pensato
+ * per i bottoni in cima al form; spostati sotto "Effettua ordine", il
+ * separatore va fra il bottone d'ordine e i wallet. Fatto lato server e non
+ * nello script del guard, così non dipende dalla cache del JS. Se il markup
+ * del separatore cambia e la regex non trova nulla, l'output resta com'è.
+ *
+ * @param callable $callback WC_Stripe_Express_Checkout_Element::display_express_checkout_button_html.
+ */
+function child_print_express_checkout_separator_first( $callback ) {
+	ob_start();
+	call_user_func( $callback );
+	$html = ob_get_clean();
+
+	$pattern = '#<p id="wc-stripe-express-checkout-button-separator".*?</p>#s';
+
+	if ( preg_match( $pattern, $html, $match ) ) {
+		$html = $match[0] . preg_replace( $pattern, '', $html, 1 );
+	}
+
+	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup di Stripe, già escapato dal plugin.
+}
