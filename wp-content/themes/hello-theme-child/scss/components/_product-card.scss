@@ -134,3 +134,11 @@
     }
   }
 }
+
+// ─── Estratto descrizione nel Loop Grid ([product_content_excerpt]) ───────────
+// Il <p> eredita la regola generica dei paragrafi (.elementor .elementor-element p,
+// 17px, base/_typography.scss): il .product-content-excerpt in più nel selettore
+// serve a superarla in specificità.
+.elementor .elementor-element p.product-content-excerpt {
+  font-size: 0.9375rem;
+}
